@@ -997,6 +997,7 @@ namespace OmniaGUI
                 {
                     Int16.TryParse(temp_string, out temp_int);
                     RPi_Settings.Volume_Settings.Volume_ATTN_Index = temp_int;
+                    Settings.Default.Volume_Attn_Index = temp_int;
                     Volume_Attn_listBox1.SelectedIndex = RPi_Settings.Volume_Settings.Volume_ATTN_Index;
                     oCode.SendCommand(txsocket, txtarget, Volume_Controls.CMD_SET_VOLUME_ATTN, 
                                                         (short)RPi_Settings.Volume_Settings.Volume_ATTN_Index);
@@ -4858,6 +4859,8 @@ namespace OmniaGUI
                 Volume_Mute_button2.Text = "Volume";
                 MonitorTextBoxText(" Volume_Mute_button2 -> CMD_SET_SPEAKER_MUTE: 0");
                 oCode.SendCommand(txsocket, txtarget, Volume_Controls.CMD_SET_SPEAKER_MUTE, 0);
+                oCode.SendCommand(txsocket, txtarget, Volume_Controls.CMD_SET_VOLUME_ATTN,
+                    (short)Settings.Default.Volume_Attn_Index);
                 RPi_Settings.Volume_Settings.Speaker_Mute = 0;
                 Settings.Default.Speaker_MutED = false;
                 //RPi_Settings.RPi_Needs_Updated = true;
