@@ -94,6 +94,13 @@ namespace OmniaGUI
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Main_form));
             this.powertabControl1 = new System.Windows.Forms.TabControl();
             this.mainPage = new System.Windows.Forms.TabPage();
+            this.Microphone_textBox2 = new System.Windows.Forms.Label();
+            this.Volume_textBox2 = new System.Windows.Forms.Label();
+            this.mainlistBox1 = new System.Windows.Forms.ListBox();
+            this.MFC_Knob_label38 = new System.Windows.Forms.Label();
+            this.MFC_C_label38 = new System.Windows.Forms.Label();
+            this.MFC_B_label38 = new System.Windows.Forms.Label();
+            this.MFC_A_label38 = new System.Windows.Forms.Label();
             this.UTC_Date_label46 = new System.Windows.Forms.Label();
             this.Time_display_UTC_label34 = new System.Windows.Forms.Label();
             this.Zedgraph_Control = new ZedGraph.ZedGraphControl();
@@ -147,8 +154,6 @@ namespace OmniaGUI
             this.Filter_Low_listBox1 = new System.Windows.Forms.ListBox();
             this.Local_Date_label46 = new System.Windows.Forms.Label();
             this.NB_button2 = new System.Windows.Forms.Button();
-            this.Microphone_textBox2 = new System.Windows.Forms.TextBox();
-            this.Volume_textBox2 = new System.Windows.Forms.TextBox();
             this.Time_display_label33 = new System.Windows.Forms.Label();
             this.TX_Mute_button2 = new System.Windows.Forms.Button();
             this.Volume_Mute_button2 = new System.Windows.Forms.Button();
@@ -316,6 +321,8 @@ namespace OmniaGUI
             this.label10 = new System.Windows.Forms.Label();
             this.Audio_tabPage1 = new System.Windows.Forms.TabPage();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.Side_Tone_label32 = new System.Windows.Forms.Label();
+            this.Side_Tone_Volume_hScrollBar1 = new System.Windows.Forms.HScrollBar();
             this.label17 = new System.Windows.Forms.Label();
             this.ritoffsetlistBox1 = new System.Windows.Forms.ListBox();
             this.label7 = new System.Windows.Forms.Label();
@@ -340,6 +347,8 @@ namespace OmniaGUI
             this.label35 = new System.Windows.Forms.Label();
             this.semicheckBox2 = new System.Windows.Forms.CheckBox();
             this.MFC = new System.Windows.Forms.TabPage();
+            this.label33 = new System.Windows.Forms.Label();
+            this.AMP_comboBox1 = new System.Windows.Forms.ComboBox();
             this.IQBD_hScrollBar1 = new System.Windows.Forms.HScrollBar();
             this.Antenna_Switch_label43 = new System.Windows.Forms.Label();
             this.Antenna_Switch_comboBox1 = new System.Windows.Forms.ComboBox();
@@ -373,8 +382,15 @@ namespace OmniaGUI
             this.IQBD_Monitor_label = new System.Windows.Forms.Label();
             this.IQBD_Tune_button8 = new System.Windows.Forms.Button();
             this.metertab = new System.Windows.Forms.TabPage();
+            this.Freq_Comp_label32 = new System.Windows.Forms.Label();
+            this.groupBox4 = new System.Windows.Forms.GroupBox();
+            this.Compression_Level_hScrollBar1 = new System.Windows.Forms.HScrollBar();
             this.Volume_Attn_listBox1 = new System.Windows.Forms.ListBox();
+            this.Compression_button2 = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
+            this.Compression_label44 = new System.Windows.Forms.Label();
+            this.Mic_Gain_label2 = new System.Windows.Forms.Label();
+            this.Mic_Gain_Step_listBox1 = new System.Windows.Forms.ListBox();
             this.Time_checkBox2 = new System.Windows.Forms.CheckBox();
             this.SMeter_groupBox4 = new System.Windows.Forms.GroupBox();
             this.Meter_Peak_Needle_Color = new System.Windows.Forms.ListBox();
@@ -382,16 +398,8 @@ namespace OmniaGUI
             this.Peak_Needle_checkBox2 = new System.Windows.Forms.CheckBox();
             this.Peak_Hold_listBox1 = new System.Windows.Forms.ListBox();
             this.Peak_hold_on_offlistBox1 = new System.Windows.Forms.ListBox();
-            this.mainlistBox1 = new System.Windows.Forms.ListBox();
-            this.label32 = new System.Windows.Forms.Label();
             this.button5 = new System.Windows.Forms.Button();
             this.RPi_Temperature_label1 = new System.Windows.Forms.Label();
-            this.Mic_Gain_Step_listBox1 = new System.Windows.Forms.ListBox();
-            this.Mic_Gain_label2 = new System.Windows.Forms.Label();
-            this.Compression_label44 = new System.Windows.Forms.Label();
-            this.Compression_Level_hScrollBar1 = new System.Windows.Forms.HScrollBar();
-            this.Compression_button2 = new System.Windows.Forms.Button();
-            this.checkBox3 = new System.Windows.Forms.CheckBox();
             this.Colors_groupBox = new System.Windows.Forms.GroupBox();
             this.button3 = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
@@ -434,8 +442,7 @@ namespace OmniaGUI
             this.Smeter_toolTip = new System.Windows.Forms.ToolTip(this.components);
             this.Cursor_timer2 = new System.Windows.Forms.Timer(this.components);
             this.Waterfall_timer = new System.Windows.Forms.Timer(this.components);
-            this.AMP_comboBox1 = new System.Windows.Forms.ComboBox();
-            this.label33 = new System.Windows.Forms.Label();
+            this.RPi_Display_Timer = new System.Windows.Forms.Timer(this.components);
             this.powertabControl1.SuspendLayout();
             this.mainPage.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -459,6 +466,7 @@ namespace OmniaGUI
             this.AMP_groupBox3.SuspendLayout();
             this.IQBD_groupBox4.SuspendLayout();
             this.metertab.SuspendLayout();
+            this.groupBox4.SuspendLayout();
             this.SMeter_groupBox4.SuspendLayout();
             this.Colors_groupBox.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -494,6 +502,13 @@ namespace OmniaGUI
             this.mainPage.AutoScroll = true;
             this.mainPage.BackColor = System.Drawing.Color.Black;
             this.mainPage.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.mainPage.Controls.Add(this.Microphone_textBox2);
+            this.mainPage.Controls.Add(this.Volume_textBox2);
+            this.mainPage.Controls.Add(this.mainlistBox1);
+            this.mainPage.Controls.Add(this.MFC_Knob_label38);
+            this.mainPage.Controls.Add(this.MFC_C_label38);
+            this.mainPage.Controls.Add(this.MFC_B_label38);
+            this.mainPage.Controls.Add(this.MFC_A_label38);
             this.mainPage.Controls.Add(this.UTC_Date_label46);
             this.mainPage.Controls.Add(this.Time_display_UTC_label34);
             this.mainPage.Controls.Add(this.Zedgraph_Control);
@@ -516,8 +531,6 @@ namespace OmniaGUI
             this.mainPage.Controls.Add(this.Filter_Low_listBox1);
             this.mainPage.Controls.Add(this.Local_Date_label46);
             this.mainPage.Controls.Add(this.NB_button2);
-            this.mainPage.Controls.Add(this.Microphone_textBox2);
-            this.mainPage.Controls.Add(this.Volume_textBox2);
             this.mainPage.Controls.Add(this.Time_display_label33);
             this.mainPage.Controls.Add(this.TX_Mute_button2);
             this.mainPage.Controls.Add(this.Volume_Mute_button2);
@@ -556,9 +569,97 @@ namespace OmniaGUI
             this.mainPage.Enter += new System.EventHandler(this.mainPage_Enter);
             this.mainPage.Leave += new System.EventHandler(this.mainPage_Leave);
             // 
+            // Microphone_textBox2
+            // 
+            this.Microphone_textBox2.BackColor = System.Drawing.Color.Gainsboro;
+            this.Microphone_textBox2.ForeColor = System.Drawing.Color.Black;
+            this.Microphone_textBox2.Location = new System.Drawing.Point(543, 170);
+            this.Microphone_textBox2.Name = "Microphone_textBox2";
+            this.Microphone_textBox2.Size = new System.Drawing.Size(39, 21);
+            this.Microphone_textBox2.TabIndex = 158;
+            this.Microphone_textBox2.Text = "100";
+            this.Microphone_textBox2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.Microphone_textBox2.Click += new System.EventHandler(this.Microphone_textBox2_Click);
+            // 
+            // Volume_textBox2
+            // 
+            this.Volume_textBox2.BackColor = System.Drawing.Color.Gainsboro;
+            this.Volume_textBox2.ForeColor = System.Drawing.Color.Black;
+            this.Volume_textBox2.Location = new System.Drawing.Point(212, 170);
+            this.Volume_textBox2.Name = "Volume_textBox2";
+            this.Volume_textBox2.Size = new System.Drawing.Size(39, 21);
+            this.Volume_textBox2.TabIndex = 157;
+            this.Volume_textBox2.Text = "100";
+            this.Volume_textBox2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.Volume_textBox2.Click += new System.EventHandler(this.Volume_textBox2_Click);
+            // 
+            // mainlistBox1
+            // 
+            this.mainlistBox1.BackColor = System.Drawing.Color.White;
+            this.mainlistBox1.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.mainlistBox1.ForeColor = System.Drawing.Color.Black;
+            this.mainlistBox1.FormattingEnabled = true;
+            this.mainlistBox1.Items.AddRange(new object[] {
+            "100K",
+            "10K",
+            "1K",
+            "100",
+            "10",
+            "1"});
+            this.mainlistBox1.Location = new System.Drawing.Point(500, 84);
+            this.mainlistBox1.Name = "mainlistBox1";
+            this.mainlistBox1.ScrollAlwaysVisible = true;
+            this.mainlistBox1.Size = new System.Drawing.Size(56, 17);
+            this.mainlistBox1.TabIndex = 193;
+            this.toolTip.SetToolTip(this.mainlistBox1, "Frequency Step Increment");
+            this.mainlistBox1.SelectedIndexChanged += new System.EventHandler(this.mainlistBox1_SelectedIndexChanged);
+            // 
+            // MFC_Knob_label38
+            // 
+            this.MFC_Knob_label38.BackColor = System.Drawing.Color.Gainsboro;
+            this.MFC_Knob_label38.Location = new System.Drawing.Point(537, 203);
+            this.MFC_Knob_label38.Name = "MFC_Knob_label38";
+            this.MFC_Knob_label38.Size = new System.Drawing.Size(97, 16);
+            this.MFC_Knob_label38.TabIndex = 192;
+            this.MFC_Knob_label38.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.toolTip.SetToolTip(this.MFC_Knob_label38, "MFC - Knob Switch");
+            // 
+            // MFC_C_label38
+            // 
+            this.MFC_C_label38.BackColor = System.Drawing.Color.Gainsboro;
+            this.MFC_C_label38.Location = new System.Drawing.Point(411, 203);
+            this.MFC_C_label38.Name = "MFC_C_label38";
+            this.MFC_C_label38.Size = new System.Drawing.Size(97, 16);
+            this.MFC_C_label38.TabIndex = 191;
+            this.MFC_C_label38.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.toolTip.SetToolTip(this.MFC_C_label38, "MFC - Button C");
+            this.MFC_C_label38.Click += new System.EventHandler(this.MFC_C_label38_Click);
+            // 
+            // MFC_B_label38
+            // 
+            this.MFC_B_label38.BackColor = System.Drawing.Color.Gainsboro;
+            this.MFC_B_label38.Location = new System.Drawing.Point(285, 203);
+            this.MFC_B_label38.Name = "MFC_B_label38";
+            this.MFC_B_label38.Size = new System.Drawing.Size(97, 16);
+            this.MFC_B_label38.TabIndex = 190;
+            this.MFC_B_label38.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.toolTip.SetToolTip(this.MFC_B_label38, "MFC - Button B");
+            this.MFC_B_label38.Click += new System.EventHandler(this.MFC_B_label38_Click);
+            // 
+            // MFC_A_label38
+            // 
+            this.MFC_A_label38.BackColor = System.Drawing.Color.Gainsboro;
+            this.MFC_A_label38.Location = new System.Drawing.Point(159, 203);
+            this.MFC_A_label38.Name = "MFC_A_label38";
+            this.MFC_A_label38.Size = new System.Drawing.Size(97, 16);
+            this.MFC_A_label38.TabIndex = 189;
+            this.MFC_A_label38.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.toolTip.SetToolTip(this.MFC_A_label38, "MFC - Button A");
+            this.MFC_A_label38.Click += new System.EventHandler(this.MFC_A_label38_Click);
+            // 
             // UTC_Date_label46
             // 
-            this.UTC_Date_label46.BackColor = System.Drawing.Color.MediumOrchid;
+            this.UTC_Date_label46.BackColor = System.Drawing.Color.Transparent;
             this.UTC_Date_label46.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.UTC_Date_label46.ForeColor = System.Drawing.Color.White;
             this.UTC_Date_label46.Location = new System.Drawing.Point(726, 118);
@@ -572,7 +673,7 @@ namespace OmniaGUI
             // 
             // Time_display_UTC_label34
             // 
-            this.Time_display_UTC_label34.BackColor = System.Drawing.Color.MediumOrchid;
+            this.Time_display_UTC_label34.BackColor = System.Drawing.Color.Transparent;
             this.Time_display_UTC_label34.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Time_display_UTC_label34.ForeColor = System.Drawing.Color.White;
             this.Time_display_UTC_label34.Location = new System.Drawing.Point(726, 95);
@@ -596,7 +697,7 @@ namespace OmniaGUI
             this.Zedgraph_Control.IsEnableWheelZoom = false;
             this.Zedgraph_Control.IsPrintFillPage = false;
             this.Zedgraph_Control.IsShowCursorValues = true;
-            this.Zedgraph_Control.Location = new System.Drawing.Point(0, 194);
+            this.Zedgraph_Control.Location = new System.Drawing.Point(0, 228);
             this.Zedgraph_Control.Margin = new System.Windows.Forms.Padding(0);
             this.Zedgraph_Control.Name = "Zedgraph_Control";
             this.Zedgraph_Control.PanButtons = System.Windows.Forms.MouseButtons.None;
@@ -610,7 +711,7 @@ namespace OmniaGUI
             this.Zedgraph_Control.ScrollMinY = 0D;
             this.Zedgraph_Control.ScrollMinY2 = 0D;
             this.Zedgraph_Control.SelectButtons = System.Windows.Forms.MouseButtons.None;
-            this.Zedgraph_Control.Size = new System.Drawing.Size(792, 128);
+            this.Zedgraph_Control.Size = new System.Drawing.Size(792, 112);
             this.Zedgraph_Control.TabIndex = 179;
             this.Zedgraph_Control.UseExtendedPrintDialog = true;
             this.Zedgraph_Control.Visible = false;
@@ -1148,8 +1249,8 @@ namespace OmniaGUI
             // 
             // button7
             // 
-            this.button7.BackColor = System.Drawing.Color.Red;
-            this.button7.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button7.BackColor = System.Drawing.Color.Gainsboro;
+            this.button7.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.button7.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.button7.ForeColor = System.Drawing.Color.Black;
             this.button7.Location = new System.Drawing.Point(169, 58);
@@ -1223,6 +1324,7 @@ namespace OmniaGUI
             // buttReset
             // 
             this.buttReset.BackColor = System.Drawing.Color.Gainsboro;
+            this.buttReset.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.buttReset.ForeColor = System.Drawing.Color.Black;
             this.buttReset.Location = new System.Drawing.Point(6, 15);
             this.buttReset.Name = "buttReset";
@@ -1235,6 +1337,7 @@ namespace OmniaGUI
             // ritbutton1
             // 
             this.ritbutton1.BackColor = System.Drawing.Color.Gainsboro;
+            this.ritbutton1.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.ritbutton1.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ritbutton1.ForeColor = System.Drawing.Color.Black;
             this.ritbutton1.Location = new System.Drawing.Point(162, 15);
@@ -1259,8 +1362,8 @@ namespace OmniaGUI
             // 
             // button6
             // 
-            this.button6.BackColor = System.Drawing.Color.Red;
-            this.button6.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button6.BackColor = System.Drawing.Color.Gainsboro;
+            this.button6.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.button6.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.button6.ForeColor = System.Drawing.Color.Black;
             this.button6.Location = new System.Drawing.Point(169, 8);
@@ -1342,7 +1445,7 @@ namespace OmniaGUI
             "3.0KHz",
             "2.7KHz",
             "2.4KHz"});
-            this.Filter_listBox1.Location = new System.Drawing.Point(464, 84);
+            this.Filter_listBox1.Location = new System.Drawing.Point(425, 84);
             this.Filter_listBox1.Name = "Filter_listBox1";
             this.Filter_listBox1.ScrollAlwaysVisible = true;
             this.Filter_listBox1.Size = new System.Drawing.Size(70, 17);
@@ -1360,7 +1463,7 @@ namespace OmniaGUI
             "1.8KHz",
             "400Hz",
             "200Hz"});
-            this.CW_Filter_listBox1.Location = new System.Drawing.Point(314, 84);
+            this.CW_Filter_listBox1.Location = new System.Drawing.Point(275, 84);
             this.CW_Filter_listBox1.Name = "CW_Filter_listBox1";
             this.CW_Filter_listBox1.Size = new System.Drawing.Size(70, 17);
             this.CW_Filter_listBox1.TabIndex = 146;
@@ -1379,7 +1482,7 @@ namespace OmniaGUI
             "200Hz",
             "100Hz",
             "75Hz"});
-            this.Filter_Low_listBox1.Location = new System.Drawing.Point(389, 84);
+            this.Filter_Low_listBox1.Location = new System.Drawing.Point(350, 84);
             this.Filter_Low_listBox1.Name = "Filter_Low_listBox1";
             this.Filter_Low_listBox1.Size = new System.Drawing.Size(70, 17);
             this.Filter_Low_listBox1.TabIndex = 145;
@@ -1388,7 +1491,7 @@ namespace OmniaGUI
             // 
             // Local_Date_label46
             // 
-            this.Local_Date_label46.BackColor = System.Drawing.Color.MediumOrchid;
+            this.Local_Date_label46.BackColor = System.Drawing.Color.Transparent;
             this.Local_Date_label46.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Local_Date_label46.ForeColor = System.Drawing.Color.White;
             this.Local_Date_label46.Location = new System.Drawing.Point(3, 118);
@@ -1415,37 +1518,9 @@ namespace OmniaGUI
             this.NB_button2.UseVisualStyleBackColor = false;
             this.NB_button2.Click += new System.EventHandler(this.NB_button2_Click);
             // 
-            // Microphone_textBox2
-            // 
-            this.Microphone_textBox2.BackColor = System.Drawing.Color.Black;
-            this.Microphone_textBox2.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Microphone_textBox2.ForeColor = System.Drawing.Color.White;
-            this.Microphone_textBox2.Location = new System.Drawing.Point(532, 170);
-            this.Microphone_textBox2.Name = "Microphone_textBox2";
-            this.Microphone_textBox2.ReadOnly = true;
-            this.Microphone_textBox2.Size = new System.Drawing.Size(31, 21);
-            this.Microphone_textBox2.TabIndex = 118;
-            this.Microphone_textBox2.Text = "0";
-            this.Microphone_textBox2.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.Microphone_textBox2.TextChanged += new System.EventHandler(this.Microphone_textBox2_TextChanged);
-            // 
-            // Volume_textBox2
-            // 
-            this.Volume_textBox2.BackColor = System.Drawing.Color.Black;
-            this.Volume_textBox2.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Volume_textBox2.ForeColor = System.Drawing.Color.White;
-            this.Volume_textBox2.Location = new System.Drawing.Point(230, 170);
-            this.Volume_textBox2.Name = "Volume_textBox2";
-            this.Volume_textBox2.ReadOnly = true;
-            this.Volume_textBox2.Size = new System.Drawing.Size(31, 21);
-            this.Volume_textBox2.TabIndex = 117;
-            this.Volume_textBox2.Text = "0";
-            this.Volume_textBox2.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.Volume_textBox2.TextChanged += new System.EventHandler(this.Volume_textBox2_TextChanged);
-            // 
             // Time_display_label33
             // 
-            this.Time_display_label33.BackColor = System.Drawing.Color.MediumOrchid;
+            this.Time_display_label33.BackColor = System.Drawing.Color.Transparent;
             this.Time_display_label33.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Time_display_label33.ForeColor = System.Drawing.Color.White;
             this.Time_display_label33.Location = new System.Drawing.Point(3, 95);
@@ -1556,8 +1631,8 @@ namespace OmniaGUI
             // 
             // mainmodebutton2
             // 
-            this.mainmodebutton2.BackColor = System.Drawing.Color.Red;
-            this.mainmodebutton2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.mainmodebutton2.BackColor = System.Drawing.Color.Gainsboro;
+            this.mainmodebutton2.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.mainmodebutton2.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.mainmodebutton2.ForeColor = System.Drawing.Color.Black;
             this.mainmodebutton2.Location = new System.Drawing.Point(169, 33);
@@ -1818,10 +1893,10 @@ namespace OmniaGUI
             this.picWaterfall.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.picWaterfall.Cursor = System.Windows.Forms.Cursors.Cross;
             this.picWaterfall.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.picWaterfall.Location = new System.Drawing.Point(0, 324);
+            this.picWaterfall.Location = new System.Drawing.Point(0, 340);
             this.picWaterfall.Margin = new System.Windows.Forms.Padding(0);
             this.picWaterfall.Name = "picWaterfall";
-            this.picWaterfall.Size = new System.Drawing.Size(792, 127);
+            this.picWaterfall.Size = new System.Drawing.Size(792, 111);
             this.picWaterfall.TabIndex = 178;
             this.picWaterfall.TabStop = false;
             this.picWaterfall.Visible = false;
@@ -2480,11 +2555,11 @@ namespace OmniaGUI
             // Tune_Power_label37
             // 
             this.Tune_Power_label37.BackColor = System.Drawing.Color.Gainsboro;
-            this.Tune_Power_label37.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.Tune_Power_label37.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.Tune_Power_label37.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Tune_Power_label37.Location = new System.Drawing.Point(369, 152);
+            this.Tune_Power_label37.Location = new System.Drawing.Point(366, 152);
             this.Tune_Power_label37.Name = "Tune_Power_label37";
-            this.Tune_Power_label37.Size = new System.Drawing.Size(54, 23);
+            this.Tune_Power_label37.Size = new System.Drawing.Size(61, 23);
             this.Tune_Power_label37.TabIndex = 119;
             this.Tune_Power_label37.Text = "50";
             this.Tune_Power_label37.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -2517,11 +2592,11 @@ namespace OmniaGUI
             // CW_Power_label36
             // 
             this.CW_Power_label36.BackColor = System.Drawing.Color.Gainsboro;
-            this.CW_Power_label36.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.CW_Power_label36.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.CW_Power_label36.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.CW_Power_label36.Location = new System.Drawing.Point(630, 55);
+            this.CW_Power_label36.Location = new System.Drawing.Point(618, 55);
             this.CW_Power_label36.Name = "CW_Power_label36";
-            this.CW_Power_label36.Size = new System.Drawing.Size(36, 23);
+            this.CW_Power_label36.Size = new System.Drawing.Size(61, 23);
             this.CW_Power_label36.TabIndex = 116;
             this.CW_Power_label36.Text = "100";
             this.CW_Power_label36.TextAlign = System.Drawing.ContentAlignment.TopCenter;
@@ -2529,22 +2604,24 @@ namespace OmniaGUI
             // SSB_Power_label36
             // 
             this.SSB_Power_label36.BackColor = System.Drawing.Color.Gainsboro;
-            this.SSB_Power_label36.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.SSB_Power_label36.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.SSB_Power_label36.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.SSB_Power_label36.Location = new System.Drawing.Point(378, 55);
+            this.SSB_Power_label36.Location = new System.Drawing.Point(366, 55);
             this.SSB_Power_label36.Name = "SSB_Power_label36";
-            this.SSB_Power_label36.Size = new System.Drawing.Size(36, 23);
+            this.SSB_Power_label36.Size = new System.Drawing.Size(61, 23);
             this.SSB_Power_label36.TabIndex = 115;
-            this.SSB_Power_label36.Text = "100";
+            this.SSB_Power_label36.Text = "100%";
             this.SSB_Power_label36.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.SSB_Power_label36.Click += new System.EventHandler(this.SSB_Power_label36_Click);
             // 
             // AM_Carrier_label36
             // 
             this.AM_Carrier_label36.BackColor = System.Drawing.Color.Gainsboro;
+            this.AM_Carrier_label36.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.AM_Carrier_label36.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.AM_Carrier_label36.Location = new System.Drawing.Point(126, 55);
+            this.AM_Carrier_label36.Location = new System.Drawing.Point(114, 55);
             this.AM_Carrier_label36.Name = "AM_Carrier_label36";
-            this.AM_Carrier_label36.Size = new System.Drawing.Size(36, 23);
+            this.AM_Carrier_label36.Size = new System.Drawing.Size(61, 23);
             this.AM_Carrier_label36.TabIndex = 114;
             this.AM_Carrier_label36.Text = "100";
             this.AM_Carrier_label36.TextAlign = System.Drawing.ContentAlignment.TopCenter;
@@ -3932,6 +4009,8 @@ namespace OmniaGUI
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.Side_Tone_label32);
+            this.groupBox1.Controls.Add(this.Side_Tone_Volume_hScrollBar1);
             this.groupBox1.Controls.Add(this.label17);
             this.groupBox1.Controls.Add(this.ritoffsetlistBox1);
             this.groupBox1.Controls.Add(this.label7);
@@ -3956,7 +4035,7 @@ namespace OmniaGUI
             this.groupBox1.Controls.Add(this.label35);
             this.groupBox1.Controls.Add(this.semicheckBox2);
             this.groupBox1.ForeColor = System.Drawing.Color.White;
-            this.groupBox1.Location = new System.Drawing.Point(16, 15);
+            this.groupBox1.Location = new System.Drawing.Point(16, 59);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(760, 332);
             this.groupBox1.TabIndex = 145;
@@ -3964,14 +4043,39 @@ namespace OmniaGUI
             this.groupBox1.Text = "CW Controls";
             this.groupBox1.Enter += new System.EventHandler(this.groupBox1_Enter);
             // 
+            // Side_Tone_label32
+            // 
+            this.Side_Tone_label32.BackColor = System.Drawing.Color.Gainsboro;
+            this.Side_Tone_label32.Font = new System.Drawing.Font("Verdana", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Side_Tone_label32.ForeColor = System.Drawing.Color.Black;
+            this.Side_Tone_label32.Location = new System.Drawing.Point(266, 105);
+            this.Side_Tone_label32.Name = "Side_Tone_label32";
+            this.Side_Tone_label32.Size = new System.Drawing.Size(229, 23);
+            this.Side_Tone_label32.TabIndex = 161;
+            this.Side_Tone_label32.Text = "SIDE TONE VOLUME";
+            this.Side_Tone_label32.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // Side_Tone_Volume_hScrollBar1
+            // 
+            this.Side_Tone_Volume_hScrollBar1.Cursor = System.Windows.Forms.Cursors.SizeWE;
+            this.Side_Tone_Volume_hScrollBar1.Location = new System.Drawing.Point(244, 141);
+            this.Side_Tone_Volume_hScrollBar1.Maximum = 108;
+            this.Side_Tone_Volume_hScrollBar1.Name = "Side_Tone_Volume_hScrollBar1";
+            this.Side_Tone_Volume_hScrollBar1.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.Side_Tone_Volume_hScrollBar1.Size = new System.Drawing.Size(269, 19);
+            this.Side_Tone_Volume_hScrollBar1.TabIndex = 160;
+            this.Side_Tone_Volume_hScrollBar1.TabStop = true;
+            this.Side_Tone_Volume_hScrollBar1.Value = 30;
+            this.Side_Tone_Volume_hScrollBar1.Scroll += new System.Windows.Forms.ScrollEventHandler(this.Side_Tone_Volume_hScrollBar1_Scroll);
+            // 
             // label17
             // 
             this.label17.BackColor = System.Drawing.Color.Gainsboro;
-            this.label17.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label17.Font = new System.Drawing.Font("Verdana", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label17.ForeColor = System.Drawing.Color.Black;
-            this.label17.Location = new System.Drawing.Point(462, 178);
+            this.label17.Location = new System.Drawing.Point(441, 247);
             this.label17.Name = "label17";
-            this.label17.Size = new System.Drawing.Size(87, 19);
+            this.label17.Size = new System.Drawing.Size(130, 28);
             this.label17.TabIndex = 159;
             this.label17.Text = "RIT LIMITS";
             this.label17.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -3979,28 +4083,29 @@ namespace OmniaGUI
             // ritoffsetlistBox1
             // 
             this.ritoffsetlistBox1.BackColor = System.Drawing.Color.Gainsboro;
-            this.ritoffsetlistBox1.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ritoffsetlistBox1.Font = new System.Drawing.Font("Verdana", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ritoffsetlistBox1.ForeColor = System.Drawing.Color.Black;
             this.ritoffsetlistBox1.FormattingEnabled = true;
-            this.ritoffsetlistBox1.ItemHeight = 14;
+            this.ritoffsetlistBox1.ItemHeight = 23;
             this.ritoffsetlistBox1.Items.AddRange(new object[] {
             "+/- 100",
             "+/- 500",
             "+/- 1000"});
-            this.ritoffsetlistBox1.Location = new System.Drawing.Point(466, 200);
+            this.ritoffsetlistBox1.Location = new System.Drawing.Point(441, 287);
             this.ritoffsetlistBox1.Name = "ritoffsetlistBox1";
             this.ritoffsetlistBox1.ScrollAlwaysVisible = true;
-            this.ritoffsetlistBox1.Size = new System.Drawing.Size(78, 18);
+            this.ritoffsetlistBox1.Size = new System.Drawing.Size(116, 27);
             this.ritoffsetlistBox1.TabIndex = 158;
+            this.ritoffsetlistBox1.SelectedIndexChanged += new System.EventHandler(this.ritoffsetlistBox1_SelectedIndexChanged);
             // 
             // label7
             // 
             this.label7.BackColor = System.Drawing.Color.Gainsboro;
-            this.label7.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label7.Font = new System.Drawing.Font("Verdana", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label7.ForeColor = System.Drawing.Color.Black;
-            this.label7.Location = new System.Drawing.Point(211, 179);
+            this.label7.Location = new System.Drawing.Point(219, 248);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(81, 17);
+            this.label7.Size = new System.Drawing.Size(104, 27);
             this.label7.TabIndex = 157;
             this.label7.Text = "RIT STEP";
             this.label7.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -4008,28 +4113,29 @@ namespace OmniaGUI
             // ritlistBox1
             // 
             this.ritlistBox1.BackColor = System.Drawing.Color.Gainsboro;
-            this.ritlistBox1.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ritlistBox1.Font = new System.Drawing.Font("Verdana", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ritlistBox1.ForeColor = System.Drawing.Color.Black;
             this.ritlistBox1.FormattingEnabled = true;
-            this.ritlistBox1.ItemHeight = 14;
+            this.ritlistBox1.ItemHeight = 23;
             this.ritlistBox1.Items.AddRange(new object[] {
             "10",
             "20",
             "30",
             "40",
             "50"});
-            this.ritlistBox1.Location = new System.Drawing.Point(212, 200);
+            this.ritlistBox1.Location = new System.Drawing.Point(268, 287);
             this.ritlistBox1.Name = "ritlistBox1";
             this.ritlistBox1.ScrollAlwaysVisible = true;
-            this.ritlistBox1.Size = new System.Drawing.Size(78, 18);
+            this.ritlistBox1.Size = new System.Drawing.Size(55, 27);
             this.ritlistBox1.TabIndex = 156;
+            this.ritlistBox1.SelectedIndexChanged += new System.EventHandler(this.ritlistBox1_SelectedIndexChanged);
             // 
             // CW_Hold_numericUpDown2
             // 
             this.CW_Hold_numericUpDown2.BackColor = System.Drawing.Color.Gainsboro;
-            this.CW_Hold_numericUpDown2.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.CW_Hold_numericUpDown2.Font = new System.Drawing.Font("Verdana", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.CW_Hold_numericUpDown2.ForeColor = System.Drawing.Color.Black;
-            this.CW_Hold_numericUpDown2.Location = new System.Drawing.Point(44, 51);
+            this.CW_Hold_numericUpDown2.Location = new System.Drawing.Point(49, 51);
             this.CW_Hold_numericUpDown2.Maximum = new decimal(new int[] {
             35,
             0,
@@ -4041,7 +4147,7 @@ namespace OmniaGUI
             0,
             0});
             this.CW_Hold_numericUpDown2.Name = "CW_Hold_numericUpDown2";
-            this.CW_Hold_numericUpDown2.Size = new System.Drawing.Size(47, 22);
+            this.CW_Hold_numericUpDown2.Size = new System.Drawing.Size(47, 31);
             this.CW_Hold_numericUpDown2.TabIndex = 153;
             this.CW_Hold_numericUpDown2.Value = new decimal(new int[] {
             1,
@@ -4053,30 +4159,31 @@ namespace OmniaGUI
             // CW_Lag_numericUpDown2
             // 
             this.CW_Lag_numericUpDown2.BackColor = System.Drawing.Color.Gainsboro;
-            this.CW_Lag_numericUpDown2.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.CW_Lag_numericUpDown2.Font = new System.Drawing.Font("Verdana", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.CW_Lag_numericUpDown2.ForeColor = System.Drawing.Color.Black;
             this.CW_Lag_numericUpDown2.Increment = new decimal(new int[] {
             5,
             0,
             0,
             0});
-            this.CW_Lag_numericUpDown2.Location = new System.Drawing.Point(669, 51);
+            this.CW_Lag_numericUpDown2.Location = new System.Drawing.Point(665, 51);
             this.CW_Lag_numericUpDown2.Maximum = new decimal(new int[] {
             25,
             0,
             0,
             0});
             this.CW_Lag_numericUpDown2.Name = "CW_Lag_numericUpDown2";
-            this.CW_Lag_numericUpDown2.Size = new System.Drawing.Size(47, 22);
+            this.CW_Lag_numericUpDown2.Size = new System.Drawing.Size(47, 31);
             this.CW_Lag_numericUpDown2.TabIndex = 152;
+            this.toolTip.SetToolTip(this.CW_Lag_numericUpDown2, "Not Yet Implemented");
             this.CW_Lag_numericUpDown2.ValueChanged += new System.EventHandler(this.CW_Lag_numericUpDown2_ValueChanged);
             // 
             // numericUpDown1
             // 
             this.numericUpDown1.BackColor = System.Drawing.Color.Gainsboro;
-            this.numericUpDown1.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.numericUpDown1.Font = new System.Drawing.Font("Verdana", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.numericUpDown1.ForeColor = System.Drawing.Color.Black;
-            this.numericUpDown1.Location = new System.Drawing.Point(350, 116);
+            this.numericUpDown1.Location = new System.Drawing.Point(276, 205);
             this.numericUpDown1.Maximum = new decimal(new int[] {
             60,
             0,
@@ -4088,7 +4195,7 @@ namespace OmniaGUI
             0,
             0});
             this.numericUpDown1.Name = "numericUpDown1";
-            this.numericUpDown1.Size = new System.Drawing.Size(47, 22);
+            this.numericUpDown1.Size = new System.Drawing.Size(47, 31);
             this.numericUpDown1.TabIndex = 151;
             this.numericUpDown1.Value = new decimal(new int[] {
             5,
@@ -4100,98 +4207,97 @@ namespace OmniaGUI
             // CW_Paddle_listBox1
             // 
             this.CW_Paddle_listBox1.BackColor = System.Drawing.Color.Gainsboro;
-            this.CW_Paddle_listBox1.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.CW_Paddle_listBox1.Font = new System.Drawing.Font("Verdana", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.CW_Paddle_listBox1.ForeColor = System.Drawing.Color.Black;
             this.CW_Paddle_listBox1.FormattingEnabled = true;
-            this.CW_Paddle_listBox1.ItemHeight = 14;
+            this.CW_Paddle_listBox1.ItemHeight = 23;
             this.CW_Paddle_listBox1.Items.AddRange(new object[] {
             "NORMAL",
             "REVERSE"});
-            this.CW_Paddle_listBox1.Location = new System.Drawing.Point(551, 55);
+            this.CW_Paddle_listBox1.Location = new System.Drawing.Point(536, 53);
             this.CW_Paddle_listBox1.Name = "CW_Paddle_listBox1";
-            this.CW_Paddle_listBox1.Size = new System.Drawing.Size(80, 18);
+            this.CW_Paddle_listBox1.Size = new System.Drawing.Size(112, 27);
             this.CW_Paddle_listBox1.TabIndex = 149;
             this.CW_Paddle_listBox1.SelectedIndexChanged += new System.EventHandler(this.CW_Paddle_listBox1_SelectedIndexChanged);
             // 
             // CW_Weight_listBox1
             // 
             this.CW_Weight_listBox1.BackColor = System.Drawing.Color.Gainsboro;
-            this.CW_Weight_listBox1.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.CW_Weight_listBox1.Font = new System.Drawing.Font("Verdana", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.CW_Weight_listBox1.ForeColor = System.Drawing.Color.Black;
             this.CW_Weight_listBox1.FormattingEnabled = true;
-            this.CW_Weight_listBox1.ItemHeight = 14;
+            this.CW_Weight_listBox1.ItemHeight = 23;
             this.CW_Weight_listBox1.Items.AddRange(new object[] {
             "25",
             "50",
             "75"});
-            this.CW_Weight_listBox1.Location = new System.Drawing.Point(443, 55);
+            this.CW_Weight_listBox1.Location = new System.Drawing.Point(467, 53);
             this.CW_Weight_listBox1.Name = "CW_Weight_listBox1";
-            this.CW_Weight_listBox1.Size = new System.Drawing.Size(70, 18);
+            this.CW_Weight_listBox1.Size = new System.Drawing.Size(52, 27);
             this.CW_Weight_listBox1.TabIndex = 148;
             this.CW_Weight_listBox1.SelectedIndexChanged += new System.EventHandler(this.CW_Weight_listBox1_SelectedIndexChanged);
             // 
             // CW_Space_listBox1
             // 
             this.CW_Space_listBox1.BackColor = System.Drawing.Color.Gainsboro;
-            this.CW_Space_listBox1.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.CW_Space_listBox1.Font = new System.Drawing.Font("Verdana", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.CW_Space_listBox1.ForeColor = System.Drawing.Color.Black;
             this.CW_Space_listBox1.FormattingEnabled = true;
-            this.CW_Space_listBox1.ItemHeight = 14;
+            this.CW_Space_listBox1.ItemHeight = 23;
             this.CW_Space_listBox1.Items.AddRange(new object[] {
-            "NONE",
             "ELEMENT",
             "CHAR",
             "WORD"});
-            this.CW_Space_listBox1.Location = new System.Drawing.Point(335, 55);
+            this.CW_Space_listBox1.Location = new System.Drawing.Point(333, 53);
             this.CW_Space_listBox1.Name = "CW_Space_listBox1";
-            this.CW_Space_listBox1.Size = new System.Drawing.Size(78, 18);
+            this.CW_Space_listBox1.Size = new System.Drawing.Size(117, 27);
             this.CW_Space_listBox1.TabIndex = 147;
             this.CW_Space_listBox1.SelectedIndexChanged += new System.EventHandler(this.CW_Space_listBox1_SelectedIndexChanged);
             // 
             // CW_Type_listBox1
             // 
             this.CW_Type_listBox1.BackColor = System.Drawing.Color.Gainsboro;
-            this.CW_Type_listBox1.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.CW_Type_listBox1.Font = new System.Drawing.Font("Verdana", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.CW_Type_listBox1.ForeColor = System.Drawing.Color.Black;
             this.CW_Type_listBox1.FormattingEnabled = true;
-            this.CW_Type_listBox1.ItemHeight = 14;
+            this.CW_Type_listBox1.ItemHeight = 23;
             this.CW_Type_listBox1.Items.AddRange(new object[] {
             "A",
             "B",
             "DIT",
             "DAH"});
-            this.CW_Type_listBox1.Location = new System.Drawing.Point(246, 55);
+            this.CW_Type_listBox1.Location = new System.Drawing.Point(248, 53);
             this.CW_Type_listBox1.Name = "CW_Type_listBox1";
-            this.CW_Type_listBox1.Size = new System.Drawing.Size(51, 18);
+            this.CW_Type_listBox1.Size = new System.Drawing.Size(68, 27);
             this.CW_Type_listBox1.TabIndex = 146;
             this.CW_Type_listBox1.SelectedIndexChanged += new System.EventHandler(this.CW_Type_listBox1_SelectedIndexChanged);
             // 
             // CW_Mode_listBox1
             // 
             this.CW_Mode_listBox1.BackColor = System.Drawing.Color.Gainsboro;
-            this.CW_Mode_listBox1.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.CW_Mode_listBox1.Font = new System.Drawing.Font("Verdana", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.CW_Mode_listBox1.ForeColor = System.Drawing.Color.Black;
             this.CW_Mode_listBox1.FormattingEnabled = true;
-            this.CW_Mode_listBox1.ItemHeight = 14;
+            this.CW_Mode_listBox1.ItemHeight = 23;
             this.CW_Mode_listBox1.Items.AddRange(new object[] {
             "IAMBIC",
             "UTIMATIC",
             "BUG",
             "STRAIGHT"});
-            this.CW_Mode_listBox1.Location = new System.Drawing.Point(129, 55);
+            this.CW_Mode_listBox1.Location = new System.Drawing.Point(113, 53);
             this.CW_Mode_listBox1.Name = "CW_Mode_listBox1";
-            this.CW_Mode_listBox1.Size = new System.Drawing.Size(79, 18);
+            this.CW_Mode_listBox1.Size = new System.Drawing.Size(118, 27);
             this.CW_Mode_listBox1.TabIndex = 145;
             this.CW_Mode_listBox1.SelectedIndexChanged += new System.EventHandler(this.CW_Mode_listBox1_SelectedIndexChanged);
             // 
             // label61
             // 
             this.label61.BackColor = System.Drawing.Color.Gainsboro;
-            this.label61.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label61.Font = new System.Drawing.Font("Verdana", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label61.ForeColor = System.Drawing.Color.Black;
-            this.label61.Location = new System.Drawing.Point(673, 20);
+            this.label61.Location = new System.Drawing.Point(670, 20);
             this.label61.Name = "label61";
-            this.label61.Size = new System.Drawing.Size(39, 23);
+            this.label61.Size = new System.Drawing.Size(59, 23);
             this.label61.TabIndex = 144;
             this.label61.Text = "LAG";
             this.label61.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -4199,23 +4305,24 @@ namespace OmniaGUI
             // label60
             // 
             this.label60.BackColor = System.Drawing.Color.Gainsboro;
-            this.label60.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label60.Font = new System.Drawing.Font("Verdana", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label60.ForeColor = System.Drawing.Color.Black;
-            this.label60.Location = new System.Drawing.Point(558, 20);
+            this.label60.Location = new System.Drawing.Point(556, 20);
             this.label60.Name = "label60";
-            this.label60.Size = new System.Drawing.Size(66, 23);
+            this.label60.Size = new System.Drawing.Size(92, 23);
             this.label60.TabIndex = 143;
             this.label60.Text = "PADDLE";
             this.label60.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.label60.Click += new System.EventHandler(this.label60_Click);
             // 
             // label59
             // 
             this.label59.BackColor = System.Drawing.Color.Gainsboro;
-            this.label59.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label59.Font = new System.Drawing.Font("Verdana", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label59.ForeColor = System.Drawing.Color.Black;
-            this.label59.Location = new System.Drawing.Point(442, 20);
+            this.label59.Location = new System.Drawing.Point(451, 20);
             this.label59.Name = "label59";
-            this.label59.Size = new System.Drawing.Size(73, 23);
+            this.label59.Size = new System.Drawing.Size(83, 23);
             this.label59.TabIndex = 142;
             this.label59.Text = "WEIGHT";
             this.label59.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -4223,11 +4330,11 @@ namespace OmniaGUI
             // label58
             // 
             this.label58.BackColor = System.Drawing.Color.Gainsboro;
-            this.label58.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label58.Font = new System.Drawing.Font("Verdana", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label58.ForeColor = System.Drawing.Color.Black;
-            this.label58.Location = new System.Drawing.Point(341, 20);
+            this.label58.Location = new System.Drawing.Point(348, 20);
             this.label58.Name = "label58";
-            this.label58.Size = new System.Drawing.Size(58, 23);
+            this.label58.Size = new System.Drawing.Size(81, 23);
             this.label58.TabIndex = 141;
             this.label58.Text = "SPACE";
             this.label58.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -4235,11 +4342,11 @@ namespace OmniaGUI
             // label45
             // 
             this.label45.BackColor = System.Drawing.Color.Gainsboro;
-            this.label45.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label45.Font = new System.Drawing.Font("Verdana", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label45.ForeColor = System.Drawing.Color.Black;
-            this.label45.Location = new System.Drawing.Point(343, 88);
+            this.label45.Location = new System.Drawing.Point(244, 170);
             this.label45.Name = "label45";
-            this.label45.Size = new System.Drawing.Size(61, 23);
+            this.label45.Size = new System.Drawing.Size(79, 23);
             this.label45.TabIndex = 140;
             this.label45.Text = "SPEED";
             this.label45.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -4247,11 +4354,11 @@ namespace OmniaGUI
             // label43
             // 
             this.label43.BackColor = System.Drawing.Color.Gainsboro;
-            this.label43.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label43.Font = new System.Drawing.Font("Verdana", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label43.ForeColor = System.Drawing.Color.Black;
-            this.label43.Location = new System.Drawing.Point(246, 20);
+            this.label43.Location = new System.Drawing.Point(257, 20);
             this.label43.Name = "label43";
-            this.label43.Size = new System.Drawing.Size(51, 23);
+            this.label43.Size = new System.Drawing.Size(69, 23);
             this.label43.TabIndex = 139;
             this.label43.Text = "TYPE";
             this.label43.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -4259,11 +4366,11 @@ namespace OmniaGUI
             // label5
             // 
             this.label5.BackColor = System.Drawing.Color.Gainsboro;
-            this.label5.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label5.Font = new System.Drawing.Font("Verdana", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label5.ForeColor = System.Drawing.Color.Black;
-            this.label5.Location = new System.Drawing.Point(140, 20);
+            this.label5.Location = new System.Drawing.Point(156, 20);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(57, 23);
+            this.label5.Size = new System.Drawing.Size(79, 23);
             this.label5.TabIndex = 138;
             this.label5.Text = "MODE";
             this.label5.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -4271,11 +4378,11 @@ namespace OmniaGUI
             // label8
             // 
             this.label8.BackColor = System.Drawing.Color.Gainsboro;
-            this.label8.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label8.Font = new System.Drawing.Font("Verdana", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label8.ForeColor = System.Drawing.Color.Black;
             this.label8.Location = new System.Drawing.Point(32, 18);
             this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(71, 26);
+            this.label8.Size = new System.Drawing.Size(102, 26);
             this.label8.TabIndex = 132;
             this.label8.Text = "TX Hold";
             this.label8.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -4283,30 +4390,30 @@ namespace OmniaGUI
             // CW_Pitch_listBox1
             // 
             this.CW_Pitch_listBox1.BackColor = System.Drawing.Color.Gainsboro;
-            this.CW_Pitch_listBox1.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.CW_Pitch_listBox1.Font = new System.Drawing.Font("Verdana", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.CW_Pitch_listBox1.ForeColor = System.Drawing.Color.Black;
             this.CW_Pitch_listBox1.FormattingEnabled = true;
-            this.CW_Pitch_listBox1.ItemHeight = 14;
+            this.CW_Pitch_listBox1.ItemHeight = 23;
             this.CW_Pitch_listBox1.Items.AddRange(new object[] {
             "400Hz",
             "500Hz",
             "600Hz",
             "700Hz",
             "800Hz"});
-            this.CW_Pitch_listBox1.Location = new System.Drawing.Point(433, 118);
+            this.CW_Pitch_listBox1.Location = new System.Drawing.Point(441, 207);
             this.CW_Pitch_listBox1.Name = "CW_Pitch_listBox1";
-            this.CW_Pitch_listBox1.Size = new System.Drawing.Size(70, 18);
+            this.CW_Pitch_listBox1.Size = new System.Drawing.Size(88, 27);
             this.CW_Pitch_listBox1.TabIndex = 137;
             this.CW_Pitch_listBox1.SelectedIndexChanged += new System.EventHandler(this.CW_Pitch_listBox1_SelectedIndexChanged);
             // 
             // label35
             // 
             this.label35.BackColor = System.Drawing.Color.Gainsboro;
-            this.label35.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label35.Font = new System.Drawing.Font("Verdana", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label35.ForeColor = System.Drawing.Color.Black;
-            this.label35.Location = new System.Drawing.Point(442, 88);
+            this.label35.Location = new System.Drawing.Point(441, 170);
             this.label35.Name = "label35";
-            this.label35.Size = new System.Drawing.Size(53, 23);
+            this.label35.Size = new System.Drawing.Size(71, 23);
             this.label35.TabIndex = 136;
             this.label35.Text = "PITCH";
             this.label35.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -4316,11 +4423,11 @@ namespace OmniaGUI
             // 
             this.semicheckBox2.AutoSize = true;
             this.semicheckBox2.BackColor = System.Drawing.Color.Gainsboro;
-            this.semicheckBox2.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.semicheckBox2.Font = new System.Drawing.Font("Verdana", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.semicheckBox2.ForeColor = System.Drawing.Color.Black;
-            this.semicheckBox2.Location = new System.Drawing.Point(258, 118);
+            this.semicheckBox2.Location = new System.Drawing.Point(342, 207);
             this.semicheckBox2.Name = "semicheckBox2";
-            this.semicheckBox2.Size = new System.Drawing.Size(56, 18);
+            this.semicheckBox2.Size = new System.Drawing.Size(77, 27);
             this.semicheckBox2.TabIndex = 135;
             this.semicheckBox2.Text = "Semi";
             this.semicheckBox2.UseVisualStyleBackColor = false;
@@ -4347,6 +4454,41 @@ namespace OmniaGUI
             this.MFC.Click += new System.EventHandler(this.MFC_Click);
             this.MFC.Enter += new System.EventHandler(this.MFC_Enter);
             this.MFC.Leave += new System.EventHandler(this.MFC_Leave);
+            // 
+            // label33
+            // 
+            this.label33.AutoSize = true;
+            this.label33.Font = new System.Drawing.Font("Verdana", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label33.ForeColor = System.Drawing.Color.White;
+            this.label33.Location = new System.Drawing.Point(636, 216);
+            this.label33.Name = "label33";
+            this.label33.Size = new System.Drawing.Size(106, 32);
+            this.label33.TabIndex = 194;
+            this.label33.Text = "CALIBRATION\r\nBAND";
+            this.label33.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // AMP_comboBox1
+            // 
+            this.AMP_comboBox1.BackColor = System.Drawing.Color.Gainsboro;
+            this.AMP_comboBox1.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.AMP_comboBox1.ForeColor = System.Drawing.Color.Black;
+            this.AMP_comboBox1.FormattingEnabled = true;
+            this.AMP_comboBox1.Items.AddRange(new object[] {
+            "160M",
+            "80M",
+            "60M",
+            "40M",
+            "30M",
+            "20M",
+            "17M",
+            "15M",
+            "12M",
+            "10M"});
+            this.AMP_comboBox1.Location = new System.Drawing.Point(659, 251);
+            this.AMP_comboBox1.Name = "AMP_comboBox1";
+            this.AMP_comboBox1.Size = new System.Drawing.Size(61, 21);
+            this.AMP_comboBox1.TabIndex = 193;
+            this.AMP_comboBox1.SelectedIndexChanged += new System.EventHandler(this.AMP_comboBox1_SelectedIndexChanged);
             // 
             // IQBD_hScrollBar1
             // 
@@ -4489,6 +4631,7 @@ namespace OmniaGUI
             this.Right_Button_comboBox4.Name = "Right_Button_comboBox4";
             this.Right_Button_comboBox4.Size = new System.Drawing.Size(104, 21);
             this.Right_Button_comboBox4.TabIndex = 186;
+            this.toolTip.SetToolTip(this.Right_Button_comboBox4, "MFC - Button C");
             this.Right_Button_comboBox4.SelectedIndexChanged += new System.EventHandler(this.Right_Button_comboBox4_SelectedIndexChanged);
             // 
             // Knob_comboBox1
@@ -4514,6 +4657,7 @@ namespace OmniaGUI
             this.Knob_comboBox1.Name = "Knob_comboBox1";
             this.Knob_comboBox1.Size = new System.Drawing.Size(104, 21);
             this.Knob_comboBox1.TabIndex = 187;
+            this.toolTip.SetToolTip(this.Knob_comboBox1, "MFC - Knob Switch");
             this.Knob_comboBox1.SelectedIndexChanged += new System.EventHandler(this.Knob_comboBox1_SelectedIndexChanged);
             // 
             // Left_Button_comboBox2
@@ -4539,6 +4683,7 @@ namespace OmniaGUI
             this.Left_Button_comboBox2.Name = "Left_Button_comboBox2";
             this.Left_Button_comboBox2.Size = new System.Drawing.Size(104, 21);
             this.Left_Button_comboBox2.TabIndex = 184;
+            this.toolTip.SetToolTip(this.Left_Button_comboBox2, "MFC - Button A");
             this.Left_Button_comboBox2.SelectedIndexChanged += new System.EventHandler(this.Left_Button_comboBox2_SelectedIndexChanged);
             // 
             // Middle_Button_comboBox3
@@ -4564,6 +4709,7 @@ namespace OmniaGUI
             this.Middle_Button_comboBox3.Name = "Middle_Button_comboBox3";
             this.Middle_Button_comboBox3.Size = new System.Drawing.Size(104, 21);
             this.Middle_Button_comboBox3.TabIndex = 185;
+            this.toolTip.SetToolTip(this.Middle_Button_comboBox3, "MFC - Button B");
             this.Middle_Button_comboBox3.SelectedIndexChanged += new System.EventHandler(this.Middle_Button_comboBox3_SelectedIndexChanged);
             // 
             // AMP_groupBox3
@@ -4859,20 +5005,12 @@ namespace OmniaGUI
             // metertab
             // 
             this.metertab.BackColor = System.Drawing.Color.Black;
-            this.metertab.Controls.Add(this.Volume_Attn_listBox1);
-            this.metertab.Controls.Add(this.label1);
+            this.metertab.Controls.Add(this.Freq_Comp_label32);
+            this.metertab.Controls.Add(this.groupBox4);
             this.metertab.Controls.Add(this.Time_checkBox2);
             this.metertab.Controls.Add(this.SMeter_groupBox4);
-            this.metertab.Controls.Add(this.mainlistBox1);
-            this.metertab.Controls.Add(this.label32);
             this.metertab.Controls.Add(this.button5);
             this.metertab.Controls.Add(this.RPi_Temperature_label1);
-            this.metertab.Controls.Add(this.Mic_Gain_Step_listBox1);
-            this.metertab.Controls.Add(this.Mic_Gain_label2);
-            this.metertab.Controls.Add(this.Compression_label44);
-            this.metertab.Controls.Add(this.Compression_Level_hScrollBar1);
-            this.metertab.Controls.Add(this.Compression_button2);
-            this.metertab.Controls.Add(this.checkBox3);
             this.metertab.Controls.Add(this.Colors_groupBox);
             this.metertab.Controls.Add(this.AMP_Current_label5);
             this.metertab.Controls.Add(this.Amplifier_temperature_label58);
@@ -4903,8 +5041,52 @@ namespace OmniaGUI
             this.metertab.Padding = new System.Windows.Forms.Padding(3);
             this.metertab.Size = new System.Drawing.Size(792, 451);
             this.metertab.TabIndex = 7;
-            this.metertab.Text = "Audio / Misc";
+            this.metertab.Text = "Audio/Sys";
             this.metertab.Click += new System.EventHandler(this.metertab_Click);
+            // 
+            // Freq_Comp_label32
+            // 
+            this.Freq_Comp_label32.BackColor = System.Drawing.Color.Gainsboro;
+            this.Freq_Comp_label32.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.Freq_Comp_label32.Font = new System.Drawing.Font("Verdana", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Freq_Comp_label32.ForeColor = System.Drawing.Color.Black;
+            this.Freq_Comp_label32.Location = new System.Drawing.Point(320, 295);
+            this.Freq_Comp_label32.Name = "Freq_Comp_label32";
+            this.Freq_Comp_label32.Size = new System.Drawing.Size(162, 23);
+            this.Freq_Comp_label32.TabIndex = 183;
+            this.Freq_Comp_label32.Text = "Freq Comp:  0 Hz";
+            this.Freq_Comp_label32.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.Freq_Comp_label32.Click += new System.EventHandler(this.Freq_Comp_label32_Click);
+            // 
+            // groupBox4
+            // 
+            this.groupBox4.Controls.Add(this.Compression_Level_hScrollBar1);
+            this.groupBox4.Controls.Add(this.Volume_Attn_listBox1);
+            this.groupBox4.Controls.Add(this.Compression_button2);
+            this.groupBox4.Controls.Add(this.label1);
+            this.groupBox4.Controls.Add(this.Compression_label44);
+            this.groupBox4.Controls.Add(this.Mic_Gain_label2);
+            this.groupBox4.Controls.Add(this.Mic_Gain_Step_listBox1);
+            this.groupBox4.ForeColor = System.Drawing.Color.White;
+            this.groupBox4.Location = new System.Drawing.Point(190, 134);
+            this.groupBox4.Name = "groupBox4";
+            this.groupBox4.Size = new System.Drawing.Size(400, 118);
+            this.groupBox4.TabIndex = 182;
+            this.groupBox4.TabStop = false;
+            this.groupBox4.Text = "Audio";
+            // 
+            // Compression_Level_hScrollBar1
+            // 
+            this.Compression_Level_hScrollBar1.Cursor = System.Windows.Forms.Cursors.SizeWE;
+            this.Compression_Level_hScrollBar1.LargeChange = 5;
+            this.Compression_Level_hScrollBar1.Location = new System.Drawing.Point(13, 47);
+            this.Compression_Level_hScrollBar1.Maximum = 24;
+            this.Compression_Level_hScrollBar1.Name = "Compression_Level_hScrollBar1";
+            this.Compression_Level_hScrollBar1.Size = new System.Drawing.Size(120, 15);
+            this.Compression_Level_hScrollBar1.TabIndex = 161;
+            this.Compression_Level_hScrollBar1.TabStop = true;
+            this.toolTip.SetToolTip(this.Compression_Level_hScrollBar1, "Set the Compression Value");
+            this.Compression_Level_hScrollBar1.Scroll += new System.Windows.Forms.ScrollEventHandler(this.Compression_Level_hScrollBar1_Scroll);
             // 
             // Volume_Attn_listBox1
             // 
@@ -4920,11 +5102,25 @@ namespace OmniaGUI
             "3",
             "4",
             "5"});
-            this.Volume_Attn_listBox1.Location = new System.Drawing.Point(475, 37);
+            this.Volume_Attn_listBox1.Location = new System.Drawing.Point(304, 45);
             this.Volume_Attn_listBox1.Name = "Volume_Attn_listBox1";
             this.Volume_Attn_listBox1.Size = new System.Drawing.Size(42, 20);
             this.Volume_Attn_listBox1.TabIndex = 181;
             this.Volume_Attn_listBox1.SelectedIndexChanged += new System.EventHandler(this.Volume_Attn_listBox1_SelectedIndexChanged);
+            // 
+            // Compression_button2
+            // 
+            this.Compression_button2.BackColor = System.Drawing.Color.Gainsboro;
+            this.Compression_button2.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.Compression_button2.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Compression_button2.ForeColor = System.Drawing.Color.Black;
+            this.Compression_button2.Location = new System.Drawing.Point(13, 19);
+            this.Compression_button2.Name = "Compression_button2";
+            this.Compression_button2.Size = new System.Drawing.Size(120, 23);
+            this.Compression_button2.TabIndex = 160;
+            this.Compression_button2.Text = "Compression OFF";
+            this.Compression_button2.UseVisualStyleBackColor = false;
+            this.Compression_button2.Click += new System.EventHandler(this.Compression_button2_Click);
             // 
             // label1
             // 
@@ -4932,12 +5128,59 @@ namespace OmniaGUI
             this.label1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.label1.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.ForeColor = System.Drawing.Color.Black;
-            this.label1.Location = new System.Drawing.Point(436, 11);
+            this.label1.Location = new System.Drawing.Point(265, 19);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(120, 23);
             this.label1.TabIndex = 180;
             this.label1.Text = "VOLUME ATTN";
             this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // Compression_label44
+            // 
+            this.Compression_label44.BackColor = System.Drawing.Color.Gainsboro;
+            this.Compression_label44.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.Compression_label44.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Compression_label44.ForeColor = System.Drawing.Color.Black;
+            this.Compression_label44.Location = new System.Drawing.Point(50, 70);
+            this.Compression_label44.Name = "Compression_label44";
+            this.Compression_label44.Size = new System.Drawing.Size(47, 15);
+            this.Compression_label44.TabIndex = 162;
+            this.Compression_label44.Text = "0";
+            this.Compression_label44.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // Mic_Gain_label2
+            // 
+            this.Mic_Gain_label2.BackColor = System.Drawing.Color.Gainsboro;
+            this.Mic_Gain_label2.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.Mic_Gain_label2.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Mic_Gain_label2.ForeColor = System.Drawing.Color.Black;
+            this.Mic_Gain_label2.Location = new System.Drawing.Point(139, 19);
+            this.Mic_Gain_label2.Name = "Mic_Gain_label2";
+            this.Mic_Gain_label2.Size = new System.Drawing.Size(120, 23);
+            this.Mic_Gain_label2.TabIndex = 164;
+            this.Mic_Gain_label2.Text = "MIC PRE GAIN";
+            this.Mic_Gain_label2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.Mic_Gain_label2.Click += new System.EventHandler(this.Mic_Gain_label2_Click);
+            // 
+            // Mic_Gain_Step_listBox1
+            // 
+            this.Mic_Gain_Step_listBox1.BackColor = System.Drawing.Color.Gainsboro;
+            this.Mic_Gain_Step_listBox1.Font = new System.Drawing.Font("Verdana", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Mic_Gain_Step_listBox1.ForeColor = System.Drawing.Color.Black;
+            this.Mic_Gain_Step_listBox1.FormattingEnabled = true;
+            this.Mic_Gain_Step_listBox1.ItemHeight = 16;
+            this.Mic_Gain_Step_listBox1.Items.AddRange(new object[] {
+            "0",
+            "1",
+            "2",
+            "3",
+            "4",
+            "5"});
+            this.Mic_Gain_Step_listBox1.Location = new System.Drawing.Point(178, 45);
+            this.Mic_Gain_Step_listBox1.Name = "Mic_Gain_Step_listBox1";
+            this.Mic_Gain_Step_listBox1.Size = new System.Drawing.Size(42, 20);
+            this.Mic_Gain_Step_listBox1.TabIndex = 165;
+            this.Mic_Gain_Step_listBox1.SelectedIndexChanged += new System.EventHandler(this.Mic_Gain_Step_listBox1_SelectedIndexChanged);
             // 
             // Time_checkBox2
             // 
@@ -4962,9 +5205,9 @@ namespace OmniaGUI
             this.SMeter_groupBox4.Controls.Add(this.Peak_Hold_listBox1);
             this.SMeter_groupBox4.Controls.Add(this.Peak_hold_on_offlistBox1);
             this.SMeter_groupBox4.ForeColor = System.Drawing.Color.White;
-            this.SMeter_groupBox4.Location = new System.Drawing.Point(189, 134);
+            this.SMeter_groupBox4.Location = new System.Drawing.Point(609, 134);
             this.SMeter_groupBox4.Name = "SMeter_groupBox4";
-            this.SMeter_groupBox4.Size = new System.Drawing.Size(210, 118);
+            this.SMeter_groupBox4.Size = new System.Drawing.Size(175, 118);
             this.SMeter_groupBox4.TabIndex = 178;
             this.SMeter_groupBox4.TabStop = false;
             this.SMeter_groupBox4.Text = "Meter";
@@ -4983,7 +5226,7 @@ namespace OmniaGUI
             "YELLOW",
             "WHITE",
             "BLACK"});
-            this.Meter_Peak_Needle_Color.Location = new System.Drawing.Point(30, 83);
+            this.Meter_Peak_Needle_Color.Location = new System.Drawing.Point(50, 83);
             this.Meter_Peak_Needle_Color.Name = "Meter_Peak_Needle_Color";
             this.Meter_Peak_Needle_Color.Size = new System.Drawing.Size(75, 20);
             this.Meter_Peak_Needle_Color.TabIndex = 183;
@@ -5001,10 +5244,11 @@ namespace OmniaGUI
             "1",
             "2",
             "3"});
-            this.Peak_Needle_Delay_listBox1.Location = new System.Drawing.Point(126, 59);
+            this.Peak_Needle_Delay_listBox1.Location = new System.Drawing.Point(101, 57);
             this.Peak_Needle_Delay_listBox1.Name = "Peak_Needle_Delay_listBox1";
             this.Peak_Needle_Delay_listBox1.Size = new System.Drawing.Size(42, 20);
             this.Peak_Needle_Delay_listBox1.TabIndex = 182;
+            this.toolTip.SetToolTip(this.Peak_Needle_Delay_listBox1, "PEAK NEEDLE DECAY TIME");
             this.Peak_Needle_Delay_listBox1.SelectedIndexChanged += new System.EventHandler(this.Peak_Needle_Delay_listBox1_SelectedIndexChanged);
             // 
             // Peak_Needle_checkBox2
@@ -5013,11 +5257,12 @@ namespace OmniaGUI
             this.Peak_Needle_checkBox2.BackColor = System.Drawing.Color.Gainsboro;
             this.Peak_Needle_checkBox2.Font = new System.Drawing.Font("Verdana", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Peak_Needle_checkBox2.ForeColor = System.Drawing.Color.Black;
-            this.Peak_Needle_checkBox2.Location = new System.Drawing.Point(15, 59);
+            this.Peak_Needle_checkBox2.Location = new System.Drawing.Point(19, 57);
             this.Peak_Needle_checkBox2.Name = "Peak_Needle_checkBox2";
-            this.Peak_Needle_checkBox2.Size = new System.Drawing.Size(107, 20);
+            this.Peak_Needle_checkBox2.Size = new System.Drawing.Size(58, 20);
             this.Peak_Needle_checkBox2.TabIndex = 178;
-            this.Peak_Needle_checkBox2.Text = "Peak Needle";
+            this.Peak_Needle_checkBox2.Text = "Peak";
+            this.toolTip.SetToolTip(this.Peak_Needle_checkBox2, "DISPLAY PEAK NEEDLE");
             this.Peak_Needle_checkBox2.UseVisualStyleBackColor = false;
             this.Peak_Needle_checkBox2.CheckedChanged += new System.EventHandler(this.Peak_Needle_checkBox2_CheckedChanged);
             // 
@@ -5034,12 +5279,13 @@ namespace OmniaGUI
             "30",
             "50",
             "100"});
-            this.Peak_Hold_listBox1.Location = new System.Drawing.Point(15, 26);
+            this.Peak_Hold_listBox1.Location = new System.Drawing.Point(27, 26);
             this.Peak_Hold_listBox1.Name = "Peak_Hold_listBox1";
             this.Peak_Hold_listBox1.ScrollAlwaysVisible = true;
             this.Peak_Hold_listBox1.Size = new System.Drawing.Size(43, 20);
             this.Peak_Hold_listBox1.TabIndex = 176;
-            this.Smeter_toolTip.SetToolTip(this.Peak_Hold_listBox1, "Smoothing Decay Time");
+            this.toolTip.SetToolTip(this.Peak_Hold_listBox1, "SMOOTHING DECAY TIME");
+            this.Smeter_toolTip.SetToolTip(this.Peak_Hold_listBox1, "SMOOTHING DECAY TIME");
             this.Peak_Hold_listBox1.SelectedIndexChanged += new System.EventHandler(this.Peak_Hold_listBox1_SelectedIndexChanged_2);
             // 
             // Peak_hold_on_offlistBox1
@@ -5052,45 +5298,14 @@ namespace OmniaGUI
             this.Peak_hold_on_offlistBox1.Items.AddRange(new object[] {
             "OFF",
             "ON"});
-            this.Peak_hold_on_offlistBox1.Location = new System.Drawing.Point(64, 26);
+            this.Peak_hold_on_offlistBox1.Location = new System.Drawing.Point(97, 26);
             this.Peak_hold_on_offlistBox1.Name = "Peak_hold_on_offlistBox1";
             this.Peak_hold_on_offlistBox1.ScrollAlwaysVisible = true;
             this.Peak_hold_on_offlistBox1.Size = new System.Drawing.Size(50, 20);
             this.Peak_hold_on_offlistBox1.TabIndex = 177;
-            this.Smeter_toolTip.SetToolTip(this.Peak_hold_on_offlistBox1, "Smoothing");
+            this.toolTip.SetToolTip(this.Peak_hold_on_offlistBox1, "SMOOTHING");
+            this.Smeter_toolTip.SetToolTip(this.Peak_hold_on_offlistBox1, "SMOOTHING");
             this.Peak_hold_on_offlistBox1.SelectedIndexChanged += new System.EventHandler(this.Peak_hold_on_offlistBox1_SelectedIndexChanged_1);
-            // 
-            // mainlistBox1
-            // 
-            this.mainlistBox1.BackColor = System.Drawing.Color.Gainsboro;
-            this.mainlistBox1.Font = new System.Drawing.Font("Verdana", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.mainlistBox1.ForeColor = System.Drawing.Color.Black;
-            this.mainlistBox1.FormattingEnabled = true;
-            this.mainlistBox1.ItemHeight = 16;
-            this.mainlistBox1.Items.AddRange(new object[] {
-            "100K",
-            "10K",
-            "1K",
-            "100",
-            "10",
-            "1"});
-            this.mainlistBox1.Location = new System.Drawing.Point(567, 37);
-            this.mainlistBox1.Name = "mainlistBox1";
-            this.mainlistBox1.ScrollAlwaysVisible = true;
-            this.mainlistBox1.Size = new System.Drawing.Size(69, 20);
-            this.mainlistBox1.TabIndex = 174;
-            // 
-            // label32
-            // 
-            this.label32.BackColor = System.Drawing.Color.Gainsboro;
-            this.label32.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label32.ForeColor = System.Drawing.Color.Black;
-            this.label32.Location = new System.Drawing.Point(580, 12);
-            this.label32.Name = "label32";
-            this.label32.Size = new System.Drawing.Size(43, 21);
-            this.label32.TabIndex = 173;
-            this.label32.Text = "STEP";
-            this.label32.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // button5
             // 
@@ -5116,105 +5331,13 @@ namespace OmniaGUI
             this.RPi_Temperature_label1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.RPi_Temperature_label1.Font = new System.Drawing.Font("Verdana", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.RPi_Temperature_label1.ForeColor = System.Drawing.Color.Black;
-            this.RPi_Temperature_label1.Location = new System.Drawing.Point(212, 300);
+            this.RPi_Temperature_label1.Location = new System.Drawing.Point(220, 338);
             this.RPi_Temperature_label1.Name = "RPi_Temperature_label1";
             this.RPi_Temperature_label1.Size = new System.Drawing.Size(162, 23);
             this.RPi_Temperature_label1.TabIndex = 166;
             this.RPi_Temperature_label1.Text = "Processor: 0°C";
             this.RPi_Temperature_label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.RPi_Temperature_label1.Click += new System.EventHandler(this.RPi_Temperature_label1_Click);
-            // 
-            // Mic_Gain_Step_listBox1
-            // 
-            this.Mic_Gain_Step_listBox1.BackColor = System.Drawing.Color.Gainsboro;
-            this.Mic_Gain_Step_listBox1.Font = new System.Drawing.Font("Verdana", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Mic_Gain_Step_listBox1.ForeColor = System.Drawing.Color.Black;
-            this.Mic_Gain_Step_listBox1.FormattingEnabled = true;
-            this.Mic_Gain_Step_listBox1.ItemHeight = 16;
-            this.Mic_Gain_Step_listBox1.Items.AddRange(new object[] {
-            "0",
-            "1",
-            "2",
-            "3",
-            "4",
-            "5"});
-            this.Mic_Gain_Step_listBox1.Location = new System.Drawing.Point(330, 37);
-            this.Mic_Gain_Step_listBox1.Name = "Mic_Gain_Step_listBox1";
-            this.Mic_Gain_Step_listBox1.Size = new System.Drawing.Size(42, 20);
-            this.Mic_Gain_Step_listBox1.TabIndex = 165;
-            this.Mic_Gain_Step_listBox1.SelectedIndexChanged += new System.EventHandler(this.Mic_Gain_Step_listBox1_SelectedIndexChanged);
-            // 
-            // Mic_Gain_label2
-            // 
-            this.Mic_Gain_label2.BackColor = System.Drawing.Color.Gainsboro;
-            this.Mic_Gain_label2.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.Mic_Gain_label2.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Mic_Gain_label2.ForeColor = System.Drawing.Color.Black;
-            this.Mic_Gain_label2.Location = new System.Drawing.Point(291, 11);
-            this.Mic_Gain_label2.Name = "Mic_Gain_label2";
-            this.Mic_Gain_label2.Size = new System.Drawing.Size(120, 23);
-            this.Mic_Gain_label2.TabIndex = 164;
-            this.Mic_Gain_label2.Text = "MIC PRE GAIN";
-            this.Mic_Gain_label2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.Mic_Gain_label2.Click += new System.EventHandler(this.Mic_Gain_label2_Click);
-            // 
-            // Compression_label44
-            // 
-            this.Compression_label44.BackColor = System.Drawing.Color.Gainsboro;
-            this.Compression_label44.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.Compression_label44.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Compression_label44.ForeColor = System.Drawing.Color.Black;
-            this.Compression_label44.Location = new System.Drawing.Point(183, 62);
-            this.Compression_label44.Name = "Compression_label44";
-            this.Compression_label44.Size = new System.Drawing.Size(47, 15);
-            this.Compression_label44.TabIndex = 162;
-            this.Compression_label44.Text = "0";
-            this.Compression_label44.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // Compression_Level_hScrollBar1
-            // 
-            this.Compression_Level_hScrollBar1.Cursor = System.Windows.Forms.Cursors.SizeWE;
-            this.Compression_Level_hScrollBar1.LargeChange = 5;
-            this.Compression_Level_hScrollBar1.Location = new System.Drawing.Point(146, 39);
-            this.Compression_Level_hScrollBar1.Maximum = 24;
-            this.Compression_Level_hScrollBar1.Name = "Compression_Level_hScrollBar1";
-            this.Compression_Level_hScrollBar1.Size = new System.Drawing.Size(120, 15);
-            this.Compression_Level_hScrollBar1.TabIndex = 161;
-            this.Compression_Level_hScrollBar1.TabStop = true;
-            this.toolTip.SetToolTip(this.Compression_Level_hScrollBar1, "Set the Compression Value");
-            this.Compression_Level_hScrollBar1.Scroll += new System.Windows.Forms.ScrollEventHandler(this.Compression_Level_hScrollBar1_Scroll);
-            // 
-            // Compression_button2
-            // 
-            this.Compression_button2.BackColor = System.Drawing.Color.Gainsboro;
-            this.Compression_button2.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Compression_button2.ForeColor = System.Drawing.Color.Black;
-            this.Compression_button2.Location = new System.Drawing.Point(146, 11);
-            this.Compression_button2.Name = "Compression_button2";
-            this.Compression_button2.Size = new System.Drawing.Size(120, 23);
-            this.Compression_button2.TabIndex = 160;
-            this.Compression_button2.Text = "Compression OFF";
-            this.Compression_button2.UseVisualStyleBackColor = false;
-            this.Compression_button2.Click += new System.EventHandler(this.Compression_button2_Click);
-            // 
-            // checkBox3
-            // 
-            this.checkBox3.AutoSize = true;
-            this.checkBox3.BackColor = System.Drawing.Color.Gainsboro;
-            this.checkBox3.Enabled = false;
-            this.checkBox3.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.checkBox3.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.checkBox3.ForeColor = System.Drawing.Color.Black;
-            this.checkBox3.Location = new System.Drawing.Point(464, 237);
-            this.checkBox3.Name = "checkBox3";
-            this.checkBox3.Size = new System.Drawing.Size(93, 17);
-            this.checkBox3.TabIndex = 159;
-            this.checkBox3.Text = "Stop Server";
-            this.checkBox3.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.toolTip.SetToolTip(this.checkBox3, "Stop Servers when MSCC Stops.");
-            this.checkBox3.UseVisualStyleBackColor = false;
-            this.checkBox3.Visible = false;
-            this.checkBox3.CheckedChanged += new System.EventHandler(this.checkBox3_CheckedChanged);
             // 
             // Colors_groupBox
             // 
@@ -5290,7 +5413,7 @@ namespace OmniaGUI
             this.Boarder_Color_button4.Name = "Boarder_Color_button4";
             this.Boarder_Color_button4.Size = new System.Drawing.Size(108, 24);
             this.Boarder_Color_button4.TabIndex = 153;
-            this.Boarder_Color_button4.Text = "BOARDER";
+            this.Boarder_Color_button4.Text = "BORDER";
             this.Boarder_Color_button4.UseVisualStyleBackColor = false;
             this.Boarder_Color_button4.Click += new System.EventHandler(this.Boarder_Color_button4_Click);
             // 
@@ -5300,7 +5423,7 @@ namespace OmniaGUI
             this.AMP_Current_label5.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.AMP_Current_label5.Font = new System.Drawing.Font("Verdana", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.AMP_Current_label5.ForeColor = System.Drawing.Color.Black;
-            this.AMP_Current_label5.Location = new System.Drawing.Point(594, 300);
+            this.AMP_Current_label5.Location = new System.Drawing.Point(602, 338);
             this.AMP_Current_label5.Name = "AMP_Current_label5";
             this.AMP_Current_label5.Size = new System.Drawing.Size(162, 23);
             this.AMP_Current_label5.TabIndex = 145;
@@ -5314,7 +5437,7 @@ namespace OmniaGUI
             this.Amplifier_temperature_label58.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.Amplifier_temperature_label58.Font = new System.Drawing.Font("Verdana", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Amplifier_temperature_label58.ForeColor = System.Drawing.Color.Black;
-            this.Amplifier_temperature_label58.Location = new System.Drawing.Point(403, 300);
+            this.Amplifier_temperature_label58.Location = new System.Drawing.Point(411, 338);
             this.Amplifier_temperature_label58.Name = "Amplifier_temperature_label58";
             this.Amplifier_temperature_label58.Size = new System.Drawing.Size(162, 23);
             this.Amplifier_temperature_label58.TabIndex = 144;
@@ -5328,7 +5451,7 @@ namespace OmniaGUI
             this.Temperature_label57.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.Temperature_label57.Font = new System.Drawing.Font("Verdana", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Temperature_label57.ForeColor = System.Drawing.Color.Black;
-            this.Temperature_label57.Location = new System.Drawing.Point(21, 300);
+            this.Temperature_label57.Location = new System.Drawing.Point(29, 338);
             this.Temperature_label57.Name = "Temperature_label57";
             this.Temperature_label57.Size = new System.Drawing.Size(162, 23);
             this.Temperature_label57.TabIndex = 141;
@@ -5343,7 +5466,7 @@ namespace OmniaGUI
             this.Relay_Board_checkBox2.BackColor = System.Drawing.Color.Gainsboro;
             this.Relay_Board_checkBox2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Relay_Board_checkBox2.ForeColor = System.Drawing.Color.Black;
-            this.Relay_Board_checkBox2.Location = new System.Drawing.Point(328, 267);
+            this.Relay_Board_checkBox2.Location = new System.Drawing.Point(165, 32);
             this.Relay_Board_checkBox2.Name = "Relay_Board_checkBox2";
             this.Relay_Board_checkBox2.Size = new System.Drawing.Size(122, 20);
             this.Relay_Board_checkBox2.TabIndex = 131;
@@ -5357,7 +5480,7 @@ namespace OmniaGUI
             // 
             this.MSCC_Core_Version_label45.BackColor = System.Drawing.Color.Gainsboro;
             this.MSCC_Core_Version_label45.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.MSCC_Core_Version_label45.Location = new System.Drawing.Point(31, 379);
+            this.MSCC_Core_Version_label45.Location = new System.Drawing.Point(39, 417);
             this.MSCC_Core_Version_label45.Name = "MSCC_Core_Version_label45";
             this.MSCC_Core_Version_label45.Size = new System.Drawing.Size(123, 23);
             this.MSCC_Core_Version_label45.TabIndex = 126;
@@ -5369,7 +5492,7 @@ namespace OmniaGUI
             // 
             this.MSCC_Display_label44.BackColor = System.Drawing.Color.Gainsboro;
             this.MSCC_Display_label44.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.MSCC_Display_label44.Location = new System.Drawing.Point(40, 343);
+            this.MSCC_Display_label44.Location = new System.Drawing.Point(48, 381);
             this.MSCC_Display_label44.Name = "MSCC_Display_label44";
             this.MSCC_Display_label44.Size = new System.Drawing.Size(105, 23);
             this.MSCC_Display_label44.TabIndex = 125;
@@ -5387,7 +5510,7 @@ namespace OmniaGUI
             "PPT",
             "COR",
             "QRP"});
-            this.HR50_PPT_listBox1.Location = new System.Drawing.Point(683, 232);
+            this.HR50_PPT_listBox1.Location = new System.Drawing.Point(476, 60);
             this.HR50_PPT_listBox1.Name = "HR50_PPT_listBox1";
             this.HR50_PPT_listBox1.ScrollAlwaysVisible = true;
             this.HR50_PPT_listBox1.Size = new System.Drawing.Size(84, 20);
@@ -5404,7 +5527,7 @@ namespace OmniaGUI
             this.HR50_checkBox2.Enabled = false;
             this.HR50_checkBox2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.HR50_checkBox2.ForeColor = System.Drawing.Color.Black;
-            this.HR50_checkBox2.Location = new System.Drawing.Point(680, 261);
+            this.HR50_checkBox2.Location = new System.Drawing.Point(276, 77);
             this.HR50_checkBox2.Name = "HR50_checkBox2";
             this.HR50_checkBox2.Size = new System.Drawing.Size(91, 20);
             this.HR50_checkBox2.TabIndex = 123;
@@ -5420,7 +5543,7 @@ namespace OmniaGUI
             this.label16.BackColor = System.Drawing.Color.Gainsboro;
             this.label16.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.label16.Enabled = false;
-            this.label16.Location = new System.Drawing.Point(604, 198);
+            this.label16.Location = new System.Drawing.Point(595, 98);
             this.label16.Name = "label16";
             this.label16.Size = new System.Drawing.Size(136, 23);
             this.label16.TabIndex = 122;
@@ -5442,7 +5565,7 @@ namespace OmniaGUI
             "COM2",
             "COM3",
             "COM4"});
-            this.HR50_listBox1.Location = new System.Drawing.Point(579, 233);
+            this.HR50_listBox1.Location = new System.Drawing.Point(466, 35);
             this.HR50_listBox1.Name = "HR50_listBox1";
             this.HR50_listBox1.Size = new System.Drawing.Size(94, 19);
             this.HR50_listBox1.TabIndex = 121;
@@ -5457,7 +5580,7 @@ namespace OmniaGUI
             this.button2.Enabled = false;
             this.button2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.button2.ForeColor = System.Drawing.Color.Black;
-            this.button2.Location = new System.Drawing.Point(576, 260);
+            this.button2.Location = new System.Drawing.Point(429, 99);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(94, 22);
             this.button2.TabIndex = 83;
@@ -5486,7 +5609,7 @@ namespace OmniaGUI
             this.Restore_button2.BackColor = System.Drawing.Color.Gainsboro;
             this.Restore_button2.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Restore_button2.ForeColor = System.Drawing.Color.Black;
-            this.Restore_button2.Location = new System.Drawing.Point(462, 206);
+            this.Restore_button2.Location = new System.Drawing.Point(364, 46);
             this.Restore_button2.Name = "Restore_button2";
             this.Restore_button2.Size = new System.Drawing.Size(87, 25);
             this.Restore_button2.TabIndex = 81;
@@ -5500,7 +5623,7 @@ namespace OmniaGUI
             // 
             this.SDRcore_Trans_Version.BackColor = System.Drawing.Color.Gainsboro;
             this.SDRcore_Trans_Version.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.SDRcore_Trans_Version.Location = new System.Drawing.Point(478, 379);
+            this.SDRcore_Trans_Version.Location = new System.Drawing.Point(486, 417);
             this.SDRcore_Trans_Version.Name = "SDRcore_Trans_Version";
             this.SDRcore_Trans_Version.Size = new System.Drawing.Size(123, 23);
             this.SDRcore_Trans_Version.TabIndex = 79;
@@ -5512,7 +5635,7 @@ namespace OmniaGUI
             // 
             this.SDRcore_Recv_Version_label16.BackColor = System.Drawing.Color.Gainsboro;
             this.SDRcore_Recv_Version_label16.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.SDRcore_Recv_Version_label16.Location = new System.Drawing.Point(329, 379);
+            this.SDRcore_Recv_Version_label16.Location = new System.Drawing.Point(337, 417);
             this.SDRcore_Recv_Version_label16.Name = "SDRcore_Recv_Version_label16";
             this.SDRcore_Recv_Version_label16.Size = new System.Drawing.Size(123, 23);
             this.SDRcore_Recv_Version_label16.TabIndex = 78;
@@ -5524,7 +5647,7 @@ namespace OmniaGUI
             // 
             this.MS_SDR_Version_label16.BackColor = System.Drawing.Color.Gainsboro;
             this.MS_SDR_Version_label16.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.MS_SDR_Version_label16.Location = new System.Drawing.Point(180, 379);
+            this.MS_SDR_Version_label16.Location = new System.Drawing.Point(188, 417);
             this.MS_SDR_Version_label16.Name = "MS_SDR_Version_label16";
             this.MS_SDR_Version_label16.Size = new System.Drawing.Size(123, 23);
             this.MS_SDR_Version_label16.TabIndex = 77;
@@ -5536,7 +5659,7 @@ namespace OmniaGUI
             // 
             this.label15.BackColor = System.Drawing.Color.Gainsboro;
             this.label15.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.label15.Location = new System.Drawing.Point(487, 343);
+            this.label15.Location = new System.Drawing.Point(495, 381);
             this.label15.Name = "label15";
             this.label15.Size = new System.Drawing.Size(105, 23);
             this.label15.TabIndex = 76;
@@ -5547,7 +5670,7 @@ namespace OmniaGUI
             // 
             this.label12.BackColor = System.Drawing.Color.Gainsboro;
             this.label12.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.label12.Location = new System.Drawing.Point(338, 343);
+            this.label12.Location = new System.Drawing.Point(346, 381);
             this.label12.Name = "label12";
             this.label12.Size = new System.Drawing.Size(105, 23);
             this.label12.TabIndex = 75;
@@ -5558,7 +5681,7 @@ namespace OmniaGUI
             // 
             this.label11.BackColor = System.Drawing.Color.Gainsboro;
             this.label11.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.label11.Location = new System.Drawing.Point(189, 343);
+            this.label11.Location = new System.Drawing.Point(197, 381);
             this.label11.Name = "label11";
             this.label11.Size = new System.Drawing.Size(105, 23);
             this.label11.TabIndex = 74;
@@ -5569,7 +5692,7 @@ namespace OmniaGUI
             // 
             this.label6.BackColor = System.Drawing.Color.Gainsboro;
             this.label6.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.label6.Location = new System.Drawing.Point(636, 343);
+            this.label6.Location = new System.Drawing.Point(644, 381);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(105, 23);
             this.label6.TabIndex = 73;
@@ -5580,7 +5703,7 @@ namespace OmniaGUI
             // 
             this.firmwarelabel16.BackColor = System.Drawing.Color.Gainsboro;
             this.firmwarelabel16.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.firmwarelabel16.Location = new System.Drawing.Point(627, 379);
+            this.firmwarelabel16.Location = new System.Drawing.Point(635, 417);
             this.firmwarelabel16.Name = "firmwarelabel16";
             this.firmwarelabel16.Size = new System.Drawing.Size(123, 23);
             this.firmwarelabel16.TabIndex = 71;
@@ -5678,40 +5801,9 @@ namespace OmniaGUI
             // 
             this.Waterfall_timer.Tick += new System.EventHandler(this.Waterfall_timer_Tick);
             // 
-            // AMP_comboBox1
+            // RPi_Display_Timer
             // 
-            this.AMP_comboBox1.BackColor = System.Drawing.Color.Gainsboro;
-            this.AMP_comboBox1.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.AMP_comboBox1.ForeColor = System.Drawing.Color.Black;
-            this.AMP_comboBox1.FormattingEnabled = true;
-            this.AMP_comboBox1.Items.AddRange(new object[] {
-            "160M",
-            "80M",
-            "60M",
-            "40M",
-            "30M",
-            "20M",
-            "17M",
-            "15M",
-            "12M",
-            "10M"});
-            this.AMP_comboBox1.Location = new System.Drawing.Point(659, 251);
-            this.AMP_comboBox1.Name = "AMP_comboBox1";
-            this.AMP_comboBox1.Size = new System.Drawing.Size(61, 21);
-            this.AMP_comboBox1.TabIndex = 193;
-            this.AMP_comboBox1.SelectedIndexChanged += new System.EventHandler(this.AMP_comboBox1_SelectedIndexChanged);
-            // 
-            // label33
-            // 
-            this.label33.AutoSize = true;
-            this.label33.Font = new System.Drawing.Font("Verdana", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label33.ForeColor = System.Drawing.Color.White;
-            this.label33.Location = new System.Drawing.Point(636, 216);
-            this.label33.Name = "label33";
-            this.label33.Size = new System.Drawing.Size(106, 32);
-            this.label33.TabIndex = 194;
-            this.label33.Text = "CALIBRATION\r\nBAND";
-            this.label33.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.RPi_Display_Timer.Tick += new System.EventHandler(this.RPi_Display_Timer_Tick);
             // 
             // Main_form
             // 
@@ -5766,6 +5858,7 @@ namespace OmniaGUI
             this.IQBD_groupBox4.ResumeLayout(false);
             this.metertab.ResumeLayout(false);
             this.metertab.PerformLayout();
+            this.groupBox4.ResumeLayout(false);
             this.SMeter_groupBox4.ResumeLayout(false);
             this.SMeter_groupBox4.PerformLayout();
             this.Colors_groupBox.ResumeLayout(false);
@@ -5894,8 +5987,6 @@ namespace OmniaGUI
         private Button IQ_Reset_All_button2;
         private GroupBox Freq_Cal_groupBox4;
         private GroupBox IQ_groupBox3;
-        private TextBox Microphone_textBox2;
-        private TextBox Volume_textBox2;
         private ProgressBar Calibration_progressBar1;
         private ListBox Standard_Carrier_listBox1;
         private ListView B160_Favs_listView1;
@@ -6017,7 +6108,6 @@ namespace OmniaGUI
         private GroupBox Colors_groupBox;
         private Button Compression_button4;
         private Button ACG_button;
-        private CheckBox checkBox3;
         private Label Reverse_Power_label43;
         private Label Forward_Power_label43;
         private Label SWR_Value_label43;
@@ -6071,8 +6161,6 @@ namespace OmniaGUI
         private FontDialog fontDialog1;
         private Button button4;
         private Button button5;
-        private ListBox mainlistBox1;
-        private Label label32;
         private System.Windows.Forms.Timer Window_Refresh_timer;
         private ToolTip Smeter_toolTip;
         private Label Power_Value_label2;
@@ -6123,6 +6211,18 @@ namespace OmniaGUI
         private Label XCRV_Power_Display_label33;
         private ComboBox AMP_comboBox1;
         private Label label33;
+        private GroupBox groupBox4;
+        private Label MFC_A_label38;
+        private Label MFC_B_label38;
+        private Label MFC_Knob_label38;
+        private Label MFC_C_label38;
+        private System.Windows.Forms.Timer RPi_Display_Timer;
+        private ListBox mainlistBox1;
+        private Label Volume_textBox2;
+        private Label Microphone_textBox2;
+        private Label Freq_Comp_label32;
+        private HScrollBar Side_Tone_Volume_hScrollBar1;
+        private Label Side_Tone_label32;
         //private Label Freq_CAl_Progress_Label;
     }
 }

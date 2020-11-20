@@ -146,8 +146,8 @@
             // 
             this.Panadapter_Base_line_hScrollBar1.Cursor = System.Windows.Forms.Cursors.SizeWE;
             this.Panadapter_Base_line_hScrollBar1.Location = new System.Drawing.Point(250, 78);
+            this.Panadapter_Base_line_hScrollBar1.Maximum = 800;
             this.Panadapter_Base_line_hScrollBar1.MaximumSize = new System.Drawing.Size(150, 17);
-            this.Panadapter_Base_line_hScrollBar1.Minimum = -200;
             this.Panadapter_Base_line_hScrollBar1.Name = "Panadapter_Base_line_hScrollBar1";
             this.Panadapter_Base_line_hScrollBar1.Size = new System.Drawing.Size(150, 15);
             this.Panadapter_Base_line_hScrollBar1.SmallChange = 5;

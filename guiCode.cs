@@ -19,7 +19,7 @@ using OmniaGUI;
 public static class Master_Controls
 {
     public static int previous_second = 0;
-    public static bool Start_Up = true;
+    public static bool Shutdown = false;
     public static int Main_frequency = 0;
     public static int Main_volume = 0;
     public static int Previous_Main_frequency = 0;
@@ -85,6 +85,7 @@ public static class Master_Controls
         public const byte CMD_SET_FORWARD_POWER = 0x0B;
         public const byte CMD_SET_REVERSE_POWER = 0x0C;
         public const byte CMD_SET_SWR = 0x0D;
+        public const byte CMD_SET_SOLIDUS_STATUS = 0x0E;
 
         //Docking Commands
         public const byte CMD_SET_DOCKED = 0x10;
@@ -105,6 +106,11 @@ public static class Master_Controls
         public const byte CMD_MFC_SET_CW_BW = 0x1B;
         public const byte CMD_MFC_SET_HI_BW = 0x1C;
         public const byte CMD_MFC_SET_RIT = 0x1D;
+        public const byte CMD_SET_GUI_STAR = 0x1E;
+        public const byte Knob_switch_star = 0x10;
+        public const byte Button_left_switch_star = 0x20;
+        public const byte Button_middle_switch_star = 0x30;
+        public const byte Button_right_switch_star = 0x40;
 
         public const byte CMD_SET_KNOB_SWITCH = 0x20;
         public const byte CMD_SET_LEFT_SWITCH = 0x21;
@@ -125,7 +131,6 @@ public static class Master_Controls
     public static bool Debug_Display = false;
     public static bool Two_Tone = false;
     public static bool QRP_Mode = true;
-    public static bool Mia_Status = false;
     public static bool QRP_Startup_Mode_Status = false;
     public static bool Transceiver_Warming = true;
     //public static bool Band_Change_Tune = false;
@@ -163,6 +168,13 @@ public static class Master_Controls
     public static TabPage Current_tab;
 }
 
+public static class Solidus_Controls
+{
+    public static bool Solidus_Status = false;
+    public static bool Solidus_Status_Set = false;
+    public static bool Mia_Status = false;
+    public static bool Mia_Status_Set = false;
+}
 public static class RPi_Settings
 {
     
@@ -174,6 +186,7 @@ public static class RPi_Settings
     public static bool RPi_Needs_Updated = false;
     public static class Volume_Settings{
         public static int Volume_ATTN_Index = 0;
+        public static int Previous_Speaker_Volume = 0;
         public static int Speaker_Volume = 0;
         public static int Speaker_Mute = 0;
         public static int Mic_Volume = 0;
@@ -181,8 +194,13 @@ public static class RPi_Settings
         public static int Mic_Pre_Gain = 0;
         public static int Mic_Mode = 0;
     }
-
+    public static class Controls
+    {
+        public static int Previous_Freq_Step = 0;
+        public static int Freq_Step = 0;
+    }
 }
+
 public static class Freq_Digits
 {
     public static Int32 meg10 = 0;
@@ -236,7 +254,6 @@ public static class Tuning_Knob_Controls
     public const byte CMD_SET_STAR = 0xCD;
     public const byte CMD_SET_STEP_VALUE = 0xCE;
 
-
     public static byte Knob_switch_function = 0;
     public static byte Knob_switch = 0x80;
 
@@ -251,7 +268,13 @@ public static class Tuning_Knob_Controls
 
     public static byte PTT_switch_function = 0;
     public const byte PTT_switch = 0x01;
-
+    public static class Button_Text
+    {
+        public static string Button_left_text;
+        public static string Button_middle_text;
+        public static string Button_right_text;
+        public static string Knob_text;
+    }
     public static class Freq_Queue
     {
         public const int MAX_COMMAND_QUEUE = 1000;
@@ -267,7 +290,6 @@ public static class Tuning_Knob_Controls
         public static int E_queue_count = 0;
         public static bool E_queue_busy = false;
     }
-
     public static class Star_Position
     {
         public static byte Knob = 0;
@@ -275,7 +297,6 @@ public static class Tuning_Knob_Controls
         public static byte Middle = 0;
         public static byte Right = 0;
     }
-
     public static class Button_Function_List
     {
         public const byte NONE = 0;
@@ -293,14 +314,12 @@ public static class Tuning_Knob_Controls
         public const byte PTT_REAR_CONNECTOR = 12;
         //public const byte VOLUME = 12;
     }
-
     public static class Active_Functions
     {
         public static bool Freq_Active = false;
         public static bool RIT_Offset_Active = false;
         public static bool Volume_Active = false;
     }
-
     public static class RIT_OFFSET_Function
     {
         public static bool Switch_Toggle = false;
@@ -313,7 +332,6 @@ public static class Tuning_Knob_Controls
         public static int RIT_Min_Offset_Value = 0;
         public static int RIT_Step = 0;
     }
-
     public static class Freq_Function
     {
         public static bool Switch_Toggle = false;
@@ -342,7 +360,6 @@ public static class Tuning_Knob_Controls
         public static bool Switch_Toggle = false;
         public static int HI_CUT_index = 0;
     }
-
     public static class Band_Function
     {
         public static bool Switch_Toggle = false;
@@ -1261,6 +1278,24 @@ public static class Last_used
     }
 }
 
+public static class CW_Parameters
+{
+    public static short CW_Firmware_Option;
+    public static short CW_Restore_Defaults;
+    public static short CW_Iambic_Mode_On_Off;
+    public static short CW_Iambic_Type;
+    public static short CW_Iambic_Calibrate;
+    public static short CW_Memory;
+    public static short CW_Spacing;
+    public static short CW_Paddle;
+    public static short CW_Weight;
+    public static short CW_Tx_Hold;
+    public static short CW_Speed;
+    public static short CW_Semi_Break_In;
+    public static short CW_Semi_Control;
+    public static short CW_Side_Tone_Volume;
+}
+
 public static class oCode
 {
     public static int oldTxHold = 0;
@@ -1302,18 +1337,18 @@ public static class oCode
     //public static bool version_first = false;
 
     //CW 
-    public static byte SET_CW_MODE = 0x70;
-    public static byte SET_IAMBIC_MODE = 0x71;
-    public static byte SET_RIT = 0x72;
-    public static byte SET_CW_PADDLE = 0x73;
-    public static byte SET_IAMBIC_TYPE = 0x74;
-    public static byte SET_SPACING = 0x75;
-    public static byte SET_MEMORY_TYPE = 0x76;
-    public static byte SET_WEIGHT = 0x77;
-    public static byte SET_TX_HOLD = 0x7A;
-    public static byte SET_WPM = 0x7B;
-    public static byte SET_SIDE_TONE = 0x7F;
-    public static byte SET_SEMI_BREAKIN = 0x78;
+    public const byte SET_CW_MODE = 0x70;
+    public const byte SET_IAMBIC_MODE = 0x71;
+    public const byte SET_LAG = 0x72;
+    public const byte SET_CW_PADDLE = 0x73;
+    public const byte SET_IAMBIC_TYPE = 0x74;
+    public const byte SET_SPACING = 0x75;
+    public const byte SET_MEMORY_TYPE = 0x76;
+    public const byte SET_WEIGHT = 0x77;
+    public const byte SET_TX_HOLD = 0x7A;
+    public const byte SET_WPM = 0x7B;
+    public const byte SET_SEMI_BREAKIN = 0x78;
+    public const byte SET_SIDE_TONE_VOLUME = 0x7F;
 
 
     // 0xA4 NOT AVAILABLE Reserved for CMD_GET_KEY_DOWN 0xA4
@@ -1370,7 +1405,7 @@ public static class oCode
 
     public struct iniStates
     {
-        public static short CW_Firmware_Option;
+        /*public static short CW_Firmware_Option;
         public static short CW_Restore_Defaults;
         public static short CW_Iambic_Mode_On_Off;
         public static short CW_Iambic_Type;
@@ -1383,7 +1418,8 @@ public static class oCode
         public static short CW_Speed;
         public static short CW_Semi_Break_In;
         public static short CW_Semi_Control;
-        public static short CW_Side_Tone;
+        public static short CW_Side_Tone_Volume;
+        */
         public static int DLL_PORT;
         public static int GUI_PORT;
         public static string DLL_IP;
@@ -1493,9 +1529,9 @@ public static class oCode
         path = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
         // add our folder and file name
 #if RPI
-                path += "/mscc/mscc-rpi.ini";
+        path += "/mscc/mscc-rpi.ini";
 #else
-                path += "\\multus-sdr-client\\Multus_mscc.ini";
+        path += "\\multus-sdr-client\\Multus_mscc.ini";
 #endif
         guiCode_Write_Debug_Message(" getIiniStates -> ini file: " + path);
 
@@ -1528,24 +1564,85 @@ public static class oCode
         // The parms are stored in a public static struct, which can be reached by the form-level GUI code.
         while ((line = file.ReadLine()) != null)
         {
-            if (line.Contains("CW_Firmware_Option")) iniStates.CW_Firmware_Option = getIntFromIniString(line);
-            if (line.Contains("CW_Restore_Defaults")) iniStates.CW_Restore_Defaults = getIntFromIniString(line);
-            if (line.Contains("CW_Iambic_Mode_On_Off")) iniStates.CW_Iambic_Mode_On_Off = getIntFromIniString(line);
-            if (line.Contains("CW_Iambic_Type")) iniStates.CW_Iambic_Type = getIntFromIniString(line);
-            if (line.Contains("CW_Iambic_Calibrate")) iniStates.CW_Iambic_Calibrate = getIntFromIniString(line);
-            if (line.Contains("CW_Memory")) iniStates.CW_Memory = getIntFromIniString(line);
-            if (line.Contains("CW_Spacing")) iniStates.CW_Spacing = getIntFromIniString(line);
-            if (line.Contains("CW_Paddle")) iniStates.CW_Paddle = getIntFromIniString(line);
-            if (line.Contains("CW_Weight")) iniStates.CW_Weight = getIntFromIniString(line);
-            if (line.Contains("CW_Tx_Hold")) iniStates.CW_Tx_Hold = getIntFromIniString(line);
-            if (line.Contains("CW_Speed")) iniStates.CW_Speed = getIntFromIniString(line);
-            if (line.Contains("CW_Semi_Break_In")) iniStates.CW_Semi_Break_In = getIntFromIniString(line);
-            if (line.Contains("CW_Semi_Control")) iniStates.CW_Semi_Control = getIntFromIniString(line);
-            if (line.Contains("CW_Side_Tone")) iniStates.CW_Side_Tone = getIntFromIniString(line);
+#if !RPI
+            if (line.Contains("CW_Firmware_Option")) CW_Parameters.CW_Firmware_Option = getIntFromIniString(line);
+            if (line.Contains("CW_Restore_Defaults")) CW_Parameters.CW_Restore_Defaults = getIntFromIniString(line);
+            if (line.Contains("CW_Iambic_Mode_On_Off")) CW_Parameters.CW_Iambic_Mode_On_Off = getIntFromIniString(line);
+            if (line.Contains("CW_Iambic_Type")) CW_Parameters.CW_Iambic_Type = getIntFromIniString(line);
+            if (line.Contains("CW_Iambic_Calibrate")) CW_Parameters.CW_Iambic_Calibrate = getIntFromIniString(line);
+            if (line.Contains("CW_Memory")) CW_Parameters.CW_Memory = getIntFromIniString(line);
+            if (line.Contains("CW_Spacing")) CW_Parameters.CW_Spacing = getIntFromIniString(line);
+            if (line.Contains("CW_Paddle")) CW_Parameters.CW_Paddle = getIntFromIniString(line);
+            if (line.Contains("CW_Weight")) CW_Parameters.CW_Weight = getIntFromIniString(line);
+            if (line.Contains("CW_Tx_Hold")) CW_Parameters.CW_Tx_Hold = getIntFromIniString(line);
+            if (line.Contains("CW_Speed")) CW_Parameters.CW_Speed = getIntFromIniString(line);
+            if (line.Contains("CW_Semi_Break_In")) CW_Parameters.CW_Semi_Break_In = getIntFromIniString(line);
+            if (line.Contains("CW_Semi_Control")) CW_Parameters.CW_Semi_Control = getIntFromIniString(line);
+            if (line.Contains("CW_Side_Tone_Volume")) CW_Parameters.CW_Side_Tone_Volume = getIntFromIniString(line);
+#endif
             if (line.Contains("MSCC_PORT")) iniStates.GUI_PORT = getIntFromIni32String(line);
             if (line.Contains("PROFICIO_DLL_PORT")) iniStates.DLL_PORT = getIntFromIni32String(line);
             if (line.Contains("MSCC_IP")) iniStates.GUI_IP = getStringFromIniString(line);
             if (line.Contains("PROFICIO_DLL_IP")) iniStates.DLL_IP = getStringFromIniString(line);
+        }
+
+        file.Close();
+        return true;
+
+    }
+
+    public static bool Get_CW_Params()
+    {
+        String path, line;
+        System.IO.StreamReader file;
+        //int p;
+
+        // get path to local Appdata folder
+        path = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
+        // add our folder and file name
+
+        path += "/mscc/Multus_mscc.ini";
+        guiCode_Write_Debug_Message(" Get_CW_Params -> ini file: " + path);
+
+        // try to open the file
+        try
+        {
+            //file = new System.IO.StreamReader(path);
+            file = new System.IO.StreamReader(File.OpenRead(path));
+        }
+
+        // if the file open fails, whine prettily and return false
+        catch (IOException e)
+        {
+            string er = e.Message;
+            MessageBox.Show("IO Exception opening Multus_mscc.ini file." + er +
+                " Have you run the INI creation utility?", "MSCC", MessageBoxButtons.OK,MessageBoxIcon.Exclamation);
+            return false;
+        }
+        if (!System.IO.File.Exists(path))
+        {
+            MessageBox.Show("IO Exception opening Multus_mscc.ini file. \r\n Have you run the INI creation utility?",
+                "MSCC", MessageBoxButtons.OK,MessageBoxIcon.Exclamation);
+            return false;
+        }
+        // Parse the INI file. Doing it this way eliminates the requirement that the parameters be stored in any particular order.
+        // The parms are stored in a public static struct, which can be reached by the form-level GUI code.
+        while ((line = file.ReadLine()) != null)
+        {
+            if (line.Contains("CW_Firmware_Option")) CW_Parameters.CW_Firmware_Option = getIntFromIniString(line);
+            if (line.Contains("CW_Restore_Defaults")) CW_Parameters.CW_Restore_Defaults = getIntFromIniString(line);
+            if (line.Contains("CW_Iambic_Mode_On_Off")) CW_Parameters.CW_Iambic_Mode_On_Off = getIntFromIniString(line);
+            if (line.Contains("CW_Iambic_Type")) CW_Parameters.CW_Iambic_Type = getIntFromIniString(line);
+            if (line.Contains("CW_Iambic_Calibrate")) CW_Parameters.CW_Iambic_Calibrate = getIntFromIniString(line);
+            if (line.Contains("CW_Memory")) CW_Parameters.CW_Memory = getIntFromIniString(line);
+            if (line.Contains("CW_Spacing")) CW_Parameters.CW_Spacing = getIntFromIniString(line);
+            if (line.Contains("CW_Paddle")) CW_Parameters.CW_Paddle = getIntFromIniString(line);
+            if (line.Contains("CW_Weight")) CW_Parameters.CW_Weight = getIntFromIniString(line);
+            if (line.Contains("CW_Tx_Hold")) CW_Parameters.CW_Tx_Hold = getIntFromIniString(line);
+            if (line.Contains("CW_Speed")) CW_Parameters.CW_Speed = getIntFromIniString(line);
+            if (line.Contains("CW_Semi_Break_In")) CW_Parameters.CW_Semi_Break_In = getIntFromIniString(line);
+            if (line.Contains("CW_Semi_Control")) CW_Parameters.CW_Semi_Control = getIntFromIniString(line);
+            if (line.Contains("CW_Side_Tone_Volume")) CW_Parameters.CW_Side_Tone_Volume = getIntFromIniString(line);
         }
 
         file.Close();
@@ -1612,14 +1709,12 @@ public static class oCode
             Ms_sdr_path = (path + "/ms-sdr");
             Sdr_core_recv_path = (path + "/sdrcore-recv");
             SDR_core_trans_path = (path + "/sdrcore-trans");
-
 #else
-
             Ms_sdr_path = (path + "\\ms-sdr.exe");
             Sdr_core_recv_path = (path + "\\sdrcore-recv.exe");
             SDR_core_trans_path = (path + "\\sdrcore-trans.exe");
 #endif
-            
+
 
             SDRprocesses.sdrcore_trans = new Process();
             try

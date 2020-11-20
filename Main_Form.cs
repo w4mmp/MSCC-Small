@@ -119,10 +119,10 @@ namespace OmniaGUI
             this.BackColor = Color.Gainsboro;
             this.DoubleBuffered = true;
 
-#if RPI
+#if RPI 
             Full_size = this.Size;
             Main_tab_size = this.Size;
-            Main_tab_size.Height = 224;
+            Main_tab_size.Height = 254;
 #endif
 
             /*String Log_directory = Log_Path += "\\multus-sdr-client-logs";
@@ -658,15 +658,12 @@ namespace OmniaGUI
                 case 1:
                     ritScroll.LargeChange = 20;
                     break;
-
                 case 2:
                     ritScroll.LargeChange = 30;
                     break;
-
                 case 3:
                     ritScroll.LargeChange = 40;
                     break;
-
                 case 4:
                     ritScroll.LargeChange = 50;
                     break;
@@ -796,6 +793,46 @@ namespace OmniaGUI
             Decimal_label59.ForeColor = Settings.Default.Freq_Color;
         }
 
+        public void Set_Button_Color(bool active,Button mybutton)
+        {
+            switch (active)
+            {
+                case true:
+                    mybutton.ForeColor = Color.White;
+                    mybutton.BackColor = Color.Red;
+                    break;
+                default:
+                    mybutton.ForeColor = Color.Black;
+                    mybutton.BackColor = Color.Gainsboro;
+                    break;
+            }
+        }
+
+        private void RPi_Display_Timer_Tick(object sender, EventArgs e)
+        {
+#if RPI
+            Manage_RPI_Controls();
+#endif
+        }
+
+        public void Manage_RPI_Controls()
+        {
+            if (RPi_Settings.Volume_Settings.Previous_Speaker_Volume != RPi_Settings.Volume_Settings.Speaker_Volume)
+            {
+                Volume_hScrollBar1.Value = RPi_Settings.Volume_Settings.Speaker_Volume;
+                RPi_Settings.Volume_Settings.Previous_Speaker_Volume = RPi_Settings.Volume_Settings.Speaker_Volume;
+                Volume_textBox2.Text = Convert.ToString(RPi_Settings.Volume_Settings.Speaker_Volume);
+                /*if (RPi_Settings.Volume_Settings.Speaker_Mute == 1)
+                {
+                    Volume_Mute_button2_Click(null, null);
+                }*/
+            }
+            if(RPi_Settings.Controls.Previous_Freq_Step != RPi_Settings.Controls.Freq_Step)
+            {
+                mainlistBox1.SelectedIndex = RPi_Settings.Controls.Freq_Step;
+            }
+        }
+
         public bool Update_RPi_Settings()
         {
             String path;
@@ -859,6 +896,46 @@ namespace OmniaGUI
                 file.Close();
                 RPi_Settings.RPi_Needs_Updated = false;
             }
+            return true;
+        }
+
+        public bool Init_CW_Settings()
+        {
+#if RPI 
+            oCode.Get_CW_Params();
+#endif
+            CW_Hold_numericUpDown2.Value = CW_Parameters.CW_Tx_Hold;
+            CW_Mode_listBox1.SelectedIndex = CW_Parameters.CW_Iambic_Mode_On_Off;
+            CW_Type_listBox1.SelectedIndex = CW_Parameters.CW_Iambic_Type;
+            CW_Space_listBox1.SelectedIndex = CW_Parameters.CW_Spacing;
+            switch (CW_Parameters.CW_Weight)
+            {
+                case 25:
+                    CW_Weight_listBox1.SelectedIndex = 0;
+                    break;
+                case 50:
+                    CW_Weight_listBox1.SelectedIndex = 1;
+                    break;
+                case 75:
+                    CW_Weight_listBox1.SelectedIndex = 2;
+                    break;
+            }
+            CW_Paddle_listBox1.SelectedIndex = CW_Parameters.CW_Paddle;
+            MonitorTextBoxText(" CW_Side_Tone_Volume: " + Convert.ToString(CW_Parameters.CW_Side_Tone_Volume));
+            Side_Tone_Volume_hScrollBar1.Value = CW_Parameters.CW_Side_Tone_Volume;
+            numericUpDown1.Value = CW_Parameters.CW_Speed;
+            semicheckBox2.CheckedChanged -= semicheckBox2_CheckedChanged;
+            MonitorTextBoxText(" CW_Semi_Break_In: " + Convert.ToString(CW_Parameters.CW_Semi_Break_In));
+            switch (CW_Parameters.CW_Semi_Break_In)
+            {
+                case 0:
+                    semicheckBox2.Checked = false;
+                    break;
+                case 1:
+                    semicheckBox2.Checked = true;
+                    break;
+            }
+            semicheckBox2.CheckedChanged += semicheckBox2_CheckedChanged;
             return true;
         }
 
@@ -1149,6 +1226,7 @@ namespace OmniaGUI
                 }
             }
             file.Close();
+            Init_CW_Settings();
             Manage_Colors();
             Message = " Main_form -> Init_RPi_Settings Finished. Line_Count: " + Convert.ToString(line_count);
             Write_Debug_Message(Message);
@@ -1157,7 +1235,6 @@ namespace OmniaGUI
 
         public void Finish_Initialization()
         {
-            int displayValue = 1;
             byte[] buf = new byte[2];
 
 #if RPI
@@ -1181,21 +1258,7 @@ namespace OmniaGUI
             AGC_listBox1.SetSelected(0, true);
             //this.MouseWheel += new MouseEventHandler(Main_MouseWheel);
             powerhScrollBar1.Value = 40;
-            displayValue = 40;
             powerlabel14.Text = "NO VALUE";
-            //Load the correct value for the Semi Break-in check box
-            displayValue = oCode.iniStates.CW_Semi_Break_In;
-            oCode.oldSemiBreakin = displayValue;
-            switch (displayValue)
-            {
-                case 0:
-                    semicheckBox2.Checked = false;
-                    break;
-
-                case 1:
-                    semicheckBox2.Checked = true;
-                    break;
-            }
             switch (Settings.Default.Auto_Zero)
             {
                 case false:
@@ -1204,16 +1267,6 @@ namespace OmniaGUI
 
                 case true:
                     Auto_Zero_checkBox2.Checked = true;
-                    break;
-            }
-            switch (Settings.Default.Stop_Server)
-            {
-                case false:
-                    checkBox3.Checked = false;
-                    break;
-
-                case true:
-                    checkBox3.Checked = true;
                     break;
             }
             switch (Settings.Default.Band_Change_Tune)
@@ -1244,8 +1297,6 @@ namespace OmniaGUI
             Default_CW_Filter_listBox1.SelectedIndex = Settings.Default.CW_Default;
             Default_High_Cut_listBox1.SelectedIndex = Settings.Default.Hi_Cut_Default;
             set_default_filter_configuration();
-            displayValue = oCode.iniStates.CW_Tx_Hold;
-            CW_Hold_numericUpDown2.Value = displayValue;
             //txholdlabel8.Text = Convert.ToString(displayValue) + " TX Hold";
             Initialize_RIT();
             Initialize_Docking();
@@ -1304,6 +1355,7 @@ namespace OmniaGUI
             Volume_Attn_listBox1.SelectedIndex = Settings.Default.Volume_Attn_Index;
             Volume_textBox2.Text = Convert.ToString(Settings.Default.Speaker_Volume);
             Volume_hScrollBar1.Value = Settings.Default.Speaker_Volume;
+#if !RPI
             switch (Settings.Default.Speaker_MutED)
             {
                 case true:
@@ -1320,7 +1372,7 @@ namespace OmniaGUI
                                                                 Convert.ToString(Settings.Default.Speaker_MutED));
                     break;
             }
-
+#endif
             AMP_Tune_button4.Enabled = true;
             AMP_hScrollBar1.Enabled = true;
             Peak_Needle_checkBox2.CheckedChanged -= Peak_Needle_checkBox2_CheckedChanged;
@@ -1369,7 +1421,9 @@ namespace OmniaGUI
 
         private void frmMain_Load(object sender, EventArgs e)
         {
+#if RPI
             String Message;
+#endif
             Point RPI_location = new Point(0, 4);
             byte[] buf = new byte[2];
             Size pic_size = new Size(0, 0);
@@ -1428,6 +1482,7 @@ namespace OmniaGUI
             CW_Filter_listBox1.Size = new Size(70, 30);
             Filter_Low_listBox1.Size = new Size(70, 30);
             Filter_listBox1.Size = new Size(70, 30);
+            mainlistBox1.Size = new Size(70, 30);
 #endif
             timer3.Enabled = true;
         }
@@ -1714,67 +1769,15 @@ namespace OmniaGUI
             if (oCode.isLoading) return;
             if (Rit_Controls.Rit_On == false)
             {
-                ritbutton1.BackColor = Color.Red;
-                ritbutton1.Font = new Font(ritbutton1.Font, FontStyle.Bold);
-                //ritbutton1.FlatStyle = FlatStyle.Popup;
+                Set_Button_Color(true, ritbutton1);
                 Rit_Controls.Rit_On = true;
-                //oCode.SendCommand32(txsocket, txtarget, Rit_Controls.CMD_SET_RIT_FREQ, (Rit_Controls.Rit_Freq_Plus_Offset));
                 oCode.SendCommand(txsocket, txtarget, Rit_Controls.CMD_SET_RIT_STATUS, 1);
             }
             else
             {
-                ritbutton1.ForeColor = Color.Black;
-                ritbutton1.BackColor = Color.Gainsboro;
-                //ritbutton1.FlatStyle = FlatStyle.Standard;
+                Set_Button_Color(false, ritbutton1);
                 Rit_Controls.Rit_On = false;
-
                 oCode.SendCommand(txsocket, txtarget, Rit_Controls.CMD_SET_RIT_STATUS, 0);
-            }
-        }
-
-        /*private void label12_Click_1(object sender, EventArgs e)
-        {
-        }
-        */
-        private void resetbutton1_Click_1(object sender, EventArgs e)
-        {
-            int fr = 0;
-            //short dummy = 0;
-            if (oCode.isLoading) return;
-            if (!Frequency_Calibration_controls.standard_carrier_selected)
-            {
-                DialogResult ret1 = MessageBox.Show("A Standard Carrier has not been selected. \r\nClick STANADRD CARRIER", "MSCC",
-                                                                    MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
-                return;
-            }
-            if (Filter_control.CW_Pitch != 600)
-            {
-                MessageBox.Show("CW Pitch must be set to 600", "MSCC",
-                               MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
-                return;
-            }
-            if (Frequency_Calibration_controls.Calibration_Checked)
-            {
-                DialogResult ret = MessageBox.Show("Are you sure you want to reset the calibration?", "MSCC",
-                                                                        MessageBoxButtons.YesNo, MessageBoxIcon.Asterisk);
-                if (ret == DialogResult.Yes)
-                {
-                    Frequency_Calibration_controls.si5351_reset = true;
-                    oCode.SendCommand32(txsocket, txtarget, Frequency_Calibration_controls.CMD_START_CALIBRATE, fr);
-                    MessageBox.Show("The Proficio Calibration has been reset.\n" +
-                    "Click CALIBRATE to finish the calibration", "MSCC", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
-                    calibratebutton1.Text = "CALIBRATE";
-                    calibratebutton1.BackColor = Color.Gainsboro;
-                    calibratebutton1.ForeColor = Color.Black;
-                    Calibration_progressBar1.Value = 0;
-                    //Progress_label58.Text = "000";
-                }
-            }
-            else
-            {
-                MessageBox.Show("Run a Calibration Check before performing a calibration\r\n" +
-                   "to determine if the Standard Carrier signal is sufficient for a calibration", "MSCC",
-                               MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
             }
         }
 
@@ -2596,9 +2599,7 @@ namespace OmniaGUI
                         Power_hScrollBar1.Enabled = false;
                         CW_Power_hScrollBar1.Enabled = false;
                         button1.Enabled = false;
-                        Tune_vButton2.BackColor = Color.Red;
-                        Tune_vButton2.ForeColor = Color.White;
-                        Tune_vButton2.Text = "TUN";
+                        Set_Button_Color(true, Tune_vButton2);
                         Volume_Controls.Previous_Slider_Mode = Volume_Controls.Volume_Slider_Mode;
                         Volume_Controls.Volume_Slider_Mode = Volume_Controls.SLIDER_TUNE_MODE;
                     }
@@ -2622,9 +2623,7 @@ namespace OmniaGUI
                         Power_hScrollBar1.Enabled = true;
                         CW_Power_hScrollBar1.Enabled = true;
                         button1.Enabled = true;
-                        Tune_vButton2.BackColor = Color.Gainsboro;
-                        Tune_vButton2.ForeColor = Color.Black;
-                        Tune_vButton2.Text = "TUN";
+                        Set_Button_Color(false, Tune_vButton2);
                         Volume_Controls.Volume_Slider_Mode = Volume_Controls.Previous_Slider_Mode;
                     }
                 }
@@ -2839,18 +2838,12 @@ namespace OmniaGUI
                 {
                     MonitorTextBoxText(" Transverter Warning Accepted, Turning Transverter ON");
                     trans_toggle = 1;
-                    //Transvertercheckbox.ForeColor = Color.Red;
-                    //Transvertercheckbox.Text = "TRANSVERTER ON";
-                    //Transvertercheckbox.FlatStyle = FlatStyle.Popup;
                     oCode.trans_on = true;
                 }
                 else
                 {
                     MonitorTextBoxText(" Transverter Warning Accepted, Turning Transverter OFF");
                     trans_toggle = 0;
-                    //Transvertercheckbox.ForeColor = Control.DefaultForeColor;
-                    //Transvertercheckbox.Text = "TRANSVERTER OFF";
-                    //Transvertercheckbox.FlatStyle = FlatStyle.Standard;
                     oCode.trans_on = false;
                 }
                 oCode.SendCommand(txsocket, txtarget, oCode.CMD_SET_TRANSVERTER, trans_toggle);
@@ -3442,41 +3435,43 @@ namespace OmniaGUI
         private void MFC_Enter(object sender, EventArgs e)
         {
             MonitorTextBoxText(" MFC_Enter -> MFC tab entered");
-
-            AMP_groupBox3.Enabled = true;
-            oCode.SendCommand(txsocket, txtarget, Master_Controls.CMD_SET_PA_BYPASS, 1);
-            //Solidus_Band_label4.Text = Convert.ToString(oCode.current_band) + " M";
-            if (Master_Controls.Tuning_Mode || Master_Controls.Transmit_Mode)
+            if (Solidus_Controls.Mia_Status)
             {
-                oCode.SendCommand(txsocket, txtarget, oCode.CMD_SET_TX_ON, 0);
-                if (!Settings.Default.Speaker_MutED)
+                AMP_groupBox3.Enabled = true;
+                oCode.SendCommand(txsocket, txtarget, Master_Controls.CMD_SET_PA_BYPASS, 1);
+                //Solidus_Band_label4.Text = Convert.ToString(oCode.current_band) + " M";
+                if (Master_Controls.Tuning_Mode || Master_Controls.Transmit_Mode)
                 {
-                    oCode.SendCommand(txsocket, txtarget, Volume_Controls.CMD_SET_SPEAKER_MUTE, 0);
+                    oCode.SendCommand(txsocket, txtarget, oCode.CMD_SET_TX_ON, 0);
+                    if (!Settings.Default.Speaker_MutED)
+                    {
+                        oCode.SendCommand(txsocket, txtarget, Volume_Controls.CMD_SET_SPEAKER_MUTE, 0);
+                    }
                 }
+                oCode.SendCommand(txsocket, txtarget, oCode.CMD_SET_RIG_TUNE, 0);
+                MonitorTextBoxText(" MFC_Enter -> Current Band: " + oCode.current_band);
+                oCode.SendCommand(txsocket, txtarget, oCode.CMD_SET_MAIN_MODE, Mode.TUNE_mode);
+                buttTune.BackColor = Color.Gainsboro;
+                buttTune.ForeColor = Color.Black;
+                Tune_vButton2.BackColor = Color.Gainsboro;
+                Tune_vButton2.ForeColor = Color.Black;
+                Tune_vButton2.Text = "TUN";
+                button1.BackColor = Color.Gainsboro;
+                button1.ForeColor = Color.Black;
+                button1.Text = "PTT";
+                buttTune.BackColor = Color.Gainsboro;
+                buttTune.ForeColor = Color.Black;
+                Master_Controls.PPT_Mode = false;
+                Master_Controls.Transmit_Mode = false;
+                Master_Controls.Two_Tone = false;
+                oCode.SendCommand(txsocket, txtarget, Power_Controls.CMD_SET_TUNE_POWER, 100);
+                AMP_Calibrate_hScrollBar1.Enabled = true;
+                AMP_hScrollBar1.Enabled = true;
+                Solidus_Bias_button8.Enabled = true;
+                AMP_Tune_button4.Enabled = true;
+                Amplifier_Power_Controls.Tab_Active = true;
+                TabPage CurrrentTabProperty = powertabControl1.SelectedTab;
             }
-            oCode.SendCommand(txsocket, txtarget, oCode.CMD_SET_RIG_TUNE, 0);
-            MonitorTextBoxText(" MFC_Enter -> Current Band: " + oCode.current_band);
-            oCode.SendCommand(txsocket, txtarget, oCode.CMD_SET_MAIN_MODE, Mode.TUNE_mode);
-            buttTune.BackColor = Color.Gainsboro;
-            buttTune.ForeColor = Color.Black;
-            Tune_vButton2.BackColor = Color.Gainsboro;
-            Tune_vButton2.ForeColor = Color.Black;
-            Tune_vButton2.Text = "TUN";
-            button1.BackColor = Color.Gainsboro;
-            button1.ForeColor = Color.Black;
-            button1.Text = "PTT";
-            buttTune.BackColor = Color.Gainsboro;
-            buttTune.ForeColor = Color.Black;
-            Master_Controls.PPT_Mode = false;
-            Master_Controls.Transmit_Mode = false;
-            Master_Controls.Two_Tone = false;
-            oCode.SendCommand(txsocket, txtarget, Power_Controls.CMD_SET_TUNE_POWER, 100);
-            AMP_Calibrate_hScrollBar1.Enabled = true;
-            AMP_hScrollBar1.Enabled = true;
-            Solidus_Bias_button8.Enabled = true;
-            AMP_Tune_button4.Enabled = true;
-            Amplifier_Power_Controls.Tab_Active = true;
-            TabPage CurrrentTabProperty = powertabControl1.SelectedTab;
         }
 
         private void MFC_Leave(object sender, EventArgs e)
@@ -4542,19 +4537,21 @@ namespace OmniaGUI
                     {
                         Post_Initialization();
                         Master_Controls.Post_Init = true;
+#if RPI
+                        RPi_Display_Timer.Enabled = true;
+#endif
                     }
                     if (!Master_Controls.Step_Sent)
                     {
                         oCode.SendCommand(txsocket, txtarget, Tuning_Knob_Controls.CMD_SET_STEP_VALUE, oCode.Freq_Tune_Index);
                         Master_Controls.Step_Sent = true;
                     }
+
                     //MonitorTextBoxText(" Sdrcore_running ");
                     if (++Master_Controls.Keep_Alive_Counter >= 15)
                     {
                         MonitorTextBoxText(" Keep Alive Counter: " + Convert.ToString(Master_Controls.Keep_Alive_Counter));
-#if RPI
-                        //Update_RPi_Settings();
-#endif
+
                         if (Master_Controls.Keep_Alive == false)
                         {
                             Keep_Alive_timer.Stop();
@@ -6709,7 +6706,7 @@ namespace OmniaGUI
 
         private void Backup_button2_Click(object sender, EventArgs e)
         {
-            String Ms_sdr_path;
+            String Logfile_path;
             String path;
             String backup_path;
             string fileName = "test.txt";
@@ -6717,26 +6714,26 @@ namespace OmniaGUI
             if (oCode.isLoading) return;
 
             //oCode.Platform = (int)Environment.OSVersion.Platform;
+
+#if RPI
+            path = "/home/mscc/mscc/mscc-logs";
+            Logfile_path = path;
+            backup_path = path + "/backup";
+#else
             path = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
-            if (oCode.Platform == 4)
-            {
-                Ms_sdr_path = (path + "/mscc");
-                backup_path = (path + "/mscc/backup");
-            }
-            else
-            {
-                Ms_sdr_path = (path + "\\multus-sdr-client");
-                backup_path = (path + "\\multus-sdr-client\\backup");
-            }
-            MonitorTextBoxText(" (0) Backup_button2_Click -> Ms_sdr_path " + Ms_sdr_path + " backup_path " + backup_path);
+            Logfile_path = (path + "\\multus-sdr-client");
+            backup_path = (path + "\\multus-sdr-client\\backup");
+#endif
+
+            MonitorTextBoxText(" (0) Backup_button2_Click -> Ms_sdr_path " + Logfile_path + " backup_path " + backup_path);
             string destFile = System.IO.Path.Combine(backup_path, fileName);
 
             System.IO.Directory.CreateDirectory(backup_path);
-            MonitorTextBoxText(" (1) Backup_button2_Click -> Ms_sdr_path " + Ms_sdr_path + " backup_path " + backup_path);
-            if (System.IO.Directory.Exists(Ms_sdr_path))
+            MonitorTextBoxText(" (1) Backup_button2_Click -> Ms_sdr_path " + Logfile_path + " backup_path " + backup_path);
+            if (System.IO.Directory.Exists(Logfile_path))
             {
-                MonitorTextBoxText(" (3) Backup_button2_Click -> Ms_sdr_path " + Ms_sdr_path + " backup_path " + backup_path);
-                string[] files = System.IO.Directory.GetFiles(Ms_sdr_path);
+                MonitorTextBoxText(" (3) Backup_button2_Click -> Ms_sdr_path " + Logfile_path + " backup_path " + backup_path);
+                string[] files = System.IO.Directory.GetFiles(Logfile_path);
                 foreach (string s in files)
                 {
                     fileName = System.IO.Path.GetFileName(s);
@@ -6744,11 +6741,6 @@ namespace OmniaGUI
                     System.IO.File.Copy(s, destFile, true);
                 }
             }
-            //if (!Master_Controls.Zip_Backup)
-            //{
-            //   MessageBox.Show("The initialization files have been backed up to: \r\n" + backup_path , "MSCC",
-            //                                                                                MessageBoxButtons.OK, MessageBoxIcon.Information);
-            //}
         }
 
         private void Restore_button2_Click(object sender, EventArgs e)
@@ -6916,17 +6908,17 @@ namespace OmniaGUI
             //Master_Controls.Zip_Backup = true;
             Backup_button2_Click(null, null);
             //oCode.Platform = (int)Environment.OSVersion.Platform;
+
+#if RPI
+            path = "/home/mscc/mscc/mscc-logs";
+            Ms_sdr_path = (path + "/backup");
+            Zip_path = Ms_sdr_path + "ziplog.zip";
+#else
             path = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
-            if (oCode.Platform == 4)
-            {
-                Ms_sdr_path = (path + "/mscc/backup");
-            }
-            else
-            {
-                Ms_sdr_path = (path + "\\multus-sdr-client\\backup");
-            }
+            Ms_sdr_path = (path + "\\multus-sdr-client\\backup");
             Zip_path = AppDomain.CurrentDomain.BaseDirectory;
             Zip_path = (Zip_path + "ziplog.zip");
+#endif
             if (System.IO.Directory.Exists(Ms_sdr_path))
             {
                 if (System.IO.File.Exists(Zip_path))
@@ -7578,7 +7570,7 @@ namespace OmniaGUI
         private void PA_vButton1_Click_1(object sender, EventArgs e)
         {
             if (oCode.isLoading) return;
-            if (Master_Controls.Mia_Status)
+            if (Solidus_Controls.Mia_Status)
             {
                 if (Master_Controls.QRP_Mode)
                 {
@@ -8005,7 +7997,7 @@ namespace OmniaGUI
             return swapped[step];
         }
 
-        private void mainlistBox1_SelectedIndexChanged_1(object sender, EventArgs e)
+        private void mainlistBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
             {
                 if (oCode.isLoading == true) return;
@@ -9378,6 +9370,7 @@ namespace OmniaGUI
             Knob_comboBox1.SelectedIndex = knob_switch;
             Tuning_Knob_Controls.previous_switch_table[Tuning_Knob_Controls.KNOB_SWITCH] = (sbyte)knob_switch;
             Tuning_Knob_Controls.Knob_switch_function = (byte)knob_switch;
+            MFC_Knob_label38.Text = "K: " + Knob_comboBox1.Text;
 
             Tuning_Knob_Controls.previous_switch_table[Tuning_Knob_Controls.PTT_SWITCH] = (sbyte)ptt_switch;
             Tuning_Knob_Controls.PTT_switch_function = (byte)ptt_switch;
@@ -9386,16 +9379,20 @@ namespace OmniaGUI
             Tuning_Knob_Controls.previous_switch_table[Tuning_Knob_Controls.LEFT_SWITCH] = (sbyte)left_switch;
             Tuning_Knob_Controls.Button_left_function = (byte)left_switch;
             Tuning_Knob_Controls.Star_Position.Left = (byte)(0x10 | left_switch);
+            MFC_A_label38.Text = "A: " + Left_Button_comboBox2.Text;
 
             Middle_Button_comboBox3.SelectedIndex = middle_switch;
             Tuning_Knob_Controls.previous_switch_table[Tuning_Knob_Controls.MIDDLE_SWITCH] = (sbyte)middle_switch;
             Tuning_Knob_Controls.Button_middle_function = (byte)middle_switch;
             Tuning_Knob_Controls.Star_Position.Middle = (byte)(0x20 | middle_switch);
+            MFC_B_label38.Text = "B: " + Middle_Button_comboBox3.Text;
+
 
             Right_Button_comboBox4.SelectedIndex = right_switch;
             Tuning_Knob_Controls.previous_switch_table[Tuning_Knob_Controls.RIGHT_SWITCH] = (sbyte)right_switch;
             Tuning_Knob_Controls.Button_right_function = (byte)right_switch;
             Tuning_Knob_Controls.Star_Position.Right = (byte)(0x30 | right_switch);
+            MFC_C_label38.Text = "C: " + Right_Button_comboBox4.Text;
             Master_Controls.code_triggered = false;
 
             if (state == 1)
@@ -10294,13 +10291,13 @@ namespace OmniaGUI
 
 
             Time_display_label33.ForeColor = Settings.Default.Freq_Color;
-            Time_display_label33.BackColor = Settings.Default.Boarder_Color;
+            //Time_display_label33.BackColor = Settings.Default.Boarder_Color;
             Local_Date_label46.ForeColor = Settings.Default.Freq_Color;
-            Local_Date_label46.BackColor = Settings.Default.Boarder_Color;
+            //Local_Date_label46.BackColor = Settings.Default.Boarder_Color;
             Time_display_UTC_label34.ForeColor = Settings.Default.Freq_Color;
-            Time_display_UTC_label34.BackColor = Settings.Default.Boarder_Color;
+            //Time_display_UTC_label34.BackColor = Settings.Default.Boarder_Color;
             UTC_Date_label46.ForeColor = Settings.Default.Freq_Color;
-            UTC_Date_label46.BackColor = Settings.Default.Boarder_Color;
+            //UTC_Date_label46.BackColor = Settings.Default.Boarder_Color;
             panel1.BackColor = Settings.Default.Boarder_Color;
             panel1.ForeColor = Settings.Default.Freq_Color;
             groupBox3.BackColor = Settings.Default.Boarder_Color;
@@ -12012,19 +12009,6 @@ namespace OmniaGUI
             }
         }
 
-        private void checkBox3_CheckedChanged(object sender, EventArgs e)
-        {
-            if (!Settings.Default.Stop_Server)
-            {
-                Settings.Default.Stop_Server = true;
-            }
-            else
-            {
-                Settings.Default.Stop_Server = false;
-            }
-            MonitorTextBoxText(" Stop Server: " + Convert.ToString(Settings.Default.Stop_Server));
-        }
-
         short band = 180;
         short previous_band = 180;
         int bias = 0;
@@ -12121,12 +12105,53 @@ namespace OmniaGUI
             //string[] message = new string[80];
             string message_1;
             uint meter_power;
+            byte which_switch = 0;
+            byte star = 0;
 
             op_code = extended_packet[1];
             operand = extended_packet[2];
-            MonitorTextBoxText(" Process_extended_commands-> Read Size: " + Convert.ToString(read_size));
+            //MonitorTextBoxText(" Process_extended_commands-> Read Size: " + Convert.ToString(read_size));
             switch (op_code)
             {
+                case Master_Controls.Extended_Commands.CMD_SET_SOLIDUS_STATUS:
+                    MonitorTextBoxText(" Process_extended_commands-> CMD_SET_SOLIDUS_STATUS -> Value: " +
+                        Convert.ToString(operand));
+                    switch (operand)
+                    {
+                        case 0:
+                            Solidus_Controls.Solidus_Status = false;
+                            break;
+                        default:
+                            Solidus_Controls.Solidus_Status = true;
+                            break;
+                    }
+                    Solidus_Controls.Solidus_Status_Set = true;
+                    Manage_Solidus_Status();
+                    break;
+
+                case Master_Controls.Extended_Commands.CMD_SET_GUI_STAR:
+                    MonitorTextBoxText(" Process_extended_commands-> CMD_SET_GUI_STAR -> Value: " + Convert.ToString(operand));
+                    which_switch = operand;
+                    which_switch = (byte)(which_switch & 0xF0);
+                    star = (byte)(operand & 0x0F);
+                    switch (which_switch)
+                    {
+                        case Master_Controls.Extended_Commands.Button_right_switch_star:
+                            switch (star)
+                            {
+                                case 1:
+                                    MFC_C_label38.BackColor = Color.Red;
+                                    MFC_C_label38.ForeColor = Color.White;
+                                    break;
+                                default:
+                                    MFC_C_label38.BackColor = Color.Gainsboro;
+                                    MFC_C_label38.ForeColor = Color.Black;
+                                    break;
+                            }
+                            break;
+                    }
+                    break;
+
                 case Master_Controls.Extended_Commands.CMD_MFC_SET_BAND:
                     //MonitorTextBoxText(" Process_extended_commands-> CMD_MFC_SET_BAND -> Value: " + Convert.ToString(operand));
                     Set_Band_By_Server(operand);
@@ -12748,6 +12773,7 @@ namespace OmniaGUI
             int read_size = 0;
             byte[] buf = new byte[2];
             int waterfall_limit = zed_size.Width;
+            char mode = 'N';
 
             Master_Controls.Network_Receive_Busy = true;
             UdpClient socket = result.AsyncState as UdpClient;
@@ -12766,6 +12792,75 @@ namespace OmniaGUI
 
             switch (op_code)
             {
+                case oCode.CMD_SET_MAIN_MODE:
+                    MonitorTextBoxText(" CMD_SET_MAIN_MODE: " + Convert.ToString((char)operand));
+                    switch ((char)operand)
+                    {
+                        case 'A':
+                            oCode.modeswitch = 0;
+                            mainmodebutton2.Text = "AM";
+                            mode = 'A';
+                            Volume_Controls.Volume_Slider_Mode = Volume_Controls.SLIDER_AM_MODE;
+                            break;
+                        case 'L':
+                            oCode.modeswitch = 1;
+                            mainmodebutton2.Text = "LSB";
+                            mode = 'L';
+                            Volume_Controls.Volume_Slider_Mode = Volume_Controls.SLIDER_SSB_MODE;
+                            break;
+                        case 'U':
+                            oCode.modeswitch = 2;
+                            mainmodebutton2.Text = "USB";
+                            mode = 'U';
+                            Volume_Controls.Volume_Slider_Mode = Volume_Controls.SLIDER_SSB_MODE;
+                            break;
+                        case 'C':
+                            oCode.modeswitch = 3;
+                            mainmodebutton2.Text = "CW";
+                            mode = 'C';
+                            Volume_Controls.Volume_Slider_Mode = Volume_Controls.SLIDER_CW_MODE;
+                            break;
+                    }
+                    Last_used.Current_mode = mode;
+                    switch (oCode.current_band)
+                    {
+                        case 160:
+                            Last_used.B160.Mode = mode;
+                            break;
+                        case 80:
+                            Last_used.B80.Mode = mode;
+                            break;
+                        case 60:
+                            Last_used.B60.Mode = mode;
+                            break;
+                        case 40:
+                            Last_used.B40.Mode = mode;
+                            break;
+                        case 30:
+                            Last_used.B30.Mode = mode;
+                            break;
+                        case 20:
+                            Last_used.B20.Mode = mode;
+                            break;
+                        case 17:
+                            Last_used.B17.Mode = mode;
+                            break;
+                        case 15:
+                            Last_used.B15.Mode = mode;
+                            break;
+                        case 12:
+                            Last_used.B12.Mode = mode;
+                            break;
+                        case 10:
+                            Last_used.B10.Mode = mode;
+                            break;
+                        default:
+                            Last_used.GEN.Mode = mode;
+                            break;
+                    }
+                    Last_used.Current_mode = mode;
+                    break;
+
                 case Master_Controls.CMD_SEND_GUI_STATUS:
                     Master_Controls.GUI_check_status = true;
                     MonitorTextBoxText(" OnUdpData -> CMD_SEND_GUI_STATUS Received");
@@ -12773,7 +12868,11 @@ namespace OmniaGUI
 
                 case Tuning_Knob_Controls.CMD_SET_STEP_VALUE:
                     oCode.Freq_Tune_Index = (short)operand;
+#if RPI
+                    RPi_Settings.Controls.Freq_Step = operand;
+#else
                     mainlistBox1.SelectedIndex = operand;
+#endif
                     oCode.FreqDigit = (short)Swap_tuning_step(operand);
                     break;
 
@@ -12895,6 +12994,7 @@ namespace OmniaGUI
                     drift_temp = BitConverter.ToInt16(message, 1);
                     MonitorTextBoxText(" OnUdpData -> Panadapter_Controls.CMD_SET_DRIFT.  Drift:" +
                         Convert.ToString(drift_temp));
+                    Freq_Comp_label32.Text = "Freq Comp: " + Convert.ToString(drift_temp) + " Hz";
                     break;
 
                 case Master_Controls.CMD_GET_TRANSCEIVER_TEMP:
@@ -12907,22 +13007,23 @@ namespace OmniaGUI
                     break;
 
                 case Master_Controls.CMD_GET_MIA_STATUS:
+                    MonitorTextBoxText(" OnUdpData -> CMD_GET_MIA_STATUS: " + Convert.ToString(operand));
                     if (operand == 0)
                     {
-                        Master_Controls.Mia_Status = false;
-                        PA_vButton1.Enabled = false;
-                        Manage_Amp_group_box(false);
-                        PA_vButton1.Text = "QRP";
-                        PA_vButton1.BackColor = Color.Gainsboro;
-                        PA_vButton1.ForeColor = Color.Black;
+                        Solidus_Controls.Mia_Status = false;
+                        //PA_vButton1.Enabled = false;
+                        //PA_vButton1.Text = "QRP";
+                        //PA_vButton1.BackColor = Color.Gainsboro;
+                        //PA_vButton1.ForeColor = Color.Black;
                         Master_Controls.QRP_Mode = true;
                     }
                     else
                     {
-                        Master_Controls.Mia_Status = true;
-                        PA_vButton1.Enabled = true;
-                        Manage_Amp_group_box(true);
+                        Solidus_Controls.Mia_Status = true;
+                        //PA_vButton1.Enabled = true;
                     }
+                    Solidus_Controls.Mia_Status_Set = true;
+                    Manage_Solidus_Status();
                     break;
 
                 case Master_Controls.CMD_SET_PA_BYPASS:
@@ -12953,15 +13054,24 @@ namespace OmniaGUI
                     break;
 
                 case oCode.CMD_SET_STOP:
-                    MessageBox.Show("A STOP Command from MS-SDR has been received." + "\r\n" +
-                    "MSCC will stop","MSCC", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                    if (!Master_Controls.Shutdown)
+                    {
+                        MessageBox.Show("A STOP Command from MS-SDR has been received." + "\r\n" +
+                        "MSCC will stop", "MSCC", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                    }
+                    else
+                    {
+                        MessageBox.Show("MSCC is Stopping per User Request.", "MSCC", 
+                            MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
                     Application.Exit();
                     break;
 
                 case AGC_ALC_Notch_Controls.CMD_SET_AGC_FAST_LEVEL:
                     AGC_hScrollBar1.Value = BitConverter.ToInt32(message, 1);
-                    AGC_hScrollBar1.Text = Convert.ToString(AGC_hScrollBar1.Value) + " mS";
+                    AGC_label57.Text = Convert.ToString(AGC_hScrollBar1.Value) + " mS";
                     AGC_ALC_Notch_Controls.AGC_Release = AGC_hScrollBar1.Value;
+                    MonitorTextBoxText(" CMD_SET_AGC_FAST_LEVEL: " + Convert.ToString(AGC_ALC_Notch_Controls.AGC_Release));
                     break;
 
                 case AGC_ALC_Notch_Controls.CMD_GET_SET_AGC:
@@ -13404,23 +13514,23 @@ namespace OmniaGUI
 
                 case Volume_Controls.CMD_SET_SPEAKER_VOLUME:
                     MonitorTextBoxText(" OnUdpData -> CMD_SET_SPEAKER_VOLUME: " + operand);
-
-                    //int speaker_value = operand + (int)((float) operand * Settings.Default.Volume_ATTN);
                     int speaker_value = operand;
                     if(speaker_value > 100)
                     {
                         speaker_value = 100;
                     }
+                    RPi_Settings.Volume_Settings.Speaker_Volume = speaker_value;
 #if !RPI
                     Volume_hScrollBar1.Value = speaker_value;
-                    //Volume_Controls.Speaker_MutED = true;
-                    Volume_Mute_button2_Click(null, null);
+                    if (Settings.Default.Speaker_MutED)
+                    {
+                        Volume_Mute_button2_Click(null, null);
+                    }
                     Volume_textBox2.Text = Convert.ToString(operand);
 #endif
 #if FTDI
                     Tuning_Knob_Controls.Volume_Function.Volume = operand;
 #endif
-                    
                     break;
 
                 case Volume_Controls.CMD_SET_MIC_MUTE:
@@ -14408,6 +14518,7 @@ namespace OmniaGUI
                     buf[1] = (byte)index;
                     oCode.SendCommand_MultiByte(txsocket, txtarget,
                                                Master_Controls.Extended_Commands.CMD_SET_EXTENDED_COMMAND, buf, buf.Length);
+                    MFC_A_label38.Text = "A: " + Left_Button_comboBox2.Text;
                     //Update_MFC_Init_File();
                 }
                 else
@@ -14443,6 +14554,7 @@ namespace OmniaGUI
                     buf[1] = (byte)index;
                     oCode.SendCommand_MultiByte(txsocket, txtarget,
                                                Master_Controls.Extended_Commands.CMD_SET_EXTENDED_COMMAND, buf, buf.Length);
+                    MFC_B_label38.Text = "B: " +Middle_Button_comboBox3.Text;
                     //Update_MFC_Init_File();
                 }
                 else
@@ -14478,6 +14590,8 @@ namespace OmniaGUI
                     buf[1] = (byte)index;
                     oCode.SendCommand_MultiByte(txsocket, txtarget,
                                                Master_Controls.Extended_Commands.CMD_SET_EXTENDED_COMMAND, buf, buf.Length);
+                    MFC_C_label38.Text = "C: " + Right_Button_comboBox4.Text;
+                    Tuning_Knob_Controls.Button_Text.Button_right_text = Right_Button_comboBox4.Text;
                     //Update_MFC_Init_File();
                 }
                 else
@@ -14513,10 +14627,12 @@ namespace OmniaGUI
                                                Master_Controls.Extended_Commands.CMD_SET_EXTENDED_COMMAND, buf, buf.Length);
                     //Update_MFC_Init_File();
                     Tuning_Knob_Controls.previous_switch_table[Tuning_Knob_Controls.KNOB_SWITCH] = (sbyte)index;
+                    MFC_Knob_label38.Text = "K: " + Knob_comboBox1.Text;
                 }
                 else
                 {
-                    Knob_comboBox1.SelectedIndex = Tuning_Knob_Controls.previous_switch_table[Tuning_Knob_Controls.KNOB_SWITCH];
+                    Knob_comboBox1.SelectedIndex = 
+                        Tuning_Knob_Controls.previous_switch_table[Tuning_Knob_Controls.KNOB_SWITCH];
                 }
             }
         }
@@ -14611,37 +14727,72 @@ namespace OmniaGUI
 
         private void CW_Mode_listBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
-
+            int index = 0;
+            if (oCode.isLoading == true) return;
+            index = CW_Mode_listBox1.SelectedIndex;
+            oCode.SendCommand(txsocket, txtarget, oCode.SET_IAMBIC_MODE, (short)index);
         }
 
         private void numericUpDown1_ValueChanged(object sender, EventArgs e)
         {
-
+            int index = 0;
+            if (oCode.isLoading == true) return;
+            index = (int) numericUpDown1.Value;
+            oCode.SendCommand(txsocket, txtarget, oCode.SET_WPM, (short)index);
         }
 
         private void CW_Paddle_listBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
-
+            int index = 0;
+            if (oCode.isLoading == true) return;
+            index = CW_Paddle_listBox1.SelectedIndex;
+            oCode.SendCommand(txsocket, txtarget, oCode.SET_CW_PADDLE, (short)index);
         }
 
         private void CW_Lag_numericUpDown2_ValueChanged(object sender, EventArgs e)
         {
-
+            int index = 0;
+            index = (int)CW_Lag_numericUpDown2.Value;
+            oCode.SendCommand(txsocket, txtarget, oCode.SET_LAG, (short)index);
         }
 
         private void CW_Weight_listBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
+            int index = 0;
+            short weight = 0;
+            if (oCode.isLoading == true) return;
+            index = CW_Weight_listBox1.SelectedIndex;
+            switch (index)
+            {
+                case 0:
+                    weight = 25;
+                    break;
+                case 1:
+                    weight = 50;
+                    break;
+                case 2:
+                    weight = 75;
+                    break;
 
+            }
+            oCode.SendCommand(txsocket, txtarget, oCode.SET_WEIGHT, (short)weight);
         }
 
         private void CW_Space_listBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
-
+            int index = 0;
+            if (oCode.isLoading == true) return;
+            index = CW_Space_listBox1.SelectedIndex;
+            index++;
+            oCode.SendCommand(txsocket, txtarget, oCode.SET_SPACING, (short)index);
         }
 
         private void CW_Type_listBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
-
+            int index = 0;
+            if (oCode.isLoading == true) return;
+            index = CW_Type_listBox1.SelectedIndex;
+            oCode.SendCommand(txsocket, txtarget, oCode.SET_IAMBIC_TYPE, (short)index);
         }
 
         private void Main_vuMeter1_Load_1(object sender, EventArgs e)
@@ -14727,20 +14878,16 @@ namespace OmniaGUI
             if (Volume_Controls.Compression_State == 0)
             {
                 Volume_Controls.Compression_State = 1;
-                Compression_button2.BackColor = Color.Red;
-                Compression_button2.ForeColor = Color.White;
+                Set_Button_Color(true, Compression_button2);
+                Set_Button_Color(true, Compression_button4);
                 Compression_button2.Text = "Compression ON";
-                Compression_button4.BackColor = Color.Red;
-                Compression_button4.ForeColor = Color.White;
             }
             else
             {
                 Volume_Controls.Compression_State = 0;
-                Compression_button2.BackColor = Color.Gainsboro;
-                Compression_button2.ForeColor = Color.Black;
+                Set_Button_Color(false, Compression_button2);
+                Set_Button_Color(false, Compression_button4);
                 Compression_button2.Text = "Compression OFF";
-                Compression_button4.BackColor = Color.Gainsboro;
-                Compression_button4.ForeColor = Color.Black;
             }
             oCode.SendCommand(txsocket, txtarget, Volume_Controls.CMD_SET_COMPRESSION_STATE, Volume_Controls.Compression_State);
         }
@@ -14769,8 +14916,7 @@ namespace OmniaGUI
             index = (int)Power_Meter_Hold.Value;
             Settings.Default.SWR_Meter_Hold = index;
             buf[1] = (byte)index;
-            oCode.SendCommand_MultiByte(txsocket, txtarget,
-                                                 Master_Controls.Extended_Commands.CMD_SET_EXTENDED_COMMAND, buf, buf.Length);
+            oCode.SendCommand_MultiByte(txsocket, txtarget,Master_Controls.Extended_Commands.CMD_SET_EXTENDED_COMMAND, buf, buf.Length);
         }
 
         private void RPi_Temperature_label1_Click(object sender, EventArgs e)
@@ -14793,13 +14939,17 @@ namespace OmniaGUI
             DialogResult ret = MessageBox.Show("Close MSCC", "MSCC", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
             if (ret == DialogResult.Yes)
             {
+                Master_Controls.Shutdown = true;
                 if (Master_Controls.Initialize_network_status == true)
                 {
                     oCode.SendCommand(Panadapter_Controls.txsocket, Panadapter_Controls.txtarget, oCode.CMD_SET_STOP, 1);
                 }
-                StartUP_label44.Text = "MSCC is Shutting Down\r\nPlease Wait";
-                StartUP_label44.Enabled = true;
-                StartUP_label44.Visible = true;
+                else
+                {
+                    StartUP_label44.Text = "MSCC is Shutting Down\r\nPlease Wait";
+                    StartUP_label44.Enabled = true;
+                    StartUP_label44.Visible = true;
+                }
                 Thread.Sleep(1000);
                 Application.Exit();
             }
@@ -16367,7 +16517,7 @@ namespace OmniaGUI
                 }
             }
             file.Close();
-            Panadapter_Controls.Spectrum_Base_Line = (base_value * 10);
+            Panadapter_Controls.Spectrum_Base_Line = (base_value);
             Panadapter_Controls.Spectrum_Gain = (6000 - gain_value);
             Display_GDI.WaterfallHighThreshold = 7000.0f - (float)Window_controls.Waterfall_Controls.gain;
             if (auto_snap_status == 0)
@@ -16974,8 +17124,6 @@ namespace OmniaGUI
             Write_Debug_Message(Message);
         }
              
-      
-
         private void picWaterfall_Click_1(object sender, EventArgs e)
         {
 
@@ -17041,6 +17189,7 @@ namespace OmniaGUI
                 {
                     oCode.SendCommand(txsocket, txtarget, Master_Controls.CMD_SET_PA_BYPASS, 0);
                     IQ_Controls.Previous_QRP_Mode = Master_Controls.QRP_Mode;
+                    MonitorTextBoxText(" Previous_QRP_Mode: " + Convert.ToString(IQ_Controls.Previous_QRP_Mode));
                     if (Master_Controls.Tuning_Mode || Master_Controls.Transmit_Mode)
                     {
                         oCode.SendCommand(txsocket, txtarget, oCode.CMD_SET_TX_ON, 0);
@@ -17073,7 +17222,10 @@ namespace OmniaGUI
                                             Master_Controls.Extended_Commands.CMD_SET_EXTENDED_COMMAND, buf, buf.Length);
                     IQ_Controls.IQ_Calibrating = false;
                     IQ_Controls.IQBD_MONITOR = false;
-                    AMP_groupBox3.Enabled = true;
+                    if (Solidus_Controls.Mia_Status)
+                    {
+                        AMP_groupBox3.Enabled = true;
+                    }
                     AMP_groupBox3.ForeColor = Color.White;
                     IQBD_Tune_button8.Enabled = false;
                     oCode.SendCommand(txsocket, txtarget, IQ_Controls.IQ_CALIBRATION_TUNE, 0);
@@ -17081,10 +17233,10 @@ namespace OmniaGUI
                     switch (IQ_Controls.Previous_QRP_Mode)
                     {
                         case true:
-                            oCode.SendCommand(txsocket, txtarget, Master_Controls.CMD_SET_PA_BYPASS, 1);
+                            oCode.SendCommand(txsocket, txtarget, Master_Controls.CMD_SET_PA_BYPASS, 0);
                             break;
                         default:
-                            oCode.SendCommand(txsocket, txtarget, Master_Controls.CMD_SET_PA_BYPASS, 0);
+                            oCode.SendCommand(txsocket, txtarget, Master_Controls.CMD_SET_PA_BYPASS, 1);
                             break;
                     }
                 }
@@ -17195,23 +17347,43 @@ namespace OmniaGUI
 
         }
 
-        public void Manage_Amp_group_box(bool on_off)
+        public void Manage_Solidus_Status()
         {
-            MonitorTextBoxText(" Manage_Amp_group_box -> On_Off: " + Convert.ToString(on_off));
-            switch (on_off)
+            MonitorTextBoxText(" Manage_Solidus_Status -> Called ");
+            if (Solidus_Controls.Solidus_Status_Set && Solidus_Controls.Mia_Status_Set)
             {
-                case false:
-                    AMP_Tune_button4.Enabled = false;
-                    AMP_hScrollBar1.Enabled = false;
-                    AMP_Calibrate_hScrollBar1.Enabled = false;
-                    IQBD_groupBox4.Enabled = false;
-                    break;
-                case true:
-                    AMP_Tune_button4.Enabled = true;
-                    AMP_hScrollBar1.Enabled = true;
-                    AMP_Calibrate_hScrollBar1.Enabled = true;
+                if (Solidus_Controls.Solidus_Status)
+                {
                     IQBD_groupBox4.Enabled = true;
-                    break;
+                    IQ_groupBox3.Enabled = false;
+                    AMP_groupBox3.Enabled = true;
+                }
+                else
+                {
+                    IQBD_groupBox4.Enabled = false;
+                    IQ_groupBox3.Enabled = true;
+                    AMP_groupBox3.Enabled = false;
+                }
+                MonitorTextBoxText(" Manage_Solidus_Status -> Mia_Status: " + Convert.ToString(Solidus_Controls.Mia_Status));
+                if (!Solidus_Controls.Mia_Status)
+                {
+                    PA_vButton1.Enabled = false;
+                    PA_vButton1.Text = "QRP";
+                    PA_vButton1.BackColor = Color.Gainsboro;
+                    PA_vButton1.ForeColor = Color.Black;
+                    Master_Controls.QRP_Mode = true;
+                    AMP_groupBox3.Enabled = false;
+                }
+                else
+                {
+                    PA_vButton1.Enabled = true;
+                }
+            }
+            else
+            {
+                MonitorTextBoxText(" Manage_Solidus_Status -> Status NOT Set -> Solidus_status_Set: " + 
+                    Convert.ToString(Solidus_Controls.Solidus_Status_Set) + 
+                    " Mia_Status_Set: " + Convert.ToString(Solidus_Controls.Mia_Status_Set));
             }
         }
 
@@ -17301,6 +17473,53 @@ namespace OmniaGUI
             oCode.SendCommand(txsocket, txtarget, Amplifier_Power_Controls.CMD_SET_AMPLIFIER_INITIALIZE, 
                                                                                       (short)Amplifier_Power_Controls.Band);
             Amplifier_Power_Controls.Solidus_Band_Selected = true;
+        }
+
+        private void SSB_Power_label36_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void MFC_A_label38_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void MFC_B_label38_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void MFC_C_label38_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void Volume_textBox2_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void Microphone_textBox2_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void Freq_Comp_label32_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label60_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void Side_Tone_Volume_hScrollBar1_Scroll(object sender, ScrollEventArgs e)
+        {
+            int index = 0;
+            index = Side_Tone_Volume_hScrollBar1.Value;
+            oCode.SendCommand(txsocket, txtarget, oCode.SET_SIDE_TONE_VOLUME, (short)index);
         }
     }
 }

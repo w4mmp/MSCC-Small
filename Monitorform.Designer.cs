@@ -78,9 +78,11 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.ClientSize = new System.Drawing.Size(521, 404);
+            this.ControlBox = false;
             this.Controls.Add(this.MonitorPausecheckBox1);
             this.Controls.Add(this.Heartbeatcheckbox);
             this.Controls.Add(this.Monitortxt);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "MonitorForm";
             this.ShowIcon = false;
             this.Text = "Monitor";

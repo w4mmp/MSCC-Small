@@ -34,6 +34,8 @@ namespace OmniaGUI
 #if RPI
             Panadapter_Base_line_hScrollBar1.Maximum = 500;
             Panadapter_Base_line_hScrollBar1.Minimum = 0;
+            this.FormBorderStyle = FormBorderStyle.None;
+            Direction_checkBox1.Enabled = false;
 #endif
         }
 
@@ -284,9 +286,9 @@ namespace OmniaGUI
             }
             file.Close();
             code_triggered = false;
-            if (base_value > 100)
+            if (base_value > 800)
             {
-                base_value = 100;
+                base_value = 800;
             }
             Panadapter_Base_line_hScrollBar1.Value = base_value;
             if (gain_value > 6000)
@@ -816,8 +818,11 @@ namespace OmniaGUI
             {
                 index = Refresh_listBox2.SelectedIndex;
                 Panadapter_Controls.Refresh_Index = (byte) index;
-                oCode.SendCommand(Panadapter_Controls.txsocket, Panadapter_Controls.txtarget, Panadapter_Controls.CMD_GET_SET_PANADAPTER_REFRESH,
-                    (byte)index);
+#if RPI
+                index = 6;
+#endif
+                oCode.SendCommand(Panadapter_Controls.txsocket, Panadapter_Controls.txtarget, 
+                    Panadapter_Controls.CMD_GET_SET_PANADAPTER_REFRESH,(byte)index);
             }
         }
 
@@ -980,13 +985,10 @@ namespace OmniaGUI
             {
                 value = Panadapter_Base_line_hScrollBar1.Value;
                 if (Panadapter_Controls.Spectrum_Base_Line == value) return;
-#if !RPI
-                Panadapter_Controls.Spectrum_Base_Line = (value * 10);
-#else
                 Panadapter_Controls.Spectrum_Base_Line = (value);
-#endif
                 oCode.SendCommand32(Panadapter_Controls.txsocket, Panadapter_Controls.txtarget, 
                     Panadapter_Controls.CMD_GET_SET_PANADAPTER_BASE, value);
+                Write_Debug_Message(" Panadapter_Base_line_hScrollBar1: " + Convert.ToString(value));
             }
         }
 
@@ -1073,8 +1075,10 @@ namespace OmniaGUI
                 Direction_checkBox1.Text = "Direction Normal";
                 buf[1] = 0;
             }
+#if !RPI
             oCode.SendCommand_MultiByte(Panadapter_Controls.txsocket, Panadapter_Controls.txtarget,
                     Master_Controls.Extended_Commands.CMD_SET_EXTENDED_COMMAND, buf, buf.Length);
+#endif
         }
 
         private void Waterfall_Gain_hScrollBar1_Scroll(object sender, ScrollEventArgs e)
