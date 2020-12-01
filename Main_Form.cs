@@ -61,6 +61,7 @@ namespace OmniaGUI
         public static bool frmGui_called = false;
         public static Size Main_tab_size = new Size(0, 0);
         public static Size Full_size = new Size(0, 0);
+        public static Point RPI_location = new Point(0, 4);
 
 
         [DllImport("gdi32.dll", EntryPoint = "AddFontResourceW", SetLastError = true)]
@@ -121,8 +122,10 @@ namespace OmniaGUI
 
 #if RPI 
             Full_size = this.Size;
+            Full_size.Height = 462;
             Main_tab_size = this.Size;
-            Main_tab_size.Height = 254;
+            Main_tab_size.Height = 314;
+            
 #endif
 
             /*String Log_directory = Log_Path += "\\multus-sdr-client-logs";
@@ -817,20 +820,33 @@ namespace OmniaGUI
 
         public void Manage_RPI_Controls()
         {
+            byte[] buf = new byte[2];
+
             if (RPi_Settings.Volume_Settings.Previous_Speaker_Volume != RPi_Settings.Volume_Settings.Speaker_Volume)
             {
                 Volume_hScrollBar1.Value = RPi_Settings.Volume_Settings.Speaker_Volume;
                 RPi_Settings.Volume_Settings.Previous_Speaker_Volume = RPi_Settings.Volume_Settings.Speaker_Volume;
                 Volume_textBox2.Text = Convert.ToString(RPi_Settings.Volume_Settings.Speaker_Volume);
-                /*if (RPi_Settings.Volume_Settings.Speaker_Mute == 1)
-                {
-                    Volume_Mute_button2_Click(null, null);
-                }*/
             }
             if(RPi_Settings.Controls.Previous_Freq_Step != RPi_Settings.Controls.Freq_Step)
             {
                 mainlistBox1.SelectedIndex = RPi_Settings.Controls.Freq_Step;
+                RPi_Settings.Controls.Previous_Freq_Step = RPi_Settings.Controls.Freq_Step;
             }
+            if(RPi_Settings.Controls.Freq_Digit != oCode.FreqDigit)
+            {
+                buf[0] = Master_Controls.Extended_Commands.CMD_MFC_SET_ZERO;
+                buf[1] = (byte)oCode.FreqDigit;
+                oCode.SendCommand_MultiByte(txsocket, txtarget,Master_Controls.Extended_Commands.CMD_SET_EXTENDED_COMMAND, 
+                                                                        buf, buf.Length);
+                RPi_Settings.Controls.Freq_Digit = oCode.FreqDigit;
+            }
+            if(IQ_Controls.RPi.Calibration_Slider_Value != IQ_Controls.RPi.Previous_Calibration_Slider_Value)
+            {
+                IQBD_hScrollBar1.Value = IQ_Controls.RPi.Calibration_Slider_Value;
+                IQ_Controls.RPi.Previous_Calibration_Slider_Value = IQ_Controls.RPi.Calibration_Slider_Value;
+            }
+            
         }
 
         public bool Update_RPi_Settings()
@@ -844,58 +860,57 @@ namespace OmniaGUI
             String Text_color;
             String Boarder_color;
 
-            if (RPi_Settings.RPi_Needs_Updated)
-            {
-                path = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
+            MonitorTextBoxText(" Update_RPi_Settings");
+            path = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
 #if RPI
-                path += "/mscc/rpi-settings.ini";
+            path += "/mscc/rpi-settings.ini";
 #endif
-                if (File.Exists(path))
-                {
-                    File.Delete(path);
-                }
-                try
-                {
-                    //file = new System.IO.StreamReader(path);
-                    file = new System.IO.StreamWriter(File.OpenWrite(path));
-                }
-
-                // if the file open fails, whine prettily and return false
-                catch (IOException e)
-                {
-                    string er = e.Message;
-                    DialogResult ret = MessageBox.Show("user_controls.ini Open Failed: " + er,
-                        "MSCC-Core", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
-                    return false;
-                }
-                Background_argb = Settings.Default.Background_Color.ToArgb();
-                Background_color = Background_argb.ToString();
-
-                Text_argb = Settings.Default.Freq_Color.ToArgb();
-                Text_color = Text_argb.ToString();
-
-                Boarder_argb = Settings.Default.Boarder_Color.ToArgb();
-                Boarder_color = Boarder_argb.ToString();
-
-                file.WriteLine("BACKGROUND_COLOR=" + Background_color + ";");
-                file.WriteLine("TEXT_COLOR=" + Text_color + ";");
-                file.WriteLine("BOARDER_COLOR=" + Boarder_color + ";");
-                file.WriteLine("PEAK_NEEDLE=" + Convert.ToString(RPi_Settings.Peak_Needle) + ";");
-                file.WriteLine("PEAK_NEEDLE_DELAY_INDEX=" + Convert.ToString(RPi_Settings.Peak_Needle_Delay_Index) + ";");
-                file.WriteLine("PEAK_NEEDLE_COLOR_INDEX=" + Convert.ToString(RPi_Settings.Peak_Needle_Color_Index) + ";");
-                file.WriteLine("TIME_DISPLAY=" + Convert.ToString(RPi_Settings.Time_Display) + ";");
-                file.WriteLine("METER_MODE=" + Convert.ToString(RPi_Settings.Meter_Mode) + ";");
-                file.WriteLine("SPEAKER_ATTN=" + Convert.ToString(RPi_Settings.Volume_Settings.Volume_ATTN_Index) + ";");
-                file.WriteLine("SPEAKER_VOLUME=" + Convert.ToString(RPi_Settings.Volume_Settings.Speaker_Volume) + ";");
-                file.WriteLine("SPEAKER_MUTE=" + Convert.ToString(RPi_Settings.Volume_Settings.Speaker_Mute) + ";");
-                file.WriteLine("MIC_MODE=" + Convert.ToString(RPi_Settings.Volume_Settings.Mic_Mode) + ";");
-                file.WriteLine("MIC_VOLUME=" + Convert.ToString(RPi_Settings.Volume_Settings.Mic_Volume) + ";");
-                file.WriteLine("MIC_MUTE=" + Convert.ToString(RPi_Settings.Volume_Settings.Mic_Mute) + ";");
-                file.WriteLine("MIC_PRE_GAIN=" + Convert.ToString(RPi_Settings.Volume_Settings.Mic_Pre_Gain) + ";");
-           
-                file.Close();
-                RPi_Settings.RPi_Needs_Updated = false;
+            if (File.Exists(path))
+            {
+                File.Delete(path);
             }
+            try
+            {
+                //file = new System.IO.StreamReader(path);
+                file = new System.IO.StreamWriter(File.OpenWrite(path));
+            }
+
+            // if the file open fails, whine prettily and return false
+            catch (IOException e)
+            {
+                string er = e.Message;
+                DialogResult ret = MessageBox.Show("rpi-settings.ini Open Failed: " + er,
+                    "MSCC-Core", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+                return false;
+            }
+            Background_argb = Settings.Default.Background_Color.ToArgb();
+            Background_color = Background_argb.ToString();
+
+            Text_argb = Settings.Default.Freq_Color.ToArgb();
+            Text_color = Text_argb.ToString();
+
+            Boarder_argb = Settings.Default.Boarder_Color.ToArgb();
+            Boarder_color = Boarder_argb.ToString();
+
+            file.WriteLine("BACKGROUND_COLOR=" + Background_color + ";");
+            file.WriteLine("TEXT_COLOR=" + Text_color + ";");
+            file.WriteLine("BOARDER_COLOR=" + Boarder_color + ";");
+            file.WriteLine("PEAK_NEEDLE=" + Convert.ToString(RPi_Settings.Peak_Needle) + ";");
+            file.WriteLine("PEAK_NEEDLE_DELAY_INDEX=" + Convert.ToString(RPi_Settings.Peak_Needle_Delay_Index) + ";");
+            file.WriteLine("PEAK_NEEDLE_COLOR_INDEX=" + Convert.ToString(RPi_Settings.Peak_Needle_Color_Index) + ";");
+            file.WriteLine("TIME_DISPLAY=" + Convert.ToString(RPi_Settings.Time_Display) + ";");
+            file.WriteLine("METER_MODE=" + Convert.ToString(RPi_Settings.Meter_Mode) + ";");
+            file.WriteLine("SPEAKER_ATTN=" + Convert.ToString(RPi_Settings.Volume_Settings.Volume_ATTN_Index) + ";");
+            file.WriteLine("SPEAKER_VOLUME=" + Convert.ToString(RPi_Settings.Volume_Settings.Speaker_Volume) + ";");
+            file.WriteLine("SPEAKER_MUTE=" + Convert.ToString(RPi_Settings.Volume_Settings.Speaker_Mute) + ";");
+            file.WriteLine("MIC_MODE=" + Convert.ToString(RPi_Settings.Volume_Settings.Mic_Mode) + ";");
+            file.WriteLine("MIC_VOLUME=" + Convert.ToString(RPi_Settings.Volume_Settings.Mic_Volume) + ";");
+            file.WriteLine("MIC_MUTE=" + Convert.ToString(RPi_Settings.Volume_Settings.Mic_Mute) + ";");
+            file.WriteLine("MIC_PRE_GAIN=" + Convert.ToString(RPi_Settings.Volume_Settings.Mic_Pre_Gain) + ";");
+            file.WriteLine("ANTENNA_SWITCH=" + Convert.ToString(RPi_Settings.Controls.Antenna_Switch) + ";");
+
+            file.Close();
+            //RPi_Settings.RPi_Needs_Updated = false;
             return true;
         }
 
@@ -948,9 +963,10 @@ namespace OmniaGUI
             String temp_string;
             int line_count = 0;
             int volume_count = 0;
-          
+            byte[] buf = new byte[2];
+
             String Message = " Main_Form -> Init_RPi_Settings started";
-            Write_Debug_Message(Message);
+            Write_Debug_Message(Message);      
             // get path to local Appdata folder
             path = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
             // add our folder and file name
@@ -976,6 +992,22 @@ namespace OmniaGUI
             while ((line = file.ReadLine()) != null)
             {
                 line_count++;
+
+                temp_string = getBetween(line, "ANTENNA_SWITCH=", ";");
+                if (temp_string != "")
+                {
+                    Int16.TryParse(temp_string, out temp_int);
+                    RPi_Settings.Controls.Antenna_Switch = temp_int;
+                    Settings.Default.Antenna_Switch = (byte)temp_int;
+                    Antenna_Switch_comboBox1.SelectedIndex = RPi_Settings.Controls.Antenna_Switch;
+                    buf[0] = Master_Controls.Extended_Commands.CMD_SET_ANTENNA_SWITCH;
+                    buf[1] = Set_Antenna_Switch_Value(temp_int);
+                    oCode.SendCommand_MultiByte(txsocket, txtarget,
+                          Master_Controls.Extended_Commands.CMD_SET_EXTENDED_COMMAND, buf, buf.Length);
+                    Message = " ANTENNA_SWITCH: " + Convert.ToString(RPi_Settings.Controls.Antenna_Switch);
+                    Write_Debug_Message(Message);
+                }
+
                 temp_string = getBetween(line, "SPEAKER_VOLUME=", ";");
                 if (temp_string != "")
                 {
@@ -1307,6 +1339,7 @@ namespace OmniaGUI
             oCode.Freq_Tune_Index = 3;
             CW_Filter_listBox1.SetSelected(2, true);
             Default_CW_Filter_listBox1.SetSelected(2, true);
+            Set_Freq_Digit_Pointer();
 
             Time_checkBox2.Enabled = true;
 
@@ -1348,14 +1381,20 @@ namespace OmniaGUI
 
         public void Post_Initialization()
         {
+            byte[] buf = new byte[2];
+            
             MonitorTextBoxText(" Post_Initialization Called");
-            MonitorTextBoxText(" mscc value: " + Convert.ToString(Properties.mscc.Default.test));
-            Properties.mscc.Default.test += 1;
-            MonitorTextBoxText(" mscc value: " + Convert.ToString(Properties.mscc.Default.test));
             Set_Startup_Band();
             Volume_Attn_listBox1.SelectedIndex = Settings.Default.Volume_Attn_Index;
             Volume_textBox2.Text = Convert.ToString(Settings.Default.Speaker_Volume);
             Volume_hScrollBar1.Value = Settings.Default.Speaker_Volume;
+#if RPI
+            buf[0] = Master_Controls.Extended_Commands.CMD_MFC_AUTO_ZERO;
+            buf[1] = 1;
+            oCode.SendCommand_MultiByte(txsocket, txtarget, Master_Controls.Extended_Commands.CMD_SET_EXTENDED_COMMAND,
+                                                                buf, buf.Length);
+#endif
+
 #if !RPI
             switch (Settings.Default.Speaker_MutED)
             {
@@ -1418,6 +1457,9 @@ namespace OmniaGUI
             Initialize_Waterfall();
 #endif
             Initialize_MFC();
+#if RPI
+            MonitorTextBoxText(" Full Size: " + Convert.ToString(Full_size));
+#endif
         }
 
         private void frmMain_Load(object sender, EventArgs e)
@@ -1425,7 +1467,6 @@ namespace OmniaGUI
 #if RPI
             String Message;
 #endif
-            Point RPI_location = new Point(0, 4);
             byte[] buf = new byte[2];
             Size pic_size = new Size(0, 0);
 
@@ -1479,12 +1520,12 @@ namespace OmniaGUI
             }
             MonitorTextBoxText(" frmMain_Load Called");
             MonitorTextBoxText(" MSCC Version: " + Convert.ToString(Master_Controls.productVersion));
-#if RPI
+/*#if RPI
             CW_Filter_listBox1.Size = new Size(70, 30);
             Filter_Low_listBox1.Size = new Size(70, 30);
             Filter_listBox1.Size = new Size(70, 30);
             mainlistBox1.Size = new Size(70, 30);
-#endif
+#endif*/
             timer3.Enabled = true;
         }
 
@@ -1570,12 +1611,12 @@ namespace OmniaGUI
             short power = 0;
             short mode_number = 0;
             //Decompose the frequency into individual digits
-            //Adjust the display frequency by the delta frequency drift set by MS-SDR
-            //oCode.DisplayFreq = oCode.DisplayFreq + Frequency_Calibration_controls.Frequency_Drift;
+#if !RPI
             if (Settings.Default.Auto_Zero)
             {
                 Zero_Frequency();
             }
+#endif
             Freq_Digits.meg10 = oCode.DisplayFreq / 10000000;
             Freq_Digits.meg = (oCode.DisplayFreq - (Freq_Digits.meg10 * 10000000)) / 1000000;
             Freq_Digits.hundred_thousand = (oCode.DisplayFreq - (Freq_Digits.meg10 * 10000000) - (Freq_Digits.meg * 1000000))
@@ -1600,7 +1641,15 @@ namespace OmniaGUI
             Tenthousands.Text = Convert.ToString(Freq_Digits.ten_thousand);
             Hundredthousand.Text = Convert.ToString(Freq_Digits.hundred_thousand);
             Millions.Text = Convert.ToString(Freq_Digits.meg);
-            Tenmillions.Text = Convert.ToString(Freq_Digits.meg10);
+            if (Freq_Digits.meg10 == 0)
+            {
+                MonitorTextBoxText(" meg10 Position is zero");
+                Tenmillions.Text = " ";
+            }
+            else
+            {
+                Tenmillions.Text = Convert.ToString(Freq_Digits.meg10);
+            }
             //Voice_output.SpeakAsync(Convert.ToString(oCode.DisplayFreq) +"  Mega Hertz");
             Panadapter_Controls.Frequency = oCode.DisplayFreq;
             //Panadapter_Controls.Updated_Frequency = oCode.DisplayFreq;
@@ -3009,16 +3058,7 @@ namespace OmniaGUI
             int Hz = freq_plus_rit - (MHz * 1000000) - (KHz * 1000);
             ritfreqtextBox1.Text = Convert.ToString(MHz) + "." + string.Format("{0:000}", KHz) + "." + (string.Format("{0:000}", Hz));
             Panadapter_Controls.Frequency = oCode.DisplayFreq;
-            /*if(Mouse_controls.Silent_Update == true)
-            {
-                oCode.SendCommand(txsocket, txtarget, oCode.CMD_SET_SPEAKER_MUTE, 1);
-                Thread.Sleep(100);
-            }*/
             oCode.SendCommand32(txsocket, txtarget, oCode.CMD_SET_MAIN_FREQ, oCode.DisplayFreq);
-            /*if (Mouse_controls.Silent_Update == true)
-            {
-                oCode.SendCommand(txsocket, txtarget, oCode.CMD_SET_SPEAKER_MUTE, 0);
-            }*/
             Mouse_controls.Silent_Update = false;
             if (oCode.current_band == oCode.general_band)
             {
@@ -3473,6 +3513,11 @@ namespace OmniaGUI
                 Amplifier_Power_Controls.Tab_Active = true;
                 TabPage CurrrentTabProperty = powertabControl1.SelectedTab;
             }
+#if RPI
+            MonitorTextBoxText(" MFC_Enter -> Antenna_Switch: " +
+                    Convert.ToString(RPi_Settings.Controls.Antenna_Switch));
+            Antenna_Switch_comboBox1.SelectedIndex = RPi_Settings.Controls.Antenna_Switch;
+#endif
         }
 
         private void MFC_Leave(object sender, EventArgs e)
@@ -3500,7 +3545,7 @@ namespace OmniaGUI
             Master_Controls.Tuning_Mode = false;
             Master_Controls.PPT_Mode = false;
             Amplifier_Power_Controls.Bias_On = false;
-            Amplifier_Power_Controls.Solidus_Band_Selected = false;
+            //Amplifier_Power_Controls.Solidus_Band_Selected = false;
             button1.Enabled = true;
             buttTune.BackColor = Color.Gainsboro;
             buttTune.ForeColor = Color.Black;
@@ -3597,10 +3642,13 @@ namespace OmniaGUI
             MonitorTextBoxText(" Main tab entered");
 #if RPI
             this.Size = Main_tab_size;
+            this.Location = RPI_location;
+
 #endif
             Master_Controls.Current_tab = powertabControl1.SelectedTab;
             Mouse_controls.Allow_Frequency_Updates = true;
             Master_Controls.Main_Tab_Active = true;
+            
             //powertabPage1.BackColor = Color.Red;
             //CurrrentTabProperty.
         }
@@ -4114,6 +4162,15 @@ namespace OmniaGUI
         {
         }*/
 
+        private void Volume_hScroolBar1_mouseenter(object sender,EventArgs e)
+        {
+            Volume_hScrollBar1.Focus();
+        }
+
+        private void Volume_hScroolBar1_mouseleave(object sender, EventArgs e)
+        {
+            this.Focus();
+        }
 
         private void Volume_hScrollBar1_Scroll(object sender, ScrollEventArgs e)
         {
@@ -4540,6 +4597,7 @@ namespace OmniaGUI
                         Master_Controls.Post_Init = true;
 #if RPI
                         RPi_Display_Timer.Enabled = true;
+                        this.Location = RPI_location;
 #endif
                     }
                     if (!Master_Controls.Step_Sent)
@@ -4552,7 +4610,9 @@ namespace OmniaGUI
                     if (++Master_Controls.Keep_Alive_Counter >= 15)
                     {
                         MonitorTextBoxText(" Keep Alive Counter: " + Convert.ToString(Master_Controls.Keep_Alive_Counter));
-
+#if RPI
+                        Update_RPi_Settings();
+#endif
                         if (Master_Controls.Keep_Alive == false)
                         {
                             Keep_Alive_timer.Stop();
@@ -5350,7 +5410,7 @@ namespace OmniaGUI
             if (IQ_Controls.IQ_RX_MODE_ACTIVE)
             {
                 DialogResult ret = MessageBox.Show("TUNING NOT PERMITTED IN RX MODE", "MSCC",
-                                                                                      MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+                                              MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
                 return;
             }
             if (IQ_Controls.band_selected)
@@ -8000,6 +8060,12 @@ namespace OmniaGUI
             return swapped[step];
         }
 
+        private void step_list_box_leave(object send,EventArgs e)
+        {
+            this.mainPage.Focus();
+            MonitorTextBoxText(" step_list_box_leave");
+        }
+
         private void mainlistBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
             {
@@ -8007,6 +8073,7 @@ namespace OmniaGUI
                 oCode.Freq_Tune_Index = (short)mainlistBox1.SelectedIndex;
                 oCode.SendCommand(txsocket, txtarget, Tuning_Knob_Controls.CMD_SET_STEP_VALUE, oCode.Freq_Tune_Index);
                 oCode.FreqDigit = (short)Swap_tuning_step(oCode.Freq_Tune_Index);
+                Set_Freq_Digit_Pointer();
             }
         }
 
@@ -9736,7 +9803,7 @@ namespace OmniaGUI
             byte[] buf = new byte[2];
             if (oCode.isLoading) return;
             buf[0] = Master_Controls.Extended_Commands.CMD_MFC_AUTO_ZERO;
-            if (Settings.Default.Auto_Zero == true)
+            if(Auto_Zero_checkBox2.Checked == false)
             {
                 Settings.Default.Auto_Zero = false;
                 buf[1] = 0;
@@ -9746,8 +9813,8 @@ namespace OmniaGUI
                 Settings.Default.Auto_Zero = true;
                 buf[1] = 1;
             }
-            oCode.SendCommand_MultiByte(txsocket, txtarget,
-                                                 Master_Controls.Extended_Commands.CMD_SET_EXTENDED_COMMAND, buf, buf.Length);
+            oCode.SendCommand_MultiByte(txsocket, txtarget,Master_Controls.Extended_Commands.CMD_SET_EXTENDED_COMMAND,
+                                                                buf, buf.Length);
         }
 
         private void Freq_Cal_timer4_Tick(object sender, EventArgs e)
@@ -10287,7 +10354,7 @@ namespace OmniaGUI
             Audio_tabPage1.BackColor = Settings.Default.Background_Color;
             MFC.BackColor = Settings.Default.Background_Color;
             metertab.BackColor = Settings.Default.Background_Color;
-            panel2.BackColor = Settings.Default.Background_Color;
+            //panel2.BackColor = Settings.Default.Background_Color;
             Band_Change_Auto_Tune_checkBox2.BackColor = Settings.Default.Background_Color;
             Auto_Zero_checkBox2.BackColor = Settings.Default.Background_Color;
             vuMeter1.BackColor = Settings.Default.Background_Color;
@@ -10328,118 +10395,6 @@ namespace OmniaGUI
             Hundredthousand.BackColor = Settings.Default.Boarder_Color;
             Millions.BackColor = Settings.Default.Boarder_Color;
             Tenmillions.BackColor = Settings.Default.Boarder_Color;
-
-            Ones_Top_button2.ForeColor = Color.Transparent;
-            Ones_Top_button2.BackColor = System.Drawing.Color.Transparent;
-            Ones_Top_button2.FlatAppearance.BorderColor = Settings.Default.Boarder_Color;
-            Ones_Top_button2.FlatAppearance.CheckedBackColor = Settings.Default.Boarder_Color;
-            Ones_Top_button2.FlatAppearance.MouseDownBackColor = Settings.Default.Boarder_Color;
-            Ones_Top_button2.FlatAppearance.MouseOverBackColor = Settings.Default.Boarder_Color;
-
-            Ones_Bottom_button2.ForeColor = Color.Transparent;
-            Ones_Bottom_button2.BackColor = System.Drawing.Color.Transparent;
-            Ones_Bottom_button2.FlatAppearance.BorderColor = Settings.Default.Boarder_Color;
-            Ones_Bottom_button2.FlatAppearance.CheckedBackColor = Settings.Default.Boarder_Color;
-            Ones_Bottom_button2.FlatAppearance.MouseDownBackColor = Settings.Default.Boarder_Color;
-            Ones_Bottom_button2.FlatAppearance.MouseOverBackColor = Settings.Default.Boarder_Color;
-
-            Tens_Top_button.ForeColor = Color.Transparent;
-            Tens_Top_button.BackColor = System.Drawing.Color.Transparent;
-            Tens_Top_button.FlatAppearance.BorderColor = Settings.Default.Boarder_Color;
-            Tens_Top_button.FlatAppearance.CheckedBackColor = Settings.Default.Boarder_Color;
-            Tens_Top_button.FlatAppearance.MouseDownBackColor = Settings.Default.Boarder_Color;
-            Tens_Top_button.FlatAppearance.MouseOverBackColor = Settings.Default.Boarder_Color;
-
-            Tens_Bottom_button2.ForeColor = Color.Transparent;
-            Tens_Bottom_button2.BackColor = System.Drawing.Color.Transparent;
-            Tens_Bottom_button2.FlatAppearance.BorderColor = Settings.Default.Boarder_Color;
-            Tens_Bottom_button2.FlatAppearance.CheckedBackColor = Settings.Default.Boarder_Color;
-            Tens_Bottom_button2.FlatAppearance.MouseDownBackColor = Settings.Default.Boarder_Color;
-            Tens_Bottom_button2.FlatAppearance.MouseOverBackColor = Settings.Default.Boarder_Color;
-
-            Hundreds_Top_button8.ForeColor = Color.Transparent;
-            Hundreds_Top_button8.BackColor = System.Drawing.Color.Transparent;
-            Hundreds_Top_button8.FlatAppearance.BorderColor = Settings.Default.Boarder_Color;
-            Hundreds_Top_button8.FlatAppearance.CheckedBackColor = Settings.Default.Boarder_Color;
-            Hundreds_Top_button8.FlatAppearance.MouseDownBackColor = Settings.Default.Boarder_Color;
-            Hundreds_Top_button8.FlatAppearance.MouseOverBackColor = Settings.Default.Boarder_Color;
-
-            Hundred_Bottom_button3.ForeColor = Color.Transparent;
-            Hundred_Bottom_button3.BackColor = System.Drawing.Color.Transparent;
-            Hundred_Bottom_button3.FlatAppearance.BorderColor = Settings.Default.Boarder_Color;
-            Hundred_Bottom_button3.FlatAppearance.CheckedBackColor = Settings.Default.Boarder_Color;
-            Hundred_Bottom_button3.FlatAppearance.MouseDownBackColor = Settings.Default.Boarder_Color;
-            Hundred_Bottom_button3.FlatAppearance.MouseOverBackColor = Settings.Default.Boarder_Color;
-
-            Thousand_Top_button7.ForeColor = Color.Transparent;
-            Thousand_Top_button7.BackColor = System.Drawing.Color.Transparent;
-            Thousand_Top_button7.FlatAppearance.BorderColor = Settings.Default.Boarder_Color;
-            Thousand_Top_button7.FlatAppearance.CheckedBackColor = Settings.Default.Boarder_Color;
-            Thousand_Top_button7.FlatAppearance.MouseDownBackColor = Settings.Default.Boarder_Color;
-            Thousand_Top_button7.FlatAppearance.MouseOverBackColor = Settings.Default.Boarder_Color;
-
-            Thousand_Bottom_button.ForeColor = Color.Transparent;
-            Thousand_Bottom_button.BackColor = System.Drawing.Color.Transparent;
-            Thousand_Bottom_button.FlatAppearance.BorderColor = Settings.Default.Boarder_Color;
-            Thousand_Bottom_button.FlatAppearance.CheckedBackColor = Settings.Default.Boarder_Color;
-            Thousand_Bottom_button.FlatAppearance.MouseDownBackColor = Settings.Default.Boarder_Color;
-            Thousand_Bottom_button.FlatAppearance.MouseOverBackColor = Settings.Default.Boarder_Color;
-
-            Tenthousand_Top_button6.ForeColor = Color.Transparent;
-            Tenthousand_Top_button6.BackColor = System.Drawing.Color.Transparent;
-            Tenthousand_Top_button6.FlatAppearance.BorderColor = Settings.Default.Boarder_Color;
-            Tenthousand_Top_button6.FlatAppearance.CheckedBackColor = Settings.Default.Boarder_Color;
-            Tenthousand_Top_button6.FlatAppearance.MouseDownBackColor = Settings.Default.Boarder_Color;
-            Tenthousand_Top_button6.FlatAppearance.MouseOverBackColor = Settings.Default.Boarder_Color;
-
-            Tenthousand_Bottom_button5.ForeColor = Color.Transparent;
-            Tenthousand_Bottom_button5.BackColor = System.Drawing.Color.Transparent;
-            Tenthousand_Bottom_button5.FlatAppearance.BorderColor = Settings.Default.Boarder_Color;
-            Tenthousand_Bottom_button5.FlatAppearance.CheckedBackColor = Settings.Default.Boarder_Color;
-            Tenthousand_Bottom_button5.FlatAppearance.MouseDownBackColor = Settings.Default.Boarder_Color;
-            Tenthousand_Bottom_button5.FlatAppearance.MouseOverBackColor = Settings.Default.Boarder_Color;
-
-            Hundred_Thousand_Top_button5.ForeColor = Color.Transparent;
-            Hundred_Thousand_Top_button5.BackColor = System.Drawing.Color.Transparent;
-            Hundred_Thousand_Top_button5.FlatAppearance.BorderColor = Settings.Default.Boarder_Color;
-            Hundred_Thousand_Top_button5.FlatAppearance.CheckedBackColor = Settings.Default.Boarder_Color;
-            Hundred_Thousand_Top_button5.FlatAppearance.MouseDownBackColor = Settings.Default.Boarder_Color;
-            Hundred_Thousand_Top_button5.FlatAppearance.MouseOverBackColor = Settings.Default.Boarder_Color;
-
-            Hundred_Thousand_Button_button6.ForeColor = Color.Transparent;
-            Hundred_Thousand_Button_button6.BackColor = System.Drawing.Color.Transparent;
-            Hundred_Thousand_Button_button6.FlatAppearance.BorderColor = Settings.Default.Boarder_Color;
-            Hundred_Thousand_Button_button6.FlatAppearance.CheckedBackColor = Settings.Default.Boarder_Color;
-            Hundred_Thousand_Button_button6.FlatAppearance.MouseDownBackColor = Settings.Default.Boarder_Color;
-            Hundred_Thousand_Button_button6.FlatAppearance.MouseOverBackColor = Settings.Default.Boarder_Color;
-
-            Million_Top_button4.ForeColor = Color.Transparent;
-            Million_Top_button4.BackColor = System.Drawing.Color.Transparent;
-            Million_Top_button4.FlatAppearance.BorderColor = Settings.Default.Boarder_Color;
-            Million_Top_button4.FlatAppearance.CheckedBackColor = Settings.Default.Boarder_Color;
-            Million_Top_button4.FlatAppearance.MouseDownBackColor = Settings.Default.Boarder_Color;
-            Million_Top_button4.FlatAppearance.MouseOverBackColor = Settings.Default.Boarder_Color;
-
-            Million_Bottom_button7.ForeColor = Color.Transparent;
-            Million_Bottom_button7.BackColor = System.Drawing.Color.Transparent;
-            Million_Bottom_button7.FlatAppearance.BorderColor = Settings.Default.Boarder_Color;
-            Million_Bottom_button7.FlatAppearance.CheckedBackColor = Settings.Default.Boarder_Color;
-            Million_Bottom_button7.FlatAppearance.MouseDownBackColor = Settings.Default.Boarder_Color;
-            Million_Bottom_button7.FlatAppearance.MouseOverBackColor = Settings.Default.Boarder_Color;
-
-            Ten_Million_Top_button3.ForeColor = Color.Transparent;
-            Ten_Million_Top_button3.BackColor = System.Drawing.Color.Transparent;
-            Ten_Million_Top_button3.FlatAppearance.BorderColor = Settings.Default.Boarder_Color;
-            Ten_Million_Top_button3.FlatAppearance.CheckedBackColor = Settings.Default.Boarder_Color;
-            Ten_Million_Top_button3.FlatAppearance.MouseDownBackColor = Settings.Default.Boarder_Color;
-            Ten_Million_Top_button3.FlatAppearance.MouseOverBackColor = Settings.Default.Boarder_Color;
-
-            TenMillion_Bottom_button8.ForeColor = Color.Transparent;
-            TenMillion_Bottom_button8.BackColor = System.Drawing.Color.Transparent;
-            TenMillion_Bottom_button8.FlatAppearance.BorderColor = Settings.Default.Boarder_Color;
-            TenMillion_Bottom_button8.FlatAppearance.CheckedBackColor = Settings.Default.Boarder_Color;
-            TenMillion_Bottom_button8.FlatAppearance.MouseDownBackColor = Settings.Default.Boarder_Color;
-            TenMillion_Bottom_button8.FlatAppearance.MouseOverBackColor = Settings.Default.Boarder_Color;
         }
 
         private void Freq_Color_button4_Click(object sender, EventArgs e)
@@ -10640,104 +10595,8 @@ namespace OmniaGUI
             {
                 Last_used.GEN.Freq = oCode.DisplayFreq;
             }
-        }
-
-        private void Ones_Bottom_button2_Click(object sender, EventArgs e)
-        {
-            oCode.FreqDigit = 0;
-            Digit_freq_update(0);
-        }
-
-        private void Ones_Top_button2_Click(object sender, EventArgs e)
-        {
-            oCode.FreqDigit = 0;
-            Digit_freq_update(1);
-        }
-
-        private void Tens_Top_button_Click(object sender, EventArgs e)
-        {
-            oCode.FreqDigit = 1;
-            Digit_freq_update(1);
-        }
-
-        private void Tens_Bottom_button2_Click(object sender, EventArgs e)
-        {
-            oCode.FreqDigit = 1;
-            Digit_freq_update(0);
-        }
-
-        private void Hundreds_Top_button8_Click(object sender, EventArgs e)
-        {
-            oCode.FreqDigit = 2;
-            Digit_freq_update(1);
-        }
-
-        private void Hundred_Bottom_button3_Click(object sender, EventArgs e)
-        {
-            oCode.FreqDigit = 2;
-            Digit_freq_update(0);
-        }
-
-        private void Thousand_Top_button7_Click(object sender, EventArgs e)
-        {
-            oCode.FreqDigit = 3;
-            Digit_freq_update(1);
-        }
-
-        private void Thousand_Bottom_button_Click(object sender, EventArgs e)
-        {
-            oCode.FreqDigit = 3;
-            Digit_freq_update(0);
-        }
-
-        private void Tenthousand_Top_button6_Click(object sender, EventArgs e)
-        {
-            oCode.FreqDigit = 4;
-            Digit_freq_update(1);
-        }
-
-        private void Tenthousand_Bottom_button5_Click(object sender, EventArgs e)
-        {
-            oCode.FreqDigit = 4;
-            Digit_freq_update(0);
-        }
-
-        private void Hundred_Thousand_Top_button5_Click(object sender, EventArgs e)
-        {
-            oCode.FreqDigit = 5;
-            Digit_freq_update(1);
-        }
-
-        private void Hundred_Thousand_Button_button6_Click(object sender, EventArgs e)
-        {
-            oCode.FreqDigit = 5;
-            Digit_freq_update(0);
-        }
-
-        private void Million_Top_button4_Click(object sender, EventArgs e)
-        {
-            oCode.FreqDigit = 6;
-            Digit_freq_update(1);
-        }
-
-        private void Million_Bottom_button7_Click(object sender, EventArgs e)
-        {
-            oCode.FreqDigit = 6;
-            Digit_freq_update(0);
-        }
-
-        private void Ten_Million_Top_button3_Click(object sender, EventArgs e)
-        {
-            oCode.FreqDigit = 7;
-            Digit_freq_update(1);
-        }
-
-        private void TenMillion_Bottom_button8_Click(object sender, EventArgs e)
-        {
-            oCode.FreqDigit = 7;
-            Digit_freq_update(0);
-        }
-
+        }   
+   
         private void Main_VU_label58_Click(object sender, EventArgs e)
         {
 
@@ -12013,7 +11872,6 @@ namespace OmniaGUI
         }
 
         short band = 180;
-        short previous_band = 180;
         int bias = 0;
         int temperature = 0;
         bool firmware_version_major = false;
@@ -12110,6 +11968,8 @@ namespace OmniaGUI
             uint meter_power;
             byte which_switch = 0;
             byte star = 0;
+            string Stop_Message = " \r\nMSCC will now STOP";
+            string Message;
 
             op_code = extended_packet[1];
             operand = extended_packet[2];
@@ -12133,13 +11993,27 @@ namespace OmniaGUI
                     break;
 
                 case Master_Controls.Extended_Commands.CMD_SET_GUI_STAR:
-                    MonitorTextBoxText(" Process_extended_commands-> CMD_SET_GUI_STAR -> Value: " + Convert.ToString(operand));
+                    MonitorTextBoxText(" Process_extended_commands-> CMD_SET_GUI_STAR -> Value: " +
+                        Convert.ToString(operand));
                     which_switch = operand;
                     which_switch = (byte)(which_switch & 0xF0);
                     star = (byte)(operand & 0x0F);
                     switch (which_switch)
                     {
-                        case Master_Controls.Extended_Commands.Button_right_switch_star:
+                        case Master_Controls.Extended_Commands.Knob_switch_star:
+                            switch (star)
+                            {
+                                case 1:
+                                    MFC_Knob_label38.BackColor = Color.Red;
+                                    MFC_Knob_label38.ForeColor = Color.White;
+                                    break;
+                                default:
+                                    MFC_Knob_label38.BackColor = Color.Gainsboro;
+                                    MFC_Knob_label38.ForeColor = Color.Black;
+                                    break;
+                            }
+                            break;
+                        case Master_Controls.Extended_Commands.Button_C_switch_star:
                             switch (star)
                             {
                                 case 1:
@@ -12149,6 +12023,32 @@ namespace OmniaGUI
                                 default:
                                     MFC_C_label38.BackColor = Color.Gainsboro;
                                     MFC_C_label38.ForeColor = Color.Black;
+                                    break;
+                            }
+                            break;
+                        case Master_Controls.Extended_Commands.Button_A_switch_star:
+                            switch (star)
+                            {
+                                case 1:
+                                    MFC_A_label38.BackColor = Color.Red;
+                                    MFC_A_label38.ForeColor = Color.White;
+                                    break;
+                                default:
+                                    MFC_A_label38.BackColor = Color.Gainsboro;
+                                    MFC_A_label38.ForeColor = Color.Black;
+                                    break;
+                            }
+                            break;
+                        case Master_Controls.Extended_Commands.Button_B_switch_star:
+                            switch (star)
+                            {
+                                case 1:
+                                    MFC_B_label38.BackColor = Color.Red;
+                                    MFC_B_label38.ForeColor = Color.White;
+                                    break;
+                                default:
+                                    MFC_B_label38.BackColor = Color.Gainsboro;
+                                    MFC_B_label38.ForeColor = Color.Black;
                                     break;
                             }
                             break;
@@ -12173,9 +12073,17 @@ namespace OmniaGUI
                         message_1 = "GetString Error";
                     }
                     //AutoClosingMessageBox.Show(message_1,"MSCC",20000,MessageBoxButtons.OK);
-                    MessageBox.Show(message_1, "MSCC", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    Message = message_1 + Stop_Message;
+                    Master_Controls.Shutdown = true;
+                    if (Master_Controls.Initialize_network_status == true)
+                    {
+                        oCode.SendCommand(Panadapter_Controls.txsocket, Panadapter_Controls.txtarget, 
+                            oCode.CMD_SET_STOP, 1);
+                    }
+                    MessageBox.Show(Message, "MSCC", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    Thread.Sleep(1000);
+                    Application.Exit();
                     break;
-
 #if !RPI
                 case Master_Controls.Extended_Commands.CMD_SET_SERVER_MSG:
                     try
@@ -12432,18 +12340,18 @@ namespace OmniaGUI
 
         public short Set_band(Int32 freq)
         {
-            short G_band = 0;
-            if (freq >= 1800000 && freq <= 2000000) G_band = 160;
-            if (freq >= 3500000 && freq <= 4000000) G_band = 80;
-            if (freq >= 5330500 && freq <= 5403500) G_band = 60;
-            if (freq >= 7000000 && freq <= 7300000) G_band = 40;
-            if (freq >= 10100000 && freq <= 10150000) G_band = 30;
-            if (freq >= 14000000 && freq <= 14350000) G_band = 20;
-            if (freq >= 18068000 && freq <= 18168000) G_band = 17;
-            if (freq >= 21000000 && freq <= 21450000) G_band = 15;
-            if (freq >= 24890000 && freq <= 24990000) G_band = 12;
-            if (freq >= 28000000 && freq <= 30000000) G_band = 10;
-            return G_band;
+            short band = 0;
+            if (freq >= 1800000 && freq <= 2000000) band = 160;
+            if (freq >= 3500000 && freq <= 4000000) band = 80;
+            if (freq >= 5330500 && freq <= 5403500) band = 60;
+            if (freq >= 7000000 && freq <= 7300000) band = 40;
+            if (freq >= 10100000 && freq <= 10150000) band = 30;
+            if (freq >= 14000000 && freq <= 14350000) band = 20;
+            if (freq >= 18068000 && freq <= 18168000) band = 17;
+            if (freq >= 21000000 && freq <= 21450000) band = 15;
+            if (freq >= 24890000 && freq <= 24990000) band = 12;
+            if (freq >= 28000000 && freq <= 30000000) band = 10;
+            return band;
         }
 
         public void Apply_Band_Stack()
@@ -12872,11 +12780,12 @@ namespace OmniaGUI
                 case Tuning_Knob_Controls.CMD_SET_STEP_VALUE:
                     oCode.Freq_Tune_Index = (short)operand;
 #if RPI
-                    RPi_Settings.Controls.Freq_Step = operand;
+                        RPi_Settings.Controls.Freq_Step = operand;
 #else
-                    mainlistBox1.SelectedIndex = operand;
+                        mainlistBox1.SelectedIndex = operand;
 #endif
                     oCode.FreqDigit = (short)Swap_tuning_step(operand);
+                    Set_Freq_Digit_Pointer();
                     break;
 
                 case oCode.CMD_SET_KEEP_ALIVE:
@@ -13048,12 +12957,15 @@ namespace OmniaGUI
                     break;
 
                 case IQ_Controls.CMD_GET_IQ_VALUE:
+                    IQ_Controls.RPi.Calibration_Slider_Value = BitConverter.ToInt32(message, 1);
+#if !RPI
                     LefthScrollBar1.Value = BitConverter.ToInt32(message, 1);
                     IQLefttextBox2.Text = Convert.ToString(BitConverter.ToInt32(message, 1));
                     IQ_Controls.IQ_Offset = LefthScrollBar1.Value;
                     IQ_Controls.Previous_IQ_Offset = LefthScrollBar1.Value;
                     IQBD_hScrollBar1.Value = BitConverter.ToInt32(message, 1);
-                    MonitorTextBoxText("CMD_GET_IQ_VALUE" + Convert.ToString(IQBD_hScrollBar1.Value));
+#endif
+                    MonitorTextBoxText(" CMD_GET_IQ_VALUE: " + Convert.ToString(IQBD_hScrollBar1.Value));
                     break;
 
                 case oCode.CMD_SET_STOP:
@@ -13263,70 +13175,48 @@ namespace OmniaGUI
                 case Master_Controls.CMD_SET_DISPLAY_FREQ:
                     Freq = BitConverter.ToInt32(message, 1);
                     band = Set_band(Freq);
-                    if (previous_band != band)
+                   
+                    MonitorTextBoxText(" CMD_SET_DISPLAY_FREQ RECIEVED. VALUE : " + BitConverter.ToInt32(message, 1));
+                    MonitorTextBoxText(" CMD_SET_DISPLAY_FREQ RECIEVED. Current Band: " + oCode.Last_band);
+                    switch (band)
                     {
-                        previous_band = band;
-                        MonitorTextBoxText(" CMD_SET_DISPLAY_FREQ RECIEVED. VALUE : " + BitConverter.ToInt32(message, 1));
-                        MonitorTextBoxText(" CMD_SET_DISPLAY_FREQ RECIEVED. Current Band: " + oCode.Last_band);
-                        switch (band)
-                        {
-                            case 160:
-                                Last_used.B160.Freq = BitConverter.ToInt32(message, 1);
-                                main160radioButton10.Checked = true;
-                                main160radioButton10_CheckedChanged(null, null);
-                                break;
-                            case 80:
-                                Last_used.B80.Freq = BitConverter.ToInt32(message, 1);
-                                main80radioButton9.Checked = true;
-                                main80radioButton9_CheckedChanged(null, null);
-                                break;
-                            case 60:
-                                Last_used.B60.Freq = BitConverter.ToInt32(message, 1);
-                                main60radioButton8.Checked = true;
-                                main60radioButton8_CheckedChanged(null, null);
-                                break;
-                            case 40:
-                                Last_used.B40.Freq = BitConverter.ToInt32(message, 1);
-                                main40radioButton7.Checked = true;
-                                main40radioButton7_CheckedChanged(null, null);
-                                break;
-                            case 30:
-                                Last_used.B30.Freq = BitConverter.ToInt32(message, 1);
-                                main30radioButton6.Checked = true;
-                                main30radioButton6_CheckedChanged(null, null);
-                                break;
-                            case 20:
-                                Last_used.B20.Freq = BitConverter.ToInt32(message, 1);
-                                main20radioButton5.Checked = true;
-                                main20radioButton5_CheckedChanged(null, null);
-                                break;
-                            case 17:
-                                Last_used.B17.Freq = BitConverter.ToInt32(message, 1);
-                                main17radioButton4.Checked = true;
-                                main17radioButton4_CheckedChanged(null, null);
-                                break;
-                            case 15:
-                                Last_used.B15.Freq = BitConverter.ToInt32(message, 1);
-                                main15radiobutton.Checked = true;
-                                main15radiobutton_CheckedChanged(null, null);
-                                break;
-                            case 12:
-                                Last_used.B12.Freq = BitConverter.ToInt32(message, 1);
-                                main12radioButton2.Checked = true;
-                                main12radioButton2_CheckedChanged(null, null);
-                                break;
-                            case 10:
-                                Last_used.B10.Freq = BitConverter.ToInt32(message, 1);
-                                main10radioButton1.Checked = true;
-                                main10radioButton1_CheckedChanged(null, null);
-                                break;
-                            default:
-                                genradioButton.Checked = true;
-                                break;
-                        }
+                        case 160:
+                            Last_used.B160.Freq = Freq;
+                            break;
+                        case 80:
+                            Last_used.B80.Freq = Freq;
+                            break;
+                        case 60:
+                            Last_used.B60.Freq = Freq;
+                            break;
+                        case 40:
+                            Last_used.B40.Freq = Freq;
+                            break;
+                        case 30:
+                            Last_used.B30.Freq = Freq;
+                            break;
+                        case 20:
+                            Last_used.B20.Freq = Freq;
+                            break;
+                        case 17:
+                            Last_used.B17.Freq = Freq;
+                            break;
+                        case 15:
+                            Last_used.B15.Freq = Freq;
+                            break;
+                        case 12:
+                            Last_used.B12.Freq = Freq;
+                            break;
+                        case 10:
+                            Last_used.B10.Freq = Freq;
+                            break;
+                        default:
+                            Last_used.GEN.Freq = Freq;
+                            break;
                     }
                     oCode.DisplayFreq = Freq;
                     Display_Main_Freq();
+                    oCode.SendCommand32(txsocket, txtarget, oCode.CMD_SET_MAIN_FREQ, oCode.DisplayFreq);
                     break;
 
                 case IQ_Controls.IQ_OPERATION_COMPLETE:
@@ -14292,6 +14182,46 @@ namespace OmniaGUI
 
         }
 
+        private byte Set_Antenna_Switch_Value(int index)
+        {
+            byte switch_value = 0;
+
+            switch (index)
+            {
+                case 0:
+                    switch_value = 160;
+                    break;
+                case 1:
+                    switch_value = 80;
+                    break;
+                case 2:
+                    switch_value = 60;
+                    break;
+                case 3:
+                    switch_value = 40;
+                    break;
+                case 4:
+                    switch_value = 30;
+                    break;
+                case 5:
+                    switch_value = 20;
+                    break;
+                case 6:
+                    switch_value = 17;
+                    break;
+                case 7:
+                    switch_value = 15;
+                    break;
+                case 8:
+                    switch_value = 12;
+                    break;
+                case 9:
+                    switch_value = 10;
+                    break;
+            }
+            return switch_value;
+        }
+
         private void Antenna_Switch_comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
             int index = 0;
@@ -14301,49 +14231,10 @@ namespace OmniaGUI
             index = Antenna_Switch_comboBox1.SelectedIndex;
             buf[0] = Master_Controls.Extended_Commands.CMD_SET_ANTENNA_SWITCH;
             Settings.Default.Antenna_Switch_Index = (byte)index;
-            switch (index)
-            {
-                case 0:
-                    buf[1] = 160;
-                    Settings.Default.Antenna_Switch = 160;
-                    break;
-                case 1:
-                    buf[1] = 80;
-                    Settings.Default.Antenna_Switch = 80;
-                    break;
-                case 2:
-                    buf[1] = 60;
-                    Settings.Default.Antenna_Switch = 60;
-                    break;
-                case 3:
-                    buf[1] = 40;
-                    Settings.Default.Antenna_Switch = 40;
-                    break;
-                case 4:
-                    buf[1] = 30;
-                    Settings.Default.Antenna_Switch = 30;
-                    break;
-                case 5:
-                    buf[1] = 20;
-                    Settings.Default.Antenna_Switch = 20;
-                    break;
-                case 6:
-                    buf[1] = 17;
-                    Settings.Default.Antenna_Switch = 17;
-                    break;
-                case 7:
-                    buf[1] = 15;
-                    Settings.Default.Antenna_Switch = 15;
-                    break;
-                case 8:
-                    buf[1] = 12;
-                    Settings.Default.Antenna_Switch = 12;
-                    break;
-                case 9:
-                    buf[1] = 10;
-                    Settings.Default.Antenna_Switch = 10;
-                    break;
-            }
+            buf[1] = Set_Antenna_Switch_Value(index);
+            RPi_Settings.Controls.Antenna_Switch = (short)index;
+            MonitorTextBoxText(" Antenna_Switch_comboBox1_SelectedIndexChanged: " +
+                Convert.ToString(RPi_Settings.Controls.Antenna_Switch));
             oCode.SendCommand_MultiByte(txsocket, txtarget,
                    Master_Controls.Extended_Commands.CMD_SET_EXTENDED_COMMAND, buf, buf.Length);
         }
@@ -15371,6 +15262,8 @@ namespace OmniaGUI
                     vuMeter1.Led2Count = 0;
                     vuMeter1.Led3Count = 5;
                     Power_Value_label2.Visible = true;
+                    Power_Value_label2.BackColor = Color.Black;
+                    Power_Value_label2.ForeColor = Color.White;
                     label9.Visible = true;
                     vuMeter1.LevelMax = 145;
                     vuMeter1.ResumeLayout();
@@ -15464,7 +15357,17 @@ namespace OmniaGUI
 
         private void button6_Click(object sender, EventArgs e)
         {
-
+            switch (VFO_Controls.VFO_A)
+            {
+                case true:
+                    groupBox3.Text = "VFO B";
+                    VFO_Controls.VFO_A = false;
+                    break;
+                default:
+                    groupBox3.Text = "VFO A";
+                    VFO_Controls.VFO_A = true;
+                    break;
+            }
         }
 
         private void Peak_Needle_checkBox2_CheckedChanged(object sender, EventArgs e)
@@ -17523,6 +17426,104 @@ namespace OmniaGUI
             int index = 0;
             index = Side_Tone_Volume_hScrollBar1.Value;
             oCode.SendCommand(txsocket, txtarget, oCode.SET_SIDE_TONE_VOLUME, (short)index);
+        }
+
+        private void Set_Freq_Digit_Pointer()
+        {
+            Freq_Pointer_0.Text = "";
+            Freq_Pointer_1.Text = "";
+            Freq_Pointer_2.Text = "";
+            Freq_Pointer_3.Text = "";
+            Freq_Pointer_4.Text = "";
+            Freq_Pointer_5.Text = "";
+            Freq_Pointer_6.Text = "";
+            Freq_Pointer_7.Text = "";
+
+            MonitorTextBoxText(" Select_Freq_Digit_Pointer: " + Convert.ToString(oCode.FreqDigit));
+            switch (oCode.FreqDigit)
+            {
+                case 0:
+                    Freq_Pointer_0.Text = "^";
+                    break;
+                case 1:
+                    Freq_Pointer_1.Text = "^";
+                    break;
+                case 2:
+                    Freq_Pointer_2.Text = "^";
+                    break;
+                case 3:
+                    Freq_Pointer_3.Text = "^";
+                    break;
+                case 4:
+                    Freq_Pointer_4.Text = "^";
+                    break;
+                case 5:
+                    Freq_Pointer_5.Text = "^";
+                    break;
+                case 6:
+                    Freq_Pointer_6.Text = "^";
+                    break;
+                case 7:
+                    Freq_Pointer_7.Text = "^";
+                    break;
+            }
+        }
+
+
+
+        private void MFC_Knob_label38_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void Freq_Pointer_5_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void Freq_Pointer_4_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void Freq_Pointer_3_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void Freq_Pointer_2_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void Freq_Pointer_1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void Freq_Pointer_0_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void Freq_Pointer_7_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void Freq_Pointer_6_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label32_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void band_stack_label29_Click_1(object sender, EventArgs e)
+        {
+
         }
     }
 }

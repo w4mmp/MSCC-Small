@@ -23,8 +23,8 @@ namespace OmniaGUI
             //stop.Focus();
             Comm_file = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
 #if RPI
-            RPi_Settings.RPi_Needs_Updated = true;
-            Update_RPi_Settings();
+            //RPi_Settings.RPi_Needs_Updated = true;
+            //Update_RPi_Settings();
             Comm_file += "/mscc/comm-port.ini";
 #else
             Comm_file += "\\multus-sdr-client\\comm-port.ini";
@@ -94,9 +94,11 @@ namespace OmniaGUI
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Main_form));
             this.powertabControl1 = new System.Windows.Forms.TabControl();
             this.mainPage = new System.Windows.Forms.TabPage();
+            this.Main_Power_hScrollBar1 = new System.Windows.Forms.HScrollBar();
+            this.mainlistBox1 = new System.Windows.Forms.ListBox();
+            this.Meter_Mode_button8 = new System.Windows.Forms.Button();
             this.Microphone_textBox2 = new System.Windows.Forms.Label();
             this.Volume_textBox2 = new System.Windows.Forms.Label();
-            this.mainlistBox1 = new System.Windows.Forms.ListBox();
             this.MFC_Knob_label38 = new System.Windows.Forms.Label();
             this.MFC_C_label38 = new System.Windows.Forms.Label();
             this.MFC_B_label38 = new System.Windows.Forms.Label();
@@ -106,35 +108,6 @@ namespace OmniaGUI
             this.Zedgraph_Control = new ZedGraph.ZedGraphControl();
             this.NR_button3 = new System.Windows.Forms.Button();
             this.Minimize_checkBox2 = new System.Windows.Forms.CheckBox();
-            this.Main_Power_hScrollBar1 = new System.Windows.Forms.HScrollBar();
-            this.Meter_Mode_button8 = new System.Windows.Forms.Button();
-            this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.Tenthousand_Top_button6 = new System.Windows.Forms.Button();
-            this.Hundred_Thousand_Top_button5 = new System.Windows.Forms.Button();
-            this.Million_Top_button4 = new System.Windows.Forms.Button();
-            this.TenMillion_Bottom_button8 = new System.Windows.Forms.Button();
-            this.Million_Bottom_button7 = new System.Windows.Forms.Button();
-            this.Hundred_Thousand_Button_button6 = new System.Windows.Forms.Button();
-            this.Tenthousand_Bottom_button5 = new System.Windows.Forms.Button();
-            this.Thousand_Bottom_button = new System.Windows.Forms.Button();
-            this.Hundreds_Top_button8 = new System.Windows.Forms.Button();
-            this.Hundred_Bottom_button3 = new System.Windows.Forms.Button();
-            this.Tens_Top_button = new System.Windows.Forms.Button();
-            this.Tens_Bottom_button2 = new System.Windows.Forms.Button();
-            this.Ones_Bottom_button2 = new System.Windows.Forms.Button();
-            this.Ones_Top_button2 = new System.Windows.Forms.Button();
-            this.Tenmillions = new System.Windows.Forms.Label();
-            this.Decimal_label58 = new System.Windows.Forms.Label();
-            this.Decimal_label59 = new System.Windows.Forms.Label();
-            this.Millions = new System.Windows.Forms.Label();
-            this.Hundredthousand = new System.Windows.Forms.Label();
-            this.Tenthousands = new System.Windows.Forms.Label();
-            this.Hundreds = new System.Windows.Forms.Label();
-            this.Tens = new System.Windows.Forms.Label();
-            this.Ones = new System.Windows.Forms.Label();
-            this.Thousand_Top_button7 = new System.Windows.Forms.Button();
-            this.Thousands = new System.Windows.Forms.Label();
-            this.Ten_Million_Top_button3 = new System.Windows.Forms.Button();
             this.Audio_Digital_button3 = new System.Windows.Forms.Button();
             this.button7 = new System.Windows.Forms.Button();
             this.Spectrum_Controls_button3 = new System.Windows.Forms.Button();
@@ -175,11 +148,29 @@ namespace OmniaGUI
             this.main160radioButton10 = new System.Windows.Forms.RadioButton();
             this.buttTune = new System.Windows.Forms.Button();
             this.Band_Change_Auto_Tune_checkBox2 = new System.Windows.Forms.CheckBox();
-            this.panel2 = new System.Windows.Forms.Panel();
             this.label9 = new System.Windows.Forms.Label();
             this.Power_Value_label2 = new System.Windows.Forms.Label();
             this.vuMeter1 = new VU_MeterLibrary.VuMeter();
             this.picWaterfall = new System.Windows.Forms.PictureBox();
+            this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.Freq_Pointer_7 = new System.Windows.Forms.Label();
+            this.Freq_Pointer_6 = new System.Windows.Forms.Label();
+            this.Freq_Pointer_5 = new System.Windows.Forms.Label();
+            this.Freq_Pointer_4 = new System.Windows.Forms.Label();
+            this.Freq_Pointer_3 = new System.Windows.Forms.Label();
+            this.Freq_Pointer_2 = new System.Windows.Forms.Label();
+            this.Freq_Pointer_1 = new System.Windows.Forms.Label();
+            this.Freq_Pointer_0 = new System.Windows.Forms.Label();
+            this.Tenmillions = new System.Windows.Forms.Label();
+            this.Tenthousands = new System.Windows.Forms.Label();
+            this.Decimal_label58 = new System.Windows.Forms.Label();
+            this.Decimal_label59 = new System.Windows.Forms.Label();
+            this.Hundredthousand = new System.Windows.Forms.Label();
+            this.Millions = new System.Windows.Forms.Label();
+            this.Hundreds = new System.Windows.Forms.Label();
+            this.Thousands = new System.Windows.Forms.Label();
+            this.Ones = new System.Windows.Forms.Label();
+            this.Tens = new System.Windows.Forms.Label();
             this.TX = new System.Windows.Forms.TabPage();
             this.Meter_hold_label43 = new System.Windows.Forms.Label();
             this.Power_Meter_Hold = new System.Windows.Forms.NumericUpDown();
@@ -233,6 +224,7 @@ namespace OmniaGUI
             this.AM_Carrier_hScrollBar1 = new System.Windows.Forms.HScrollBar();
             this.label14 = new System.Windows.Forms.Label();
             this.band_stack = new System.Windows.Forms.TabPage();
+            this.band_stack_label29 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.General_listView1 = new System.Windows.Forms.ListView();
             this.checkBox1 = new System.Windows.Forms.CheckBox();
@@ -252,7 +244,6 @@ namespace OmniaGUI
             this.label30 = new System.Windows.Forms.Label();
             this.label29 = new System.Windows.Forms.Label();
             this.band_stack_textBox1 = new System.Windows.Forms.TextBox();
-            this.band_stack_label29 = new System.Windows.Forms.Label();
             this.label28 = new System.Windows.Forms.Label();
             this.label27 = new System.Windows.Forms.Label();
             this.label26 = new System.Windows.Forms.Label();
@@ -445,9 +436,9 @@ namespace OmniaGUI
             this.RPi_Display_Timer = new System.Windows.Forms.Timer(this.components);
             this.powertabControl1.SuspendLayout();
             this.mainPage.SuspendLayout();
-            this.groupBox3.SuspendLayout();
             this.RIT_groupBox4.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picWaterfall)).BeginInit();
+            this.groupBox3.SuspendLayout();
             this.TX.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.Power_Meter_Hold)).BeginInit();
             this.band_stack.SuspendLayout();
@@ -502,9 +493,11 @@ namespace OmniaGUI
             this.mainPage.AutoScroll = true;
             this.mainPage.BackColor = System.Drawing.Color.Black;
             this.mainPage.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.mainPage.Controls.Add(this.Main_Power_hScrollBar1);
+            this.mainPage.Controls.Add(this.mainlistBox1);
+            this.mainPage.Controls.Add(this.Meter_Mode_button8);
             this.mainPage.Controls.Add(this.Microphone_textBox2);
             this.mainPage.Controls.Add(this.Volume_textBox2);
-            this.mainPage.Controls.Add(this.mainlistBox1);
             this.mainPage.Controls.Add(this.MFC_Knob_label38);
             this.mainPage.Controls.Add(this.MFC_C_label38);
             this.mainPage.Controls.Add(this.MFC_B_label38);
@@ -514,9 +507,6 @@ namespace OmniaGUI
             this.mainPage.Controls.Add(this.Zedgraph_Control);
             this.mainPage.Controls.Add(this.NR_button3);
             this.mainPage.Controls.Add(this.Minimize_checkBox2);
-            this.mainPage.Controls.Add(this.Main_Power_hScrollBar1);
-            this.mainPage.Controls.Add(this.Meter_Mode_button8);
-            this.mainPage.Controls.Add(this.groupBox3);
             this.mainPage.Controls.Add(this.Audio_Digital_button3);
             this.mainPage.Controls.Add(this.button7);
             this.mainPage.Controls.Add(this.Spectrum_Controls_button3);
@@ -552,11 +542,11 @@ namespace OmniaGUI
             this.mainPage.Controls.Add(this.main160radioButton10);
             this.mainPage.Controls.Add(this.buttTune);
             this.mainPage.Controls.Add(this.Band_Change_Auto_Tune_checkBox2);
-            this.mainPage.Controls.Add(this.panel2);
             this.mainPage.Controls.Add(this.label9);
             this.mainPage.Controls.Add(this.Power_Value_label2);
             this.mainPage.Controls.Add(this.vuMeter1);
             this.mainPage.Controls.Add(this.picWaterfall);
+            this.mainPage.Controls.Add(this.groupBox3);
             this.mainPage.ForeColor = System.Drawing.Color.Black;
             this.mainPage.Location = new System.Drawing.Point(4, 25);
             this.mainPage.Margin = new System.Windows.Forms.Padding(0);
@@ -569,11 +559,66 @@ namespace OmniaGUI
             this.mainPage.Enter += new System.EventHandler(this.mainPage_Enter);
             this.mainPage.Leave += new System.EventHandler(this.mainPage_Leave);
             // 
+            // Main_Power_hScrollBar1
+            // 
+            this.Main_Power_hScrollBar1.Cursor = System.Windows.Forms.Cursors.SizeWE;
+            this.Main_Power_hScrollBar1.Location = new System.Drawing.Point(304, 232);
+            this.Main_Power_hScrollBar1.Maximum = 109;
+            this.Main_Power_hScrollBar1.Name = "Main_Power_hScrollBar1";
+            this.Main_Power_hScrollBar1.Size = new System.Drawing.Size(185, 10);
+            this.Main_Power_hScrollBar1.TabIndex = 187;
+            this.Main_Power_hScrollBar1.TabStop = true;
+            this.toolTip.SetToolTip(this.Main_Power_hScrollBar1, "Power Output Adjustment  for current mode.");
+            this.Main_Power_hScrollBar1.Value = 30;
+            this.Main_Power_hScrollBar1.Visible = false;
+            this.Main_Power_hScrollBar1.Scroll += new System.Windows.Forms.ScrollEventHandler(this.Main_Power_hScrollBar1_Scroll);
+            // 
+            // mainlistBox1
+            // 
+            this.mainlistBox1.BackColor = System.Drawing.Color.White;
+            this.mainlistBox1.Font = new System.Drawing.Font("Verdana", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.mainlistBox1.ForeColor = System.Drawing.Color.Black;
+            this.mainlistBox1.FormattingEnabled = true;
+            this.mainlistBox1.ItemHeight = 23;
+            this.mainlistBox1.Items.AddRange(new object[] {
+            "100K",
+            "10K",
+            "1K",
+            "100",
+            "10",
+            "1"});
+            this.mainlistBox1.Location = new System.Drawing.Point(544, 103);
+            this.mainlistBox1.Name = "mainlistBox1";
+            this.mainlistBox1.ScrollAlwaysVisible = true;
+            this.mainlistBox1.Size = new System.Drawing.Size(82, 27);
+            this.mainlistBox1.TabIndex = 193;
+            this.toolTip.SetToolTip(this.mainlistBox1, "Frequency Step Increment");
+            this.mainlistBox1.SelectedIndexChanged += new System.EventHandler(this.mainlistBox1_SelectedIndexChanged);
+            this.mainlistBox1.Leave += new System.EventHandler(this.step_list_box_leave);
+            // 
+            // Meter_Mode_button8
+            // 
+            this.Meter_Mode_button8.BackColor = System.Drawing.Color.Gainsboro;
+            this.Meter_Mode_button8.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.Meter_Mode_button8.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Meter_Mode_button8.ForeColor = System.Drawing.Color.Black;
+            this.Meter_Mode_button8.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.Meter_Mode_button8.Location = new System.Drawing.Point(45, 71);
+            this.Meter_Mode_button8.Name = "Meter_Mode_button8";
+            this.Meter_Mode_button8.Size = new System.Drawing.Size(71, 25);
+            this.Meter_Mode_button8.TabIndex = 186;
+            this.Meter_Mode_button8.Text = "MODE";
+            this.toolTip.SetToolTip(this.Meter_Mode_button8, "Common Controls for Spectrum and Waterfall\r\n");
+            this.Meter_Mode_button8.UseVisualStyleBackColor = false;
+            this.Meter_Mode_button8.Visible = false;
+            this.Meter_Mode_button8.Click += new System.EventHandler(this.Meter_Mode_button8_Click);
+            // 
             // Microphone_textBox2
             // 
             this.Microphone_textBox2.BackColor = System.Drawing.Color.Gainsboro;
+            this.Microphone_textBox2.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Microphone_textBox2.ForeColor = System.Drawing.Color.Black;
-            this.Microphone_textBox2.Location = new System.Drawing.Point(543, 170);
+            this.Microphone_textBox2.Location = new System.Drawing.Point(535, 204);
             this.Microphone_textBox2.Name = "Microphone_textBox2";
             this.Microphone_textBox2.Size = new System.Drawing.Size(39, 21);
             this.Microphone_textBox2.TabIndex = 158;
@@ -584,8 +629,9 @@ namespace OmniaGUI
             // Volume_textBox2
             // 
             this.Volume_textBox2.BackColor = System.Drawing.Color.Gainsboro;
+            this.Volume_textBox2.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Volume_textBox2.ForeColor = System.Drawing.Color.Black;
-            this.Volume_textBox2.Location = new System.Drawing.Point(212, 170);
+            this.Volume_textBox2.Location = new System.Drawing.Point(219, 204);
             this.Volume_textBox2.Name = "Volume_textBox2";
             this.Volume_textBox2.Size = new System.Drawing.Size(39, 21);
             this.Volume_textBox2.TabIndex = 157;
@@ -593,43 +639,25 @@ namespace OmniaGUI
             this.Volume_textBox2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.Volume_textBox2.Click += new System.EventHandler(this.Volume_textBox2_Click);
             // 
-            // mainlistBox1
-            // 
-            this.mainlistBox1.BackColor = System.Drawing.Color.White;
-            this.mainlistBox1.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.mainlistBox1.ForeColor = System.Drawing.Color.Black;
-            this.mainlistBox1.FormattingEnabled = true;
-            this.mainlistBox1.Items.AddRange(new object[] {
-            "100K",
-            "10K",
-            "1K",
-            "100",
-            "10",
-            "1"});
-            this.mainlistBox1.Location = new System.Drawing.Point(500, 84);
-            this.mainlistBox1.Name = "mainlistBox1";
-            this.mainlistBox1.ScrollAlwaysVisible = true;
-            this.mainlistBox1.Size = new System.Drawing.Size(56, 17);
-            this.mainlistBox1.TabIndex = 193;
-            this.toolTip.SetToolTip(this.mainlistBox1, "Frequency Step Increment");
-            this.mainlistBox1.SelectedIndexChanged += new System.EventHandler(this.mainlistBox1_SelectedIndexChanged);
-            // 
             // MFC_Knob_label38
             // 
             this.MFC_Knob_label38.BackColor = System.Drawing.Color.Gainsboro;
-            this.MFC_Knob_label38.Location = new System.Drawing.Point(537, 203);
+            this.MFC_Knob_label38.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.MFC_Knob_label38.Location = new System.Drawing.Point(525, 257);
             this.MFC_Knob_label38.Name = "MFC_Knob_label38";
-            this.MFC_Knob_label38.Size = new System.Drawing.Size(97, 16);
+            this.MFC_Knob_label38.Size = new System.Drawing.Size(120, 19);
             this.MFC_Knob_label38.TabIndex = 192;
             this.MFC_Knob_label38.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.toolTip.SetToolTip(this.MFC_Knob_label38, "MFC - Knob Switch");
+            this.MFC_Knob_label38.Click += new System.EventHandler(this.MFC_Knob_label38_Click);
             // 
             // MFC_C_label38
             // 
             this.MFC_C_label38.BackColor = System.Drawing.Color.Gainsboro;
-            this.MFC_C_label38.Location = new System.Drawing.Point(411, 203);
+            this.MFC_C_label38.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.MFC_C_label38.Location = new System.Drawing.Point(399, 257);
             this.MFC_C_label38.Name = "MFC_C_label38";
-            this.MFC_C_label38.Size = new System.Drawing.Size(97, 16);
+            this.MFC_C_label38.Size = new System.Drawing.Size(120, 19);
             this.MFC_C_label38.TabIndex = 191;
             this.MFC_C_label38.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.toolTip.SetToolTip(this.MFC_C_label38, "MFC - Button C");
@@ -638,9 +666,10 @@ namespace OmniaGUI
             // MFC_B_label38
             // 
             this.MFC_B_label38.BackColor = System.Drawing.Color.Gainsboro;
-            this.MFC_B_label38.Location = new System.Drawing.Point(285, 203);
+            this.MFC_B_label38.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.MFC_B_label38.Location = new System.Drawing.Point(273, 257);
             this.MFC_B_label38.Name = "MFC_B_label38";
-            this.MFC_B_label38.Size = new System.Drawing.Size(97, 16);
+            this.MFC_B_label38.Size = new System.Drawing.Size(120, 19);
             this.MFC_B_label38.TabIndex = 190;
             this.MFC_B_label38.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.toolTip.SetToolTip(this.MFC_B_label38, "MFC - Button B");
@@ -649,9 +678,10 @@ namespace OmniaGUI
             // MFC_A_label38
             // 
             this.MFC_A_label38.BackColor = System.Drawing.Color.Gainsboro;
-            this.MFC_A_label38.Location = new System.Drawing.Point(159, 203);
+            this.MFC_A_label38.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.MFC_A_label38.Location = new System.Drawing.Point(147, 257);
             this.MFC_A_label38.Name = "MFC_A_label38";
-            this.MFC_A_label38.Size = new System.Drawing.Size(97, 16);
+            this.MFC_A_label38.Size = new System.Drawing.Size(120, 19);
             this.MFC_A_label38.TabIndex = 189;
             this.MFC_A_label38.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.toolTip.SetToolTip(this.MFC_A_label38, "MFC - Button A");
@@ -660,11 +690,11 @@ namespace OmniaGUI
             // UTC_Date_label46
             // 
             this.UTC_Date_label46.BackColor = System.Drawing.Color.Transparent;
-            this.UTC_Date_label46.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.UTC_Date_label46.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.UTC_Date_label46.ForeColor = System.Drawing.Color.White;
-            this.UTC_Date_label46.Location = new System.Drawing.Point(726, 118);
+            this.UTC_Date_label46.Location = new System.Drawing.Point(696, 251);
             this.UTC_Date_label46.Name = "UTC_Date_label46";
-            this.UTC_Date_label46.Size = new System.Drawing.Size(63, 23);
+            this.UTC_Date_label46.Size = new System.Drawing.Size(88, 23);
             this.UTC_Date_label46.TabIndex = 143;
             this.UTC_Date_label46.Text = "12.12.20";
             this.UTC_Date_label46.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -674,11 +704,11 @@ namespace OmniaGUI
             // Time_display_UTC_label34
             // 
             this.Time_display_UTC_label34.BackColor = System.Drawing.Color.Transparent;
-            this.Time_display_UTC_label34.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Time_display_UTC_label34.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Time_display_UTC_label34.ForeColor = System.Drawing.Color.White;
-            this.Time_display_UTC_label34.Location = new System.Drawing.Point(726, 95);
+            this.Time_display_UTC_label34.Location = new System.Drawing.Point(696, 228);
             this.Time_display_UTC_label34.Name = "Time_display_UTC_label34";
-            this.Time_display_UTC_label34.Size = new System.Drawing.Size(63, 23);
+            this.Time_display_UTC_label34.Size = new System.Drawing.Size(88, 23);
             this.Time_display_UTC_label34.TabIndex = 114;
             this.Time_display_UTC_label34.Text = "00:00:00";
             this.Time_display_UTC_label34.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -697,7 +727,7 @@ namespace OmniaGUI
             this.Zedgraph_Control.IsEnableWheelZoom = false;
             this.Zedgraph_Control.IsPrintFillPage = false;
             this.Zedgraph_Control.IsShowCursorValues = true;
-            this.Zedgraph_Control.Location = new System.Drawing.Point(0, 228);
+            this.Zedgraph_Control.Location = new System.Drawing.Point(0, 290);
             this.Zedgraph_Control.Margin = new System.Windows.Forms.Padding(0);
             this.Zedgraph_Control.Name = "Zedgraph_Control";
             this.Zedgraph_Control.PanButtons = System.Windows.Forms.MouseButtons.None;
@@ -711,7 +741,7 @@ namespace OmniaGUI
             this.Zedgraph_Control.ScrollMinY = 0D;
             this.Zedgraph_Control.ScrollMinY2 = 0D;
             this.Zedgraph_Control.SelectButtons = System.Windows.Forms.MouseButtons.None;
-            this.Zedgraph_Control.Size = new System.Drawing.Size(792, 112);
+            this.Zedgraph_Control.Size = new System.Drawing.Size(792, 80);
             this.Zedgraph_Control.TabIndex = 179;
             this.Zedgraph_Control.UseExtendedPrintDialog = true;
             this.Zedgraph_Control.Visible = false;
@@ -727,7 +757,7 @@ namespace OmniaGUI
             this.NR_button3.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.NR_button3.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.NR_button3.ForeColor = System.Drawing.Color.Black;
-            this.NR_button3.Location = new System.Drawing.Point(103, 130);
+            this.NR_button3.Location = new System.Drawing.Point(11, 111);
             this.NR_button3.Name = "NR_button3";
             this.NR_button3.Size = new System.Drawing.Size(23, 21);
             this.NR_button3.TabIndex = 138;
@@ -741,7 +771,7 @@ namespace OmniaGUI
             // 
             this.Minimize_checkBox2.BackColor = System.Drawing.Color.Transparent;
             this.Minimize_checkBox2.ForeColor = System.Drawing.Color.Black;
-            this.Minimize_checkBox2.Location = new System.Drawing.Point(637, 46);
+            this.Minimize_checkBox2.Location = new System.Drawing.Point(764, 60);
             this.Minimize_checkBox2.Name = "Minimize_checkBox2";
             this.Minimize_checkBox2.Size = new System.Drawing.Size(20, 20);
             this.Minimize_checkBox2.TabIndex = 188;
@@ -749,498 +779,15 @@ namespace OmniaGUI
             this.Minimize_checkBox2.UseVisualStyleBackColor = false;
             this.Minimize_checkBox2.CheckedChanged += new System.EventHandler(this.Minimize_checkBox2_CheckedChanged);
             // 
-            // Main_Power_hScrollBar1
-            // 
-            this.Main_Power_hScrollBar1.Cursor = System.Windows.Forms.Cursors.SizeWE;
-            this.Main_Power_hScrollBar1.Location = new System.Drawing.Point(588, 144);
-            this.Main_Power_hScrollBar1.Maximum = 109;
-            this.Main_Power_hScrollBar1.Name = "Main_Power_hScrollBar1";
-            this.Main_Power_hScrollBar1.Size = new System.Drawing.Size(185, 10);
-            this.Main_Power_hScrollBar1.TabIndex = 187;
-            this.Main_Power_hScrollBar1.TabStop = true;
-            this.toolTip.SetToolTip(this.Main_Power_hScrollBar1, "Power Output Adjustment  for current mode.");
-            this.Main_Power_hScrollBar1.Value = 30;
-            this.Main_Power_hScrollBar1.Visible = false;
-            this.Main_Power_hScrollBar1.Scroll += new System.Windows.Forms.ScrollEventHandler(this.Main_Power_hScrollBar1_Scroll);
-            // 
-            // Meter_Mode_button8
-            // 
-            this.Meter_Mode_button8.BackColor = System.Drawing.Color.Gainsboro;
-            this.Meter_Mode_button8.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.Meter_Mode_button8.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Meter_Mode_button8.ForeColor = System.Drawing.Color.Black;
-            this.Meter_Mode_button8.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.Meter_Mode_button8.Location = new System.Drawing.Point(55, 71);
-            this.Meter_Mode_button8.Name = "Meter_Mode_button8";
-            this.Meter_Mode_button8.Size = new System.Drawing.Size(66, 20);
-            this.Meter_Mode_button8.TabIndex = 186;
-            this.Meter_Mode_button8.Text = "MODE";
-            this.toolTip.SetToolTip(this.Meter_Mode_button8, "Common Controls for Spectrum and Waterfall\r\n");
-            this.Meter_Mode_button8.UseVisualStyleBackColor = false;
-            this.Meter_Mode_button8.Visible = false;
-            this.Meter_Mode_button8.Click += new System.EventHandler(this.Meter_Mode_button8_Click);
-            // 
-            // groupBox3
-            // 
-            this.groupBox3.BackColor = System.Drawing.Color.Transparent;
-            this.groupBox3.Controls.Add(this.Tenthousand_Top_button6);
-            this.groupBox3.Controls.Add(this.Hundred_Thousand_Top_button5);
-            this.groupBox3.Controls.Add(this.Million_Top_button4);
-            this.groupBox3.Controls.Add(this.TenMillion_Bottom_button8);
-            this.groupBox3.Controls.Add(this.Million_Bottom_button7);
-            this.groupBox3.Controls.Add(this.Hundred_Thousand_Button_button6);
-            this.groupBox3.Controls.Add(this.Tenthousand_Bottom_button5);
-            this.groupBox3.Controls.Add(this.Thousand_Bottom_button);
-            this.groupBox3.Controls.Add(this.Hundreds_Top_button8);
-            this.groupBox3.Controls.Add(this.Hundred_Bottom_button3);
-            this.groupBox3.Controls.Add(this.Tens_Top_button);
-            this.groupBox3.Controls.Add(this.Tens_Bottom_button2);
-            this.groupBox3.Controls.Add(this.Ones_Bottom_button2);
-            this.groupBox3.Controls.Add(this.Ones_Top_button2);
-            this.groupBox3.Controls.Add(this.Tenmillions);
-            this.groupBox3.Controls.Add(this.Decimal_label58);
-            this.groupBox3.Controls.Add(this.Decimal_label59);
-            this.groupBox3.Controls.Add(this.Millions);
-            this.groupBox3.Controls.Add(this.Hundredthousand);
-            this.groupBox3.Controls.Add(this.Tenthousands);
-            this.groupBox3.Controls.Add(this.Hundreds);
-            this.groupBox3.Controls.Add(this.Tens);
-            this.groupBox3.Controls.Add(this.Ones);
-            this.groupBox3.Controls.Add(this.Thousand_Top_button7);
-            this.groupBox3.Controls.Add(this.Thousands);
-            this.groupBox3.Controls.Add(this.Ten_Million_Top_button3);
-            this.groupBox3.ForeColor = System.Drawing.Color.White;
-            this.groupBox3.Location = new System.Drawing.Point(220, 0);
-            this.groupBox3.Margin = new System.Windows.Forms.Padding(0);
-            this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(409, 69);
-            this.groupBox3.TabIndex = 161;
-            this.groupBox3.TabStop = false;
-            this.groupBox3.Text = "VFO A";
-            this.groupBox3.Enter += new System.EventHandler(this.groupBox3_Enter);
-            // 
-            // Tenthousand_Top_button6
-            // 
-            this.Tenthousand_Top_button6.BackColor = System.Drawing.Color.Black;
-            this.Tenthousand_Top_button6.FlatAppearance.BorderColor = System.Drawing.Color.Black;
-            this.Tenthousand_Top_button6.FlatAppearance.CheckedBackColor = System.Drawing.Color.Black;
-            this.Tenthousand_Top_button6.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Black;
-            this.Tenthousand_Top_button6.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Black;
-            this.Tenthousand_Top_button6.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.Tenthousand_Top_button6.ForeColor = System.Drawing.Color.MediumOrchid;
-            this.Tenthousand_Top_button6.Location = new System.Drawing.Point(175, 12);
-            this.Tenthousand_Top_button6.Name = "Tenthousand_Top_button6";
-            this.Tenthousand_Top_button6.Size = new System.Drawing.Size(18, 10);
-            this.Tenthousand_Top_button6.TabIndex = 131;
-            this.Tenthousand_Top_button6.UseVisualStyleBackColor = false;
-            this.Tenthousand_Top_button6.Click += new System.EventHandler(this.Tenthousand_Top_button6_Click);
-            // 
-            // Hundred_Thousand_Top_button5
-            // 
-            this.Hundred_Thousand_Top_button5.BackColor = System.Drawing.Color.Black;
-            this.Hundred_Thousand_Top_button5.FlatAppearance.BorderColor = System.Drawing.Color.Black;
-            this.Hundred_Thousand_Top_button5.FlatAppearance.CheckedBackColor = System.Drawing.Color.Black;
-            this.Hundred_Thousand_Top_button5.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Black;
-            this.Hundred_Thousand_Top_button5.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Black;
-            this.Hundred_Thousand_Top_button5.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.Hundred_Thousand_Top_button5.ForeColor = System.Drawing.Color.MediumOrchid;
-            this.Hundred_Thousand_Top_button5.Location = new System.Drawing.Point(134, 12);
-            this.Hundred_Thousand_Top_button5.Name = "Hundred_Thousand_Top_button5";
-            this.Hundred_Thousand_Top_button5.Size = new System.Drawing.Size(18, 10);
-            this.Hundred_Thousand_Top_button5.TabIndex = 132;
-            this.Hundred_Thousand_Top_button5.UseVisualStyleBackColor = false;
-            this.Hundred_Thousand_Top_button5.Click += new System.EventHandler(this.Hundred_Thousand_Top_button5_Click);
-            // 
-            // Million_Top_button4
-            // 
-            this.Million_Top_button4.BackColor = System.Drawing.Color.Black;
-            this.Million_Top_button4.FlatAppearance.BorderColor = System.Drawing.Color.Black;
-            this.Million_Top_button4.FlatAppearance.CheckedBackColor = System.Drawing.Color.Black;
-            this.Million_Top_button4.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Black;
-            this.Million_Top_button4.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Black;
-            this.Million_Top_button4.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.Million_Top_button4.ForeColor = System.Drawing.Color.MediumOrchid;
-            this.Million_Top_button4.Location = new System.Drawing.Point(73, 12);
-            this.Million_Top_button4.Name = "Million_Top_button4";
-            this.Million_Top_button4.Size = new System.Drawing.Size(18, 10);
-            this.Million_Top_button4.TabIndex = 133;
-            this.Million_Top_button4.UseVisualStyleBackColor = false;
-            this.Million_Top_button4.Click += new System.EventHandler(this.Million_Top_button4_Click);
-            // 
-            // TenMillion_Bottom_button8
-            // 
-            this.TenMillion_Bottom_button8.BackColor = System.Drawing.Color.Black;
-            this.TenMillion_Bottom_button8.FlatAppearance.BorderColor = System.Drawing.Color.Black;
-            this.TenMillion_Bottom_button8.FlatAppearance.CheckedBackColor = System.Drawing.Color.Black;
-            this.TenMillion_Bottom_button8.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Black;
-            this.TenMillion_Bottom_button8.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Black;
-            this.TenMillion_Bottom_button8.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.TenMillion_Bottom_button8.ForeColor = System.Drawing.Color.Black;
-            this.TenMillion_Bottom_button8.Location = new System.Drawing.Point(32, 56);
-            this.TenMillion_Bottom_button8.Name = "TenMillion_Bottom_button8";
-            this.TenMillion_Bottom_button8.Size = new System.Drawing.Size(18, 10);
-            this.TenMillion_Bottom_button8.TabIndex = 126;
-            this.TenMillion_Bottom_button8.UseVisualStyleBackColor = false;
-            this.TenMillion_Bottom_button8.Click += new System.EventHandler(this.TenMillion_Bottom_button8_Click);
-            // 
-            // Million_Bottom_button7
-            // 
-            this.Million_Bottom_button7.BackColor = System.Drawing.Color.Black;
-            this.Million_Bottom_button7.FlatAppearance.BorderColor = System.Drawing.Color.Black;
-            this.Million_Bottom_button7.FlatAppearance.CheckedBackColor = System.Drawing.Color.Black;
-            this.Million_Bottom_button7.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Black;
-            this.Million_Bottom_button7.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Black;
-            this.Million_Bottom_button7.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.Million_Bottom_button7.ForeColor = System.Drawing.Color.Black;
-            this.Million_Bottom_button7.Location = new System.Drawing.Point(71, 55);
-            this.Million_Bottom_button7.Name = "Million_Bottom_button7";
-            this.Million_Bottom_button7.Size = new System.Drawing.Size(18, 10);
-            this.Million_Bottom_button7.TabIndex = 125;
-            this.Million_Bottom_button7.UseVisualStyleBackColor = false;
-            this.Million_Bottom_button7.Click += new System.EventHandler(this.Million_Bottom_button7_Click);
-            // 
-            // Hundred_Thousand_Button_button6
-            // 
-            this.Hundred_Thousand_Button_button6.BackColor = System.Drawing.Color.Black;
-            this.Hundred_Thousand_Button_button6.FlatAppearance.BorderColor = System.Drawing.Color.Black;
-            this.Hundred_Thousand_Button_button6.FlatAppearance.CheckedBackColor = System.Drawing.Color.Black;
-            this.Hundred_Thousand_Button_button6.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Black;
-            this.Hundred_Thousand_Button_button6.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Black;
-            this.Hundred_Thousand_Button_button6.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.Hundred_Thousand_Button_button6.ForeColor = System.Drawing.Color.Black;
-            this.Hundred_Thousand_Button_button6.Location = new System.Drawing.Point(134, 55);
-            this.Hundred_Thousand_Button_button6.Name = "Hundred_Thousand_Button_button6";
-            this.Hundred_Thousand_Button_button6.Size = new System.Drawing.Size(18, 10);
-            this.Hundred_Thousand_Button_button6.TabIndex = 124;
-            this.Hundred_Thousand_Button_button6.UseVisualStyleBackColor = false;
-            this.Hundred_Thousand_Button_button6.Click += new System.EventHandler(this.Hundred_Thousand_Button_button6_Click);
-            // 
-            // Tenthousand_Bottom_button5
-            // 
-            this.Tenthousand_Bottom_button5.BackColor = System.Drawing.Color.Black;
-            this.Tenthousand_Bottom_button5.FlatAppearance.BorderColor = System.Drawing.Color.Black;
-            this.Tenthousand_Bottom_button5.FlatAppearance.CheckedBackColor = System.Drawing.Color.Black;
-            this.Tenthousand_Bottom_button5.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Black;
-            this.Tenthousand_Bottom_button5.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Black;
-            this.Tenthousand_Bottom_button5.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.Tenthousand_Bottom_button5.ForeColor = System.Drawing.Color.Black;
-            this.Tenthousand_Bottom_button5.Location = new System.Drawing.Point(175, 55);
-            this.Tenthousand_Bottom_button5.Name = "Tenthousand_Bottom_button5";
-            this.Tenthousand_Bottom_button5.Size = new System.Drawing.Size(18, 10);
-            this.Tenthousand_Bottom_button5.TabIndex = 123;
-            this.Tenthousand_Bottom_button5.UseVisualStyleBackColor = false;
-            this.Tenthousand_Bottom_button5.Click += new System.EventHandler(this.Tenthousand_Bottom_button5_Click);
-            // 
-            // Thousand_Bottom_button
-            // 
-            this.Thousand_Bottom_button.BackColor = System.Drawing.Color.Black;
-            this.Thousand_Bottom_button.FlatAppearance.BorderColor = System.Drawing.Color.Black;
-            this.Thousand_Bottom_button.FlatAppearance.CheckedBackColor = System.Drawing.Color.Black;
-            this.Thousand_Bottom_button.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Black;
-            this.Thousand_Bottom_button.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Black;
-            this.Thousand_Bottom_button.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.Thousand_Bottom_button.ForeColor = System.Drawing.Color.Black;
-            this.Thousand_Bottom_button.Location = new System.Drawing.Point(217, 55);
-            this.Thousand_Bottom_button.Name = "Thousand_Bottom_button";
-            this.Thousand_Bottom_button.Size = new System.Drawing.Size(18, 10);
-            this.Thousand_Bottom_button.TabIndex = 122;
-            this.Thousand_Bottom_button.UseVisualStyleBackColor = false;
-            this.Thousand_Bottom_button.Click += new System.EventHandler(this.Thousand_Bottom_button_Click);
-            // 
-            // Hundreds_Top_button8
-            // 
-            this.Hundreds_Top_button8.BackColor = System.Drawing.Color.Black;
-            this.Hundreds_Top_button8.FlatAppearance.BorderColor = System.Drawing.Color.Black;
-            this.Hundreds_Top_button8.FlatAppearance.CheckedBackColor = System.Drawing.Color.Black;
-            this.Hundreds_Top_button8.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Black;
-            this.Hundreds_Top_button8.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Black;
-            this.Hundreds_Top_button8.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.Hundreds_Top_button8.ForeColor = System.Drawing.Color.MediumOrchid;
-            this.Hundreds_Top_button8.Location = new System.Drawing.Point(275, 12);
-            this.Hundreds_Top_button8.Name = "Hundreds_Top_button8";
-            this.Hundreds_Top_button8.Size = new System.Drawing.Size(18, 10);
-            this.Hundreds_Top_button8.TabIndex = 129;
-            this.Hundreds_Top_button8.UseVisualStyleBackColor = false;
-            this.Hundreds_Top_button8.Click += new System.EventHandler(this.Hundreds_Top_button8_Click);
-            // 
-            // Hundred_Bottom_button3
-            // 
-            this.Hundred_Bottom_button3.BackColor = System.Drawing.Color.Black;
-            this.Hundred_Bottom_button3.FlatAppearance.BorderColor = System.Drawing.Color.Black;
-            this.Hundred_Bottom_button3.FlatAppearance.CheckedBackColor = System.Drawing.Color.Black;
-            this.Hundred_Bottom_button3.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Black;
-            this.Hundred_Bottom_button3.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Black;
-            this.Hundred_Bottom_button3.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.Hundred_Bottom_button3.ForeColor = System.Drawing.Color.Black;
-            this.Hundred_Bottom_button3.Location = new System.Drawing.Point(275, 56);
-            this.Hundred_Bottom_button3.Name = "Hundred_Bottom_button3";
-            this.Hundred_Bottom_button3.Size = new System.Drawing.Size(18, 10);
-            this.Hundred_Bottom_button3.TabIndex = 121;
-            this.Hundred_Bottom_button3.UseVisualStyleBackColor = false;
-            this.Hundred_Bottom_button3.Click += new System.EventHandler(this.Hundred_Bottom_button3_Click);
-            // 
-            // Tens_Top_button
-            // 
-            this.Tens_Top_button.BackColor = System.Drawing.Color.Black;
-            this.Tens_Top_button.FlatAppearance.BorderColor = System.Drawing.Color.Black;
-            this.Tens_Top_button.FlatAppearance.CheckedBackColor = System.Drawing.Color.Black;
-            this.Tens_Top_button.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Black;
-            this.Tens_Top_button.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Black;
-            this.Tens_Top_button.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.Tens_Top_button.ForeColor = System.Drawing.Color.MediumOrchid;
-            this.Tens_Top_button.Location = new System.Drawing.Point(318, 12);
-            this.Tens_Top_button.Name = "Tens_Top_button";
-            this.Tens_Top_button.Size = new System.Drawing.Size(18, 10);
-            this.Tens_Top_button.TabIndex = 128;
-            this.Tens_Top_button.UseVisualStyleBackColor = false;
-            this.Tens_Top_button.Click += new System.EventHandler(this.Tens_Top_button_Click);
-            // 
-            // Tens_Bottom_button2
-            // 
-            this.Tens_Bottom_button2.BackColor = System.Drawing.Color.Black;
-            this.Tens_Bottom_button2.FlatAppearance.BorderColor = System.Drawing.Color.Black;
-            this.Tens_Bottom_button2.FlatAppearance.CheckedBackColor = System.Drawing.Color.Black;
-            this.Tens_Bottom_button2.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Black;
-            this.Tens_Bottom_button2.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Black;
-            this.Tens_Bottom_button2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.Tens_Bottom_button2.ForeColor = System.Drawing.Color.Black;
-            this.Tens_Bottom_button2.Location = new System.Drawing.Point(318, 56);
-            this.Tens_Bottom_button2.Name = "Tens_Bottom_button2";
-            this.Tens_Bottom_button2.Size = new System.Drawing.Size(18, 10);
-            this.Tens_Bottom_button2.TabIndex = 120;
-            this.Tens_Bottom_button2.UseVisualStyleBackColor = false;
-            this.Tens_Bottom_button2.Click += new System.EventHandler(this.Tens_Bottom_button2_Click);
-            // 
-            // Ones_Bottom_button2
-            // 
-            this.Ones_Bottom_button2.BackColor = System.Drawing.Color.Black;
-            this.Ones_Bottom_button2.FlatAppearance.BorderColor = System.Drawing.Color.Black;
-            this.Ones_Bottom_button2.FlatAppearance.CheckedBackColor = System.Drawing.Color.MediumOrchid;
-            this.Ones_Bottom_button2.FlatAppearance.MouseDownBackColor = System.Drawing.Color.MediumOrchid;
-            this.Ones_Bottom_button2.FlatAppearance.MouseOverBackColor = System.Drawing.Color.MediumOrchid;
-            this.Ones_Bottom_button2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.Ones_Bottom_button2.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Ones_Bottom_button2.ForeColor = System.Drawing.Color.Black;
-            this.Ones_Bottom_button2.Location = new System.Drawing.Point(359, 55);
-            this.Ones_Bottom_button2.Name = "Ones_Bottom_button2";
-            this.Ones_Bottom_button2.Size = new System.Drawing.Size(18, 10);
-            this.Ones_Bottom_button2.TabIndex = 119;
-            this.Ones_Bottom_button2.UseVisualStyleBackColor = false;
-            this.Ones_Bottom_button2.Click += new System.EventHandler(this.Ones_Bottom_button2_Click);
-            // 
-            // Ones_Top_button2
-            // 
-            this.Ones_Top_button2.BackColor = System.Drawing.Color.Black;
-            this.Ones_Top_button2.FlatAppearance.BorderColor = System.Drawing.Color.Black;
-            this.Ones_Top_button2.FlatAppearance.CheckedBackColor = System.Drawing.Color.Black;
-            this.Ones_Top_button2.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Black;
-            this.Ones_Top_button2.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Black;
-            this.Ones_Top_button2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.Ones_Top_button2.ForeColor = System.Drawing.Color.Transparent;
-            this.Ones_Top_button2.Location = new System.Drawing.Point(359, 12);
-            this.Ones_Top_button2.Name = "Ones_Top_button2";
-            this.Ones_Top_button2.Size = new System.Drawing.Size(18, 10);
-            this.Ones_Top_button2.TabIndex = 127;
-            this.Ones_Top_button2.UseVisualStyleBackColor = false;
-            this.Ones_Top_button2.Click += new System.EventHandler(this.Ones_Top_button2_Click);
-            // 
-            // Tenmillions
-            // 
-            this.Tenmillions.AutoSize = true;
-            this.Tenmillions.BackColor = System.Drawing.Color.Transparent;
-            this.Tenmillions.Font = new System.Drawing.Font("Times New Roman", 26.25F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Tenmillions.ForeColor = System.Drawing.Color.White;
-            this.Tenmillions.Location = new System.Drawing.Point(23, 19);
-            this.Tenmillions.Name = "Tenmillions";
-            this.Tenmillions.Size = new System.Drawing.Size(36, 41);
-            this.Tenmillions.TabIndex = 95;
-            this.Tenmillions.Text = "1";
-            this.Tenmillions.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.Tenmillions.Click += new System.EventHandler(this.Tenmillions_Click);
-            this.Tenmillions.MouseEnter += new System.EventHandler(this.Tenmillions_MouseEnter);
-            this.Tenmillions.MouseLeave += new System.EventHandler(this.Tenmillions_MouseExit);
-            // 
-            // Decimal_label58
-            // 
-            this.Decimal_label58.AutoSize = true;
-            this.Decimal_label58.BackColor = System.Drawing.Color.Transparent;
-            this.Decimal_label58.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Decimal_label58.ForeColor = System.Drawing.Color.White;
-            this.Decimal_label58.ImageAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.Decimal_label58.Location = new System.Drawing.Point(247, 35);
-            this.Decimal_label58.Name = "Decimal_label58";
-            this.Decimal_label58.Size = new System.Drawing.Size(15, 22);
-            this.Decimal_label58.TabIndex = 159;
-            this.Decimal_label58.Text = ".";
-            this.Decimal_label58.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // Decimal_label59
-            // 
-            this.Decimal_label59.AutoSize = true;
-            this.Decimal_label59.BackColor = System.Drawing.Color.Transparent;
-            this.Decimal_label59.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Decimal_label59.ForeColor = System.Drawing.Color.White;
-            this.Decimal_label59.ImageAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.Decimal_label59.Location = new System.Drawing.Point(104, 35);
-            this.Decimal_label59.Name = "Decimal_label59";
-            this.Decimal_label59.Size = new System.Drawing.Size(15, 22);
-            this.Decimal_label59.TabIndex = 160;
-            this.Decimal_label59.Text = ".";
-            this.Decimal_label59.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // Millions
-            // 
-            this.Millions.AutoSize = true;
-            this.Millions.BackColor = System.Drawing.Color.Transparent;
-            this.Millions.Font = new System.Drawing.Font("Times New Roman", 26.25F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Millions.ForeColor = System.Drawing.Color.White;
-            this.Millions.Location = new System.Drawing.Point(64, 19);
-            this.Millions.Name = "Millions";
-            this.Millions.Size = new System.Drawing.Size(36, 41);
-            this.Millions.TabIndex = 94;
-            this.Millions.Text = "4";
-            this.Millions.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.Millions.Click += new System.EventHandler(this.Millions_Click);
-            this.Millions.MouseEnter += new System.EventHandler(this.Millions_MouseEnter);
-            this.Millions.MouseLeave += new System.EventHandler(this.Millions_MouseExit);
-            // 
-            // Hundredthousand
-            // 
-            this.Hundredthousand.AutoSize = true;
-            this.Hundredthousand.BackColor = System.Drawing.Color.Transparent;
-            this.Hundredthousand.Font = new System.Drawing.Font("Times New Roman", 26.25F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Hundredthousand.ForeColor = System.Drawing.Color.White;
-            this.Hundredthousand.Location = new System.Drawing.Point(125, 19);
-            this.Hundredthousand.Name = "Hundredthousand";
-            this.Hundredthousand.Size = new System.Drawing.Size(36, 41);
-            this.Hundredthousand.TabIndex = 93;
-            this.Hundredthousand.Text = "1";
-            this.Hundredthousand.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.Hundredthousand.Click += new System.EventHandler(this.Hundredthousand_Click);
-            this.Hundredthousand.MouseEnter += new System.EventHandler(this.Hundredthousand_MouseEnter);
-            this.Hundredthousand.MouseLeave += new System.EventHandler(this.Hundredthousand_MouseExit);
-            // 
-            // Tenthousands
-            // 
-            this.Tenthousands.AutoSize = true;
-            this.Tenthousands.BackColor = System.Drawing.Color.Transparent;
-            this.Tenthousands.Font = new System.Drawing.Font("Times New Roman", 26.25F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Tenthousands.ForeColor = System.Drawing.Color.White;
-            this.Tenthousands.Location = new System.Drawing.Point(166, 19);
-            this.Tenthousands.Name = "Tenthousands";
-            this.Tenthousands.Size = new System.Drawing.Size(36, 41);
-            this.Tenthousands.TabIndex = 92;
-            this.Tenthousands.Text = "9";
-            this.Tenthousands.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.Tenthousands.Click += new System.EventHandler(this.Tenthousands_Click);
-            this.Tenthousands.MouseEnter += new System.EventHandler(this.Tenthousands_MouseEnter);
-            this.Tenthousands.MouseLeave += new System.EventHandler(this.Tenthousands_MouseExit);
-            // 
-            // Hundreds
-            // 
-            this.Hundreds.AutoSize = true;
-            this.Hundreds.BackColor = System.Drawing.Color.Transparent;
-            this.Hundreds.Font = new System.Drawing.Font("Times New Roman", 26.25F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Hundreds.ForeColor = System.Drawing.Color.White;
-            this.Hundreds.Location = new System.Drawing.Point(266, 19);
-            this.Hundreds.Name = "Hundreds";
-            this.Hundreds.Size = new System.Drawing.Size(36, 41);
-            this.Hundreds.TabIndex = 90;
-            this.Hundreds.Text = "1";
-            this.Hundreds.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.Hundreds.Click += new System.EventHandler(this.Hundreds_Click);
-            this.Hundreds.MouseEnter += new System.EventHandler(this.Hundreds_MouseEnter);
-            this.Hundreds.MouseLeave += new System.EventHandler(this.Hundreds_MouseExit);
-            // 
-            // Tens
-            // 
-            this.Tens.AutoSize = true;
-            this.Tens.BackColor = System.Drawing.Color.Transparent;
-            this.Tens.Font = new System.Drawing.Font("Times New Roman", 26.25F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Tens.ForeColor = System.Drawing.Color.White;
-            this.Tens.Location = new System.Drawing.Point(309, 19);
-            this.Tens.Name = "Tens";
-            this.Tens.Size = new System.Drawing.Size(36, 41);
-            this.Tens.TabIndex = 89;
-            this.Tens.Text = "1";
-            this.Tens.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.Tens.Click += new System.EventHandler(this.Tens_Click);
-            this.Tens.MouseEnter += new System.EventHandler(this.Tens_MouseEnter);
-            this.Tens.MouseLeave += new System.EventHandler(this.Tens_MouseExit);
-            // 
-            // Ones
-            // 
-            this.Ones.AutoSize = true;
-            this.Ones.BackColor = System.Drawing.Color.Transparent;
-            this.Ones.Font = new System.Drawing.Font("Times New Roman", 26.25F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Ones.ForeColor = System.Drawing.Color.White;
-            this.Ones.Location = new System.Drawing.Point(350, 19);
-            this.Ones.Name = "Ones";
-            this.Ones.Size = new System.Drawing.Size(36, 41);
-            this.Ones.TabIndex = 88;
-            this.Ones.Text = "0";
-            this.Ones.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.Ones.Click += new System.EventHandler(this.Ones_Click);
-            this.Ones.MouseEnter += new System.EventHandler(this.Ones_MouseEnter);
-            this.Ones.MouseLeave += new System.EventHandler(this.Ones_MouseExit);
-            // 
-            // Thousand_Top_button7
-            // 
-            this.Thousand_Top_button7.BackColor = System.Drawing.Color.Black;
-            this.Thousand_Top_button7.FlatAppearance.BorderColor = System.Drawing.Color.Black;
-            this.Thousand_Top_button7.FlatAppearance.CheckedBackColor = System.Drawing.Color.Black;
-            this.Thousand_Top_button7.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Black;
-            this.Thousand_Top_button7.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Black;
-            this.Thousand_Top_button7.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.Thousand_Top_button7.ForeColor = System.Drawing.Color.MediumOrchid;
-            this.Thousand_Top_button7.Location = new System.Drawing.Point(217, 12);
-            this.Thousand_Top_button7.Name = "Thousand_Top_button7";
-            this.Thousand_Top_button7.Size = new System.Drawing.Size(18, 10);
-            this.Thousand_Top_button7.TabIndex = 130;
-            this.Thousand_Top_button7.UseVisualStyleBackColor = false;
-            this.Thousand_Top_button7.Click += new System.EventHandler(this.Thousand_Top_button7_Click);
-            // 
-            // Thousands
-            // 
-            this.Thousands.AutoSize = true;
-            this.Thousands.BackColor = System.Drawing.Color.Transparent;
-            this.Thousands.Font = new System.Drawing.Font("Times New Roman", 26.25F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Thousands.ForeColor = System.Drawing.Color.White;
-            this.Thousands.Location = new System.Drawing.Point(208, 19);
-            this.Thousands.Name = "Thousands";
-            this.Thousands.Size = new System.Drawing.Size(36, 41);
-            this.Thousands.TabIndex = 91;
-            this.Thousands.Text = "5";
-            this.Thousands.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.Thousands.Click += new System.EventHandler(this.Thousands_Click);
-            this.Thousands.MouseEnter += new System.EventHandler(this.Thousands_MouseEnter);
-            this.Thousands.MouseLeave += new System.EventHandler(this.Thousands_MouseExit);
-            // 
-            // Ten_Million_Top_button3
-            // 
-            this.Ten_Million_Top_button3.BackColor = System.Drawing.Color.Black;
-            this.Ten_Million_Top_button3.FlatAppearance.BorderColor = System.Drawing.Color.Black;
-            this.Ten_Million_Top_button3.FlatAppearance.CheckedBackColor = System.Drawing.Color.Black;
-            this.Ten_Million_Top_button3.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Black;
-            this.Ten_Million_Top_button3.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Black;
-            this.Ten_Million_Top_button3.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.Ten_Million_Top_button3.ForeColor = System.Drawing.Color.Transparent;
-            this.Ten_Million_Top_button3.Location = new System.Drawing.Point(32, 14);
-            this.Ten_Million_Top_button3.Name = "Ten_Million_Top_button3";
-            this.Ten_Million_Top_button3.Size = new System.Drawing.Size(18, 10);
-            this.Ten_Million_Top_button3.TabIndex = 134;
-            this.Ten_Million_Top_button3.UseVisualStyleBackColor = false;
-            this.Ten_Million_Top_button3.Click += new System.EventHandler(this.Ten_Million_Top_button3_Click);
-            // 
             // Audio_Digital_button3
             // 
             this.Audio_Digital_button3.BackColor = System.Drawing.Color.Gainsboro;
             this.Audio_Digital_button3.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.Audio_Digital_button3.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Audio_Digital_button3.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Audio_Digital_button3.ForeColor = System.Drawing.Color.Black;
-            this.Audio_Digital_button3.Location = new System.Drawing.Point(723, 157);
+            this.Audio_Digital_button3.Location = new System.Drawing.Point(724, 166);
             this.Audio_Digital_button3.Name = "Audio_Digital_button3";
-            this.Audio_Digital_button3.Size = new System.Drawing.Size(26, 21);
+            this.Audio_Digital_button3.Size = new System.Drawing.Size(26, 29);
             this.Audio_Digital_button3.TabIndex = 185;
             this.Audio_Digital_button3.Text = "V";
             this.toolTip.SetToolTip(this.Audio_Digital_button3, "Preferred MIC Gain\r\nV - Voice\r\nD - Digital (Disables Compression)");
@@ -1251,11 +798,11 @@ namespace OmniaGUI
             // 
             this.button7.BackColor = System.Drawing.Color.Gainsboro;
             this.button7.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.button7.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button7.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.button7.ForeColor = System.Drawing.Color.Black;
-            this.button7.Location = new System.Drawing.Point(169, 58);
+            this.button7.Location = new System.Drawing.Point(158, 71);
             this.button7.Name = "button7";
-            this.button7.Size = new System.Drawing.Size(43, 22);
+            this.button7.Size = new System.Drawing.Size(59, 26);
             this.button7.TabIndex = 184;
             this.button7.Text = "SPT";
             this.toolTip.SetToolTip(this.button7, "Operate Split\r\n(Not yet implemented)");
@@ -1265,11 +812,11 @@ namespace OmniaGUI
             // 
             this.Spectrum_Controls_button3.BackColor = System.Drawing.Color.Gainsboro;
             this.Spectrum_Controls_button3.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.Spectrum_Controls_button3.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Spectrum_Controls_button3.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Spectrum_Controls_button3.ForeColor = System.Drawing.Color.Black;
-            this.Spectrum_Controls_button3.Location = new System.Drawing.Point(679, 58);
+            this.Spectrum_Controls_button3.Location = new System.Drawing.Point(636, 72);
             this.Spectrum_Controls_button3.Name = "Spectrum_Controls_button3";
-            this.Spectrum_Controls_button3.Size = new System.Drawing.Size(43, 22);
+            this.Spectrum_Controls_button3.Size = new System.Drawing.Size(59, 26);
             this.Spectrum_Controls_button3.TabIndex = 181;
             this.Spectrum_Controls_button3.Text = "S/W";
             this.toolTip.SetToolTip(this.Spectrum_Controls_button3, "Common Controls for Spectrum and Waterfall\r\n");
@@ -1285,7 +832,7 @@ namespace OmniaGUI
             this.RIT_groupBox4.Controls.Add(this.ritScroll);
             this.RIT_groupBox4.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.RIT_groupBox4.ForeColor = System.Drawing.Color.White;
-            this.RIT_groupBox4.Location = new System.Drawing.Point(286, 130);
+            this.RIT_groupBox4.Location = new System.Drawing.Point(286, 164);
             this.RIT_groupBox4.Name = "RIT_groupBox4";
             this.RIT_groupBox4.Size = new System.Drawing.Size(221, 61);
             this.RIT_groupBox4.TabIndex = 176;
@@ -1297,7 +844,7 @@ namespace OmniaGUI
             this.StartUP_label44.BackColor = System.Drawing.Color.Black;
             this.StartUP_label44.Font = new System.Drawing.Font("Arial", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.StartUP_label44.ForeColor = System.Drawing.Color.LightGreen;
-            this.StartUP_label44.Location = new System.Drawing.Point(-22, 2);
+            this.StartUP_label44.Location = new System.Drawing.Point(-21, 2);
             this.StartUP_label44.Name = "StartUP_label44";
             this.StartUP_label44.Size = new System.Drawing.Size(264, 59);
             this.StartUP_label44.TabIndex = 141;
@@ -1364,11 +911,11 @@ namespace OmniaGUI
             // 
             this.button6.BackColor = System.Drawing.Color.Gainsboro;
             this.button6.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.button6.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button6.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.button6.ForeColor = System.Drawing.Color.Black;
-            this.button6.Location = new System.Drawing.Point(169, 8);
+            this.button6.Location = new System.Drawing.Point(158, 8);
             this.button6.Name = "button6";
-            this.button6.Size = new System.Drawing.Size(43, 22);
+            this.button6.Size = new System.Drawing.Size(59, 26);
             this.button6.TabIndex = 175;
             this.button6.Text = "VFO";
             this.toolTip.SetToolTip(this.button6, "Switch Between VFO A and VFO B\r\n(Not yet implemented)");
@@ -1379,11 +926,11 @@ namespace OmniaGUI
             // 
             this.button4.BackColor = System.Drawing.Color.Gainsboro;
             this.button4.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.button4.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button4.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.button4.ForeColor = System.Drawing.Color.Black;
-            this.button4.Location = new System.Drawing.Point(726, 58);
+            this.button4.Location = new System.Drawing.Point(699, 72);
             this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(43, 22);
+            this.button4.Size = new System.Drawing.Size(59, 26);
             this.button4.TabIndex = 167;
             this.button4.Text = "EXT";
             this.toolTip.SetToolTip(this.button4, "Stop MSCC");
@@ -1394,11 +941,11 @@ namespace OmniaGUI
             // 
             this.ACG_button.BackColor = System.Drawing.Color.Gainsboro;
             this.ACG_button.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.ACG_button.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ACG_button.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ACG_button.ForeColor = System.Drawing.Color.Black;
-            this.ACG_button.Location = new System.Drawing.Point(679, 33);
+            this.ACG_button.Location = new System.Drawing.Point(636, 40);
             this.ACG_button.Name = "ACG_button";
-            this.ACG_button.Size = new System.Drawing.Size(43, 22);
+            this.ACG_button.Size = new System.Drawing.Size(59, 26);
             this.ACG_button.TabIndex = 164;
             this.ACG_button.Text = "SLO";
             this.toolTip.SetToolTip(this.ACG_button, "AGC\r\nSLO - SLOW\r\nMED - MEDIUM\r\nFST - FAST");
@@ -1409,11 +956,11 @@ namespace OmniaGUI
             // 
             this.Compression_button4.BackColor = System.Drawing.Color.Gainsboro;
             this.Compression_button4.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.Compression_button4.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Compression_button4.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Compression_button4.ForeColor = System.Drawing.Color.Black;
-            this.Compression_button4.Location = new System.Drawing.Point(726, 33);
+            this.Compression_button4.Location = new System.Drawing.Point(699, 41);
             this.Compression_button4.Name = "Compression_button4";
-            this.Compression_button4.Size = new System.Drawing.Size(43, 22);
+            this.Compression_button4.Size = new System.Drawing.Size(59, 26);
             this.Compression_button4.TabIndex = 163;
             this.Compression_button4.Text = "CMP";
             this.toolTip.SetToolTip(this.Compression_button4, "Audio Compression");
@@ -1425,7 +972,7 @@ namespace OmniaGUI
             this.Auto_Zero_checkBox2.BackColor = System.Drawing.Color.Black;
             this.Auto_Zero_checkBox2.Checked = true;
             this.Auto_Zero_checkBox2.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.Auto_Zero_checkBox2.Location = new System.Drawing.Point(637, 12);
+            this.Auto_Zero_checkBox2.Location = new System.Drawing.Point(764, 26);
             this.Auto_Zero_checkBox2.Name = "Auto_Zero_checkBox2";
             this.Auto_Zero_checkBox2.Size = new System.Drawing.Size(20, 20);
             this.Auto_Zero_checkBox2.TabIndex = 150;
@@ -1436,19 +983,20 @@ namespace OmniaGUI
             // Filter_listBox1
             // 
             this.Filter_listBox1.BackColor = System.Drawing.Color.White;
-            this.Filter_listBox1.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Filter_listBox1.Font = new System.Drawing.Font("Verdana", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Filter_listBox1.ForeColor = System.Drawing.Color.Black;
             this.Filter_listBox1.FormattingEnabled = true;
+            this.Filter_listBox1.ItemHeight = 23;
             this.Filter_listBox1.Items.AddRange(new object[] {
             "5.5KHz",
             "4.0KHz",
             "3.0KHz",
             "2.7KHz",
             "2.4KHz"});
-            this.Filter_listBox1.Location = new System.Drawing.Point(425, 84);
+            this.Filter_listBox1.Location = new System.Drawing.Point(442, 103);
             this.Filter_listBox1.Name = "Filter_listBox1";
             this.Filter_listBox1.ScrollAlwaysVisible = true;
-            this.Filter_listBox1.Size = new System.Drawing.Size(70, 17);
+            this.Filter_listBox1.Size = new System.Drawing.Size(94, 27);
             this.Filter_listBox1.TabIndex = 147;
             this.toolTip.SetToolTip(this.Filter_listBox1, "Sets the High Side of the Bandwidth filter.\r\nNo effect in CW mode.");
             this.Filter_listBox1.SelectedIndexChanged += new System.EventHandler(this.Filter_listBox1_SelectedIndexChanged_1);
@@ -1456,16 +1004,17 @@ namespace OmniaGUI
             // CW_Filter_listBox1
             // 
             this.CW_Filter_listBox1.BackColor = System.Drawing.Color.White;
-            this.CW_Filter_listBox1.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.CW_Filter_listBox1.Font = new System.Drawing.Font("Verdana", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.CW_Filter_listBox1.ForeColor = System.Drawing.Color.Black;
             this.CW_Filter_listBox1.FormattingEnabled = true;
+            this.CW_Filter_listBox1.ItemHeight = 23;
             this.CW_Filter_listBox1.Items.AddRange(new object[] {
             "1.8KHz",
             "400Hz",
             "200Hz"});
-            this.CW_Filter_listBox1.Location = new System.Drawing.Point(275, 84);
+            this.CW_Filter_listBox1.Location = new System.Drawing.Point(230, 103);
             this.CW_Filter_listBox1.Name = "CW_Filter_listBox1";
-            this.CW_Filter_listBox1.Size = new System.Drawing.Size(70, 17);
+            this.CW_Filter_listBox1.Size = new System.Drawing.Size(94, 27);
             this.CW_Filter_listBox1.TabIndex = 146;
             this.toolTip.SetToolTip(this.CW_Filter_listBox1, "CW Bandwidth\r\n200Hz, 400Hz 1.8KHz\r\n");
             this.CW_Filter_listBox1.SelectedIndexChanged += new System.EventHandler(this.CW_Filter_listBox1_SelectedIndexChanged);
@@ -1473,18 +1022,19 @@ namespace OmniaGUI
             // Filter_Low_listBox1
             // 
             this.Filter_Low_listBox1.BackColor = System.Drawing.Color.White;
-            this.Filter_Low_listBox1.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Filter_Low_listBox1.Font = new System.Drawing.Font("Verdana", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Filter_Low_listBox1.ForeColor = System.Drawing.Color.Black;
             this.Filter_Low_listBox1.FormattingEnabled = true;
+            this.Filter_Low_listBox1.ItemHeight = 23;
             this.Filter_Low_listBox1.Items.AddRange(new object[] {
             "500Hz",
             "300Hz",
             "200Hz",
             "100Hz",
             "75Hz"});
-            this.Filter_Low_listBox1.Location = new System.Drawing.Point(350, 84);
+            this.Filter_Low_listBox1.Location = new System.Drawing.Point(332, 103);
             this.Filter_Low_listBox1.Name = "Filter_Low_listBox1";
-            this.Filter_Low_listBox1.Size = new System.Drawing.Size(70, 17);
+            this.Filter_Low_listBox1.Size = new System.Drawing.Size(102, 27);
             this.Filter_Low_listBox1.TabIndex = 145;
             this.toolTip.SetToolTip(this.Filter_Low_listBox1, "Sets the low side of the Filter Bandwidth. \r\nNo effect in CW mode\r\n");
             this.Filter_Low_listBox1.SelectedIndexChanged += new System.EventHandler(this.Filter_Low_listBox1_SelectedIndexChanged_1);
@@ -1492,11 +1042,11 @@ namespace OmniaGUI
             // Local_Date_label46
             // 
             this.Local_Date_label46.BackColor = System.Drawing.Color.Transparent;
-            this.Local_Date_label46.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Local_Date_label46.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Local_Date_label46.ForeColor = System.Drawing.Color.White;
-            this.Local_Date_label46.Location = new System.Drawing.Point(3, 118);
+            this.Local_Date_label46.Location = new System.Drawing.Point(7, 251);
             this.Local_Date_label46.Name = "Local_Date_label46";
-            this.Local_Date_label46.Size = new System.Drawing.Size(70, 23);
+            this.Local_Date_label46.Size = new System.Drawing.Size(89, 23);
             this.Local_Date_label46.TabIndex = 142;
             this.Local_Date_label46.Text = "12.12.20";
             this.Local_Date_label46.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -1507,11 +1057,11 @@ namespace OmniaGUI
             // 
             this.NB_button2.BackColor = System.Drawing.Color.Gainsboro;
             this.NB_button2.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.NB_button2.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.NB_button2.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.NB_button2.ForeColor = System.Drawing.Color.Black;
-            this.NB_button2.Location = new System.Drawing.Point(40, 157);
+            this.NB_button2.Location = new System.Drawing.Point(36, 166);
             this.NB_button2.Name = "NB_button2";
-            this.NB_button2.Size = new System.Drawing.Size(23, 21);
+            this.NB_button2.Size = new System.Drawing.Size(29, 29);
             this.NB_button2.TabIndex = 137;
             this.NB_button2.Text = "B";
             this.toolTip.SetToolTip(this.NB_button2, "Noise Blanker");
@@ -1521,11 +1071,11 @@ namespace OmniaGUI
             // Time_display_label33
             // 
             this.Time_display_label33.BackColor = System.Drawing.Color.Transparent;
-            this.Time_display_label33.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Time_display_label33.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Time_display_label33.ForeColor = System.Drawing.Color.White;
-            this.Time_display_label33.Location = new System.Drawing.Point(3, 95);
+            this.Time_display_label33.Location = new System.Drawing.Point(8, 228);
             this.Time_display_label33.Name = "Time_display_label33";
-            this.Time_display_label33.Size = new System.Drawing.Size(70, 23);
+            this.Time_display_label33.Size = new System.Drawing.Size(86, 23);
             this.Time_display_label33.TabIndex = 113;
             this.Time_display_label33.Text = "00:00:00";
             this.Time_display_label33.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -1536,11 +1086,11 @@ namespace OmniaGUI
             // 
             this.TX_Mute_button2.BackColor = System.Drawing.Color.Gainsboro;
             this.TX_Mute_button2.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.TX_Mute_button2.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.TX_Mute_button2.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.TX_Mute_button2.ForeColor = System.Drawing.Color.Black;
-            this.TX_Mute_button2.Location = new System.Drawing.Point(644, 157);
+            this.TX_Mute_button2.Location = new System.Drawing.Point(606, 166);
             this.TX_Mute_button2.Name = "TX_Mute_button2";
-            this.TX_Mute_button2.Size = new System.Drawing.Size(73, 21);
+            this.TX_Mute_button2.Size = new System.Drawing.Size(112, 29);
             this.TX_Mute_button2.TabIndex = 106;
             this.TX_Mute_button2.Text = "Mic Gain";
             this.TX_Mute_button2.UseVisualStyleBackColor = false;
@@ -1550,11 +1100,11 @@ namespace OmniaGUI
             // 
             this.Volume_Mute_button2.BackColor = System.Drawing.Color.Gainsboro;
             this.Volume_Mute_button2.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.Volume_Mute_button2.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Volume_Mute_button2.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Volume_Mute_button2.ForeColor = System.Drawing.Color.Black;
-            this.Volume_Mute_button2.Location = new System.Drawing.Point(82, 157);
+            this.Volume_Mute_button2.Location = new System.Drawing.Point(80, 166);
             this.Volume_Mute_button2.Name = "Volume_Mute_button2";
-            this.Volume_Mute_button2.Size = new System.Drawing.Size(65, 21);
+            this.Volume_Mute_button2.Size = new System.Drawing.Size(81, 29);
             this.Volume_Mute_button2.TabIndex = 105;
             this.Volume_Mute_button2.Text = "Volume";
             this.Volume_Mute_button2.UseVisualStyleBackColor = false;
@@ -1563,10 +1113,10 @@ namespace OmniaGUI
             // MicVolume_hScrollBar1
             // 
             this.MicVolume_hScrollBar1.Cursor = System.Windows.Forms.Cursors.SizeWE;
-            this.MicVolume_hScrollBar1.Location = new System.Drawing.Point(588, 181);
+            this.MicVolume_hScrollBar1.Location = new System.Drawing.Point(584, 204);
             this.MicVolume_hScrollBar1.Maximum = 109;
             this.MicVolume_hScrollBar1.Name = "MicVolume_hScrollBar1";
-            this.MicVolume_hScrollBar1.Size = new System.Drawing.Size(185, 10);
+            this.MicVolume_hScrollBar1.Size = new System.Drawing.Size(185, 21);
             this.MicVolume_hScrollBar1.TabIndex = 102;
             this.MicVolume_hScrollBar1.TabStop = true;
             this.MicVolume_hScrollBar1.Value = 30;
@@ -1575,11 +1125,11 @@ namespace OmniaGUI
             // Volume_hScrollBar1
             // 
             this.Volume_hScrollBar1.Cursor = System.Windows.Forms.Cursors.SizeWE;
-            this.Volume_hScrollBar1.Location = new System.Drawing.Point(20, 181);
+            this.Volume_hScrollBar1.Location = new System.Drawing.Point(23, 204);
             this.Volume_hScrollBar1.Maximum = 108;
             this.Volume_hScrollBar1.Name = "Volume_hScrollBar1";
             this.Volume_hScrollBar1.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.Volume_hScrollBar1.Size = new System.Drawing.Size(185, 10);
+            this.Volume_hScrollBar1.Size = new System.Drawing.Size(185, 21);
             this.Volume_hScrollBar1.TabIndex = 101;
             this.Volume_hScrollBar1.TabStop = true;
             this.Volume_hScrollBar1.Value = 30;
@@ -1589,11 +1139,11 @@ namespace OmniaGUI
             // 
             this.Freqbutton3.BackColor = System.Drawing.Color.Gainsboro;
             this.Freqbutton3.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.Freqbutton3.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Freqbutton3.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Freqbutton3.ForeColor = System.Drawing.Color.Black;
-            this.Freqbutton3.Location = new System.Drawing.Point(166, 157);
+            this.Freqbutton3.Location = new System.Drawing.Point(179, 166);
             this.Freqbutton3.Name = "Freqbutton3";
-            this.Freqbutton3.Size = new System.Drawing.Size(23, 21);
+            this.Freqbutton3.Size = new System.Drawing.Size(29, 29);
             this.Freqbutton3.TabIndex = 66;
             this.Freqbutton3.Text = "A";
             this.toolTip.SetToolTip(this.Freqbutton3, "Auto Notch");
@@ -1604,11 +1154,11 @@ namespace OmniaGUI
             // 
             this.button1.BackColor = System.Drawing.Color.Gainsboro;
             this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.button1.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button1.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.button1.ForeColor = System.Drawing.Color.Black;
-            this.button1.Location = new System.Drawing.Point(679, 8);
+            this.button1.Location = new System.Drawing.Point(636, 8);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(43, 22);
+            this.button1.Size = new System.Drawing.Size(59, 26);
             this.button1.TabIndex = 64;
             this.button1.Text = "PTT";
             this.toolTip.SetToolTip(this.button1, "Turns on TX\r\nPTT is ONLY permitted when the \r\nDial Frequency is within a legal Am" +
@@ -1620,10 +1170,11 @@ namespace OmniaGUI
             // 
             this.genradioButton.AutoSize = true;
             this.genradioButton.BackColor = System.Drawing.Color.Transparent;
+            this.genradioButton.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.genradioButton.ForeColor = System.Drawing.Color.White;
-            this.genradioButton.Location = new System.Drawing.Point(662, 109);
+            this.genradioButton.Location = new System.Drawing.Point(681, 138);
             this.genradioButton.Name = "genradioButton";
-            this.genradioButton.Size = new System.Drawing.Size(52, 20);
+            this.genradioButton.Size = new System.Drawing.Size(60, 22);
             this.genradioButton.TabIndex = 56;
             this.genradioButton.Text = "GEN";
             this.genradioButton.UseVisualStyleBackColor = false;
@@ -1633,11 +1184,11 @@ namespace OmniaGUI
             // 
             this.mainmodebutton2.BackColor = System.Drawing.Color.Gainsboro;
             this.mainmodebutton2.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.mainmodebutton2.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.mainmodebutton2.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.mainmodebutton2.ForeColor = System.Drawing.Color.Black;
-            this.mainmodebutton2.Location = new System.Drawing.Point(169, 33);
+            this.mainmodebutton2.Location = new System.Drawing.Point(158, 41);
             this.mainmodebutton2.Name = "mainmodebutton2";
-            this.mainmodebutton2.Size = new System.Drawing.Size(43, 22);
+            this.mainmodebutton2.Size = new System.Drawing.Size(59, 26);
             this.mainmodebutton2.TabIndex = 53;
             this.mainmodebutton2.Text = "USB";
             this.mainmodebutton2.UseVisualStyleBackColor = false;
@@ -1647,10 +1198,11 @@ namespace OmniaGUI
             // 
             this.main10radioButton1.AutoSize = true;
             this.main10radioButton1.BackColor = System.Drawing.Color.Transparent;
+            this.main10radioButton1.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.main10radioButton1.ForeColor = System.Drawing.Color.White;
-            this.main10radioButton1.Location = new System.Drawing.Point(604, 109);
+            this.main10radioButton1.Location = new System.Drawing.Point(622, 138);
             this.main10radioButton1.Name = "main10radioButton1";
-            this.main10radioButton1.Size = new System.Drawing.Size(53, 20);
+            this.main10radioButton1.Size = new System.Drawing.Size(59, 22);
             this.main10radioButton1.TabIndex = 50;
             this.main10radioButton1.Text = "10M";
             this.main10radioButton1.UseVisualStyleBackColor = false;
@@ -1660,10 +1212,11 @@ namespace OmniaGUI
             // 
             this.main12radioButton2.AutoSize = true;
             this.main12radioButton2.BackColor = System.Drawing.Color.Transparent;
+            this.main12radioButton2.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.main12radioButton2.ForeColor = System.Drawing.Color.White;
-            this.main12radioButton2.Location = new System.Drawing.Point(546, 109);
+            this.main12radioButton2.Location = new System.Drawing.Point(563, 138);
             this.main12radioButton2.Name = "main12radioButton2";
-            this.main12radioButton2.Size = new System.Drawing.Size(53, 20);
+            this.main12radioButton2.Size = new System.Drawing.Size(59, 22);
             this.main12radioButton2.TabIndex = 49;
             this.main12radioButton2.Text = "12M";
             this.main12radioButton2.UseVisualStyleBackColor = false;
@@ -1673,10 +1226,11 @@ namespace OmniaGUI
             // 
             this.main15radiobutton.AutoSize = true;
             this.main15radiobutton.BackColor = System.Drawing.Color.Transparent;
+            this.main15radiobutton.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.main15radiobutton.ForeColor = System.Drawing.Color.White;
-            this.main15radiobutton.Location = new System.Drawing.Point(488, 109);
+            this.main15radiobutton.Location = new System.Drawing.Point(504, 138);
             this.main15radiobutton.Name = "main15radiobutton";
-            this.main15radiobutton.Size = new System.Drawing.Size(53, 20);
+            this.main15radiobutton.Size = new System.Drawing.Size(59, 22);
             this.main15radiobutton.TabIndex = 48;
             this.main15radiobutton.Text = "15M";
             this.main15radiobutton.UseVisualStyleBackColor = false;
@@ -1686,10 +1240,11 @@ namespace OmniaGUI
             // 
             this.main17radioButton4.AutoSize = true;
             this.main17radioButton4.BackColor = System.Drawing.Color.Transparent;
+            this.main17radioButton4.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.main17radioButton4.ForeColor = System.Drawing.Color.White;
-            this.main17radioButton4.Location = new System.Drawing.Point(430, 109);
+            this.main17radioButton4.Location = new System.Drawing.Point(445, 138);
             this.main17radioButton4.Name = "main17radioButton4";
-            this.main17radioButton4.Size = new System.Drawing.Size(53, 20);
+            this.main17radioButton4.Size = new System.Drawing.Size(59, 22);
             this.main17radioButton4.TabIndex = 47;
             this.main17radioButton4.Text = "17M";
             this.main17radioButton4.UseVisualStyleBackColor = false;
@@ -1699,10 +1254,11 @@ namespace OmniaGUI
             // 
             this.main20radioButton5.AutoSize = true;
             this.main20radioButton5.BackColor = System.Drawing.Color.Transparent;
+            this.main20radioButton5.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.main20radioButton5.ForeColor = System.Drawing.Color.White;
-            this.main20radioButton5.Location = new System.Drawing.Point(372, 109);
+            this.main20radioButton5.Location = new System.Drawing.Point(386, 138);
             this.main20radioButton5.Name = "main20radioButton5";
-            this.main20radioButton5.Size = new System.Drawing.Size(53, 20);
+            this.main20radioButton5.Size = new System.Drawing.Size(59, 22);
             this.main20radioButton5.TabIndex = 46;
             this.main20radioButton5.Text = "20M";
             this.main20radioButton5.UseVisualStyleBackColor = false;
@@ -1712,10 +1268,11 @@ namespace OmniaGUI
             // 
             this.main30radioButton6.AutoSize = true;
             this.main30radioButton6.BackColor = System.Drawing.Color.Transparent;
+            this.main30radioButton6.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.main30radioButton6.ForeColor = System.Drawing.Color.White;
-            this.main30radioButton6.Location = new System.Drawing.Point(314, 109);
+            this.main30radioButton6.Location = new System.Drawing.Point(327, 138);
             this.main30radioButton6.Name = "main30radioButton6";
-            this.main30radioButton6.Size = new System.Drawing.Size(53, 20);
+            this.main30radioButton6.Size = new System.Drawing.Size(59, 22);
             this.main30radioButton6.TabIndex = 45;
             this.main30radioButton6.Text = "30M";
             this.main30radioButton6.UseVisualStyleBackColor = false;
@@ -1725,10 +1282,11 @@ namespace OmniaGUI
             // 
             this.main40radioButton7.AutoSize = true;
             this.main40radioButton7.BackColor = System.Drawing.Color.Transparent;
+            this.main40radioButton7.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.main40radioButton7.ForeColor = System.Drawing.Color.White;
-            this.main40radioButton7.Location = new System.Drawing.Point(256, 109);
+            this.main40radioButton7.Location = new System.Drawing.Point(268, 138);
             this.main40radioButton7.Name = "main40radioButton7";
-            this.main40radioButton7.Size = new System.Drawing.Size(53, 20);
+            this.main40radioButton7.Size = new System.Drawing.Size(59, 22);
             this.main40radioButton7.TabIndex = 44;
             this.main40radioButton7.Text = "40M";
             this.main40radioButton7.UseVisualStyleBackColor = false;
@@ -1738,10 +1296,11 @@ namespace OmniaGUI
             // 
             this.main60radioButton8.AutoSize = true;
             this.main60radioButton8.BackColor = System.Drawing.Color.Transparent;
+            this.main60radioButton8.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.main60radioButton8.ForeColor = System.Drawing.Color.White;
-            this.main60radioButton8.Location = new System.Drawing.Point(198, 109);
+            this.main60radioButton8.Location = new System.Drawing.Point(209, 138);
             this.main60radioButton8.Name = "main60radioButton8";
-            this.main60radioButton8.Size = new System.Drawing.Size(53, 20);
+            this.main60radioButton8.Size = new System.Drawing.Size(59, 22);
             this.main60radioButton8.TabIndex = 43;
             this.main60radioButton8.Text = "60M";
             this.main60radioButton8.UseVisualStyleBackColor = false;
@@ -1750,11 +1309,11 @@ namespace OmniaGUI
             // main80radioButton9
             // 
             this.main80radioButton9.BackColor = System.Drawing.Color.Transparent;
+            this.main80radioButton9.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.main80radioButton9.ForeColor = System.Drawing.Color.White;
-            this.main80radioButton9.Location = new System.Drawing.Point(143, 109);
-            this.main80radioButton9.Margin = new System.Windows.Forms.Padding(0, 3, 3, 5);
+            this.main80radioButton9.Location = new System.Drawing.Point(140, 139);
             this.main80radioButton9.Name = "main80radioButton9";
-            this.main80radioButton9.Size = new System.Drawing.Size(51, 20);
+            this.main80radioButton9.Size = new System.Drawing.Size(63, 20);
             this.main80radioButton9.TabIndex = 42;
             this.main80radioButton9.Text = "80M";
             this.main80radioButton9.UseVisualStyleBackColor = false;
@@ -1764,11 +1323,11 @@ namespace OmniaGUI
             // 
             this.main160radioButton10.AutoSize = true;
             this.main160radioButton10.BackColor = System.Drawing.Color.Transparent;
+            this.main160radioButton10.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.main160radioButton10.ForeColor = System.Drawing.Color.White;
-            this.main160radioButton10.Location = new System.Drawing.Point(79, 109);
-            this.main160radioButton10.Margin = new System.Windows.Forms.Padding(3, 3, 0, 5);
+            this.main160radioButton10.Location = new System.Drawing.Point(65, 138);
             this.main160radioButton10.Name = "main160radioButton10";
-            this.main160radioButton10.Size = new System.Drawing.Size(61, 20);
+            this.main160radioButton10.Size = new System.Drawing.Size(69, 22);
             this.main160radioButton10.TabIndex = 41;
             this.main160radioButton10.Text = "160M";
             this.main160radioButton10.UseVisualStyleBackColor = false;
@@ -1778,11 +1337,11 @@ namespace OmniaGUI
             // 
             this.buttTune.BackColor = System.Drawing.Color.Gainsboro;
             this.buttTune.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.buttTune.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.buttTune.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.buttTune.ForeColor = System.Drawing.Color.Black;
-            this.buttTune.Location = new System.Drawing.Point(726, 8);
+            this.buttTune.Location = new System.Drawing.Point(699, 8);
             this.buttTune.Name = "buttTune";
-            this.buttTune.Size = new System.Drawing.Size(43, 22);
+            this.buttTune.Size = new System.Drawing.Size(59, 26);
             this.buttTune.TabIndex = 4;
             this.buttTune.Text = "TUN";
             this.toolTip.SetToolTip(this.buttTune, "Sets Rig to Tune Power and Turns on TX\r\nThe TUNING is ONLY permitted when the \r\nD" +
@@ -1794,7 +1353,7 @@ namespace OmniaGUI
             // 
             this.Band_Change_Auto_Tune_checkBox2.BackColor = System.Drawing.Color.Black;
             this.Band_Change_Auto_Tune_checkBox2.ForeColor = System.Drawing.Color.Black;
-            this.Band_Change_Auto_Tune_checkBox2.Location = new System.Drawing.Point(637, 29);
+            this.Band_Change_Auto_Tune_checkBox2.Location = new System.Drawing.Point(764, 43);
             this.Band_Change_Auto_Tune_checkBox2.Name = "Band_Change_Auto_Tune_checkBox2";
             this.Band_Change_Auto_Tune_checkBox2.Size = new System.Drawing.Size(20, 20);
             this.Band_Change_Auto_Tune_checkBox2.TabIndex = 151;
@@ -1802,21 +1361,12 @@ namespace OmniaGUI
             this.Band_Change_Auto_Tune_checkBox2.UseVisualStyleBackColor = false;
             this.Band_Change_Auto_Tune_checkBox2.CheckedChanged += new System.EventHandler(this.Band_Change_Auto_Tune_checkBox2_CheckedChanged);
             // 
-            // panel2
-            // 
-            this.panel2.BackColor = System.Drawing.Color.Black;
-            this.panel2.ForeColor = System.Drawing.Color.Black;
-            this.panel2.Location = new System.Drawing.Point(71, 107);
-            this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(651, 25);
-            this.panel2.TabIndex = 183;
-            // 
             // label9
             // 
             this.label9.BackColor = System.Drawing.Color.Black;
             this.label9.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label9.ForeColor = System.Drawing.Color.White;
-            this.label9.Location = new System.Drawing.Point(54, 74);
+            this.label9.Location = new System.Drawing.Point(46, 72);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(35, 17);
             this.label9.TabIndex = 171;
@@ -1829,7 +1379,7 @@ namespace OmniaGUI
             this.Power_Value_label2.BackColor = System.Drawing.Color.Black;
             this.Power_Value_label2.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Power_Value_label2.ForeColor = System.Drawing.Color.White;
-            this.Power_Value_label2.Location = new System.Drawing.Point(89, 74);
+            this.Power_Value_label2.Location = new System.Drawing.Point(77, 71);
             this.Power_Value_label2.Name = "Power_Value_label2";
             this.Power_Value_label2.Size = new System.Drawing.Size(34, 17);
             this.Power_Value_label2.TabIndex = 172;
@@ -1870,7 +1420,7 @@ namespace OmniaGUI
             this.vuMeter1.ShowDialOnly = false;
             this.vuMeter1.ShowLedPeak = false;
             this.vuMeter1.ShowTextInDial = true;
-            this.vuMeter1.Size = new System.Drawing.Size(160, 128);
+            this.vuMeter1.Size = new System.Drawing.Size(149, 119);
             this.vuMeter1.TabIndex = 168;
             this.vuMeter1.TextInDial = new string[] {
         "[S]",
@@ -1893,15 +1443,291 @@ namespace OmniaGUI
             this.picWaterfall.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.picWaterfall.Cursor = System.Windows.Forms.Cursors.Cross;
             this.picWaterfall.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.picWaterfall.Location = new System.Drawing.Point(0, 340);
+            this.picWaterfall.Location = new System.Drawing.Point(0, 371);
             this.picWaterfall.Margin = new System.Windows.Forms.Padding(0);
             this.picWaterfall.Name = "picWaterfall";
-            this.picWaterfall.Size = new System.Drawing.Size(792, 111);
+            this.picWaterfall.Size = new System.Drawing.Size(792, 80);
             this.picWaterfall.TabIndex = 178;
             this.picWaterfall.TabStop = false;
             this.picWaterfall.Visible = false;
             this.picWaterfall.Click += new System.EventHandler(this.picWaterfall_Click_1);
             this.picWaterfall.Paint += new System.Windows.Forms.PaintEventHandler(this.picWaterfall_paint);
+            // 
+            // groupBox3
+            // 
+            this.groupBox3.BackColor = System.Drawing.Color.Transparent;
+            this.groupBox3.Controls.Add(this.Freq_Pointer_7);
+            this.groupBox3.Controls.Add(this.Freq_Pointer_6);
+            this.groupBox3.Controls.Add(this.Freq_Pointer_5);
+            this.groupBox3.Controls.Add(this.Freq_Pointer_4);
+            this.groupBox3.Controls.Add(this.Freq_Pointer_3);
+            this.groupBox3.Controls.Add(this.Freq_Pointer_2);
+            this.groupBox3.Controls.Add(this.Freq_Pointer_1);
+            this.groupBox3.Controls.Add(this.Freq_Pointer_0);
+            this.groupBox3.Controls.Add(this.Tenmillions);
+            this.groupBox3.Controls.Add(this.Tenthousands);
+            this.groupBox3.Controls.Add(this.Decimal_label58);
+            this.groupBox3.Controls.Add(this.Decimal_label59);
+            this.groupBox3.Controls.Add(this.Hundredthousand);
+            this.groupBox3.Controls.Add(this.Millions);
+            this.groupBox3.Controls.Add(this.Hundreds);
+            this.groupBox3.Controls.Add(this.Thousands);
+            this.groupBox3.Controls.Add(this.Ones);
+            this.groupBox3.Controls.Add(this.Tens);
+            this.groupBox3.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.groupBox3.ForeColor = System.Drawing.Color.White;
+            this.groupBox3.Location = new System.Drawing.Point(222, 0);
+            this.groupBox3.Margin = new System.Windows.Forms.Padding(0);
+            this.groupBox3.Name = "groupBox3";
+            this.groupBox3.Size = new System.Drawing.Size(409, 89);
+            this.groupBox3.TabIndex = 161;
+            this.groupBox3.TabStop = false;
+            this.groupBox3.Text = "VFO A";
+            this.groupBox3.Enter += new System.EventHandler(this.groupBox3_Enter);
+            // 
+            // Freq_Pointer_7
+            // 
+            this.Freq_Pointer_7.AutoSize = true;
+            this.Freq_Pointer_7.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Freq_Pointer_7.Location = new System.Drawing.Point(28, 71);
+            this.Freq_Pointer_7.Name = "Freq_Pointer_7";
+            this.Freq_Pointer_7.Size = new System.Drawing.Size(17, 13);
+            this.Freq_Pointer_7.TabIndex = 168;
+            this.Freq_Pointer_7.Text = "^";
+            this.Freq_Pointer_7.Click += new System.EventHandler(this.Freq_Pointer_7_Click);
+            // 
+            // Freq_Pointer_6
+            // 
+            this.Freq_Pointer_6.AutoSize = true;
+            this.Freq_Pointer_6.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Freq_Pointer_6.Location = new System.Drawing.Point(67, 71);
+            this.Freq_Pointer_6.Name = "Freq_Pointer_6";
+            this.Freq_Pointer_6.Size = new System.Drawing.Size(17, 13);
+            this.Freq_Pointer_6.TabIndex = 167;
+            this.Freq_Pointer_6.Text = "^";
+            this.Freq_Pointer_6.Click += new System.EventHandler(this.Freq_Pointer_6_Click);
+            // 
+            // Freq_Pointer_5
+            // 
+            this.Freq_Pointer_5.AutoSize = true;
+            this.Freq_Pointer_5.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Freq_Pointer_5.Location = new System.Drawing.Point(128, 71);
+            this.Freq_Pointer_5.Name = "Freq_Pointer_5";
+            this.Freq_Pointer_5.Size = new System.Drawing.Size(17, 13);
+            this.Freq_Pointer_5.TabIndex = 166;
+            this.Freq_Pointer_5.Text = "^";
+            this.Freq_Pointer_5.Click += new System.EventHandler(this.Freq_Pointer_5_Click);
+            // 
+            // Freq_Pointer_4
+            // 
+            this.Freq_Pointer_4.AutoSize = true;
+            this.Freq_Pointer_4.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Freq_Pointer_4.Location = new System.Drawing.Point(166, 71);
+            this.Freq_Pointer_4.Name = "Freq_Pointer_4";
+            this.Freq_Pointer_4.Size = new System.Drawing.Size(17, 13);
+            this.Freq_Pointer_4.TabIndex = 165;
+            this.Freq_Pointer_4.Text = "^";
+            this.Freq_Pointer_4.Click += new System.EventHandler(this.Freq_Pointer_4_Click);
+            // 
+            // Freq_Pointer_3
+            // 
+            this.Freq_Pointer_3.AutoSize = true;
+            this.Freq_Pointer_3.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Freq_Pointer_3.Location = new System.Drawing.Point(217, 71);
+            this.Freq_Pointer_3.Name = "Freq_Pointer_3";
+            this.Freq_Pointer_3.Size = new System.Drawing.Size(17, 13);
+            this.Freq_Pointer_3.TabIndex = 164;
+            this.Freq_Pointer_3.Text = "^";
+            this.Freq_Pointer_3.Click += new System.EventHandler(this.Freq_Pointer_3_Click);
+            // 
+            // Freq_Pointer_2
+            // 
+            this.Freq_Pointer_2.AutoSize = true;
+            this.Freq_Pointer_2.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Freq_Pointer_2.Location = new System.Drawing.Point(280, 71);
+            this.Freq_Pointer_2.Name = "Freq_Pointer_2";
+            this.Freq_Pointer_2.Size = new System.Drawing.Size(17, 13);
+            this.Freq_Pointer_2.TabIndex = 163;
+            this.Freq_Pointer_2.Text = "^";
+            this.Freq_Pointer_2.Click += new System.EventHandler(this.Freq_Pointer_2_Click);
+            // 
+            // Freq_Pointer_1
+            // 
+            this.Freq_Pointer_1.AutoSize = true;
+            this.Freq_Pointer_1.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Freq_Pointer_1.Location = new System.Drawing.Point(320, 71);
+            this.Freq_Pointer_1.Name = "Freq_Pointer_1";
+            this.Freq_Pointer_1.Size = new System.Drawing.Size(17, 13);
+            this.Freq_Pointer_1.TabIndex = 162;
+            this.Freq_Pointer_1.Text = "^";
+            this.Freq_Pointer_1.Click += new System.EventHandler(this.Freq_Pointer_1_Click);
+            // 
+            // Freq_Pointer_0
+            // 
+            this.Freq_Pointer_0.AutoSize = true;
+            this.Freq_Pointer_0.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Freq_Pointer_0.Location = new System.Drawing.Point(355, 71);
+            this.Freq_Pointer_0.Name = "Freq_Pointer_0";
+            this.Freq_Pointer_0.Size = new System.Drawing.Size(17, 13);
+            this.Freq_Pointer_0.TabIndex = 161;
+            this.Freq_Pointer_0.Text = "^";
+            this.Freq_Pointer_0.Click += new System.EventHandler(this.Freq_Pointer_0_Click);
+            // 
+            // Tenmillions
+            // 
+            this.Tenmillions.AutoSize = true;
+            this.Tenmillions.BackColor = System.Drawing.Color.Transparent;
+            this.Tenmillions.Font = new System.Drawing.Font("Microsoft Sans Serif", 36F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Tenmillions.ForeColor = System.Drawing.Color.White;
+            this.Tenmillions.Location = new System.Drawing.Point(8, 20);
+            this.Tenmillions.Name = "Tenmillions";
+            this.Tenmillions.Size = new System.Drawing.Size(52, 55);
+            this.Tenmillions.TabIndex = 95;
+            this.Tenmillions.Text = "1";
+            this.Tenmillions.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.Tenmillions.Click += new System.EventHandler(this.Tenmillions_Click);
+            this.Tenmillions.MouseEnter += new System.EventHandler(this.Tenmillions_MouseEnter);
+            this.Tenmillions.MouseLeave += new System.EventHandler(this.Tenmillions_MouseExit);
+            // 
+            // Tenthousands
+            // 
+            this.Tenthousands.AutoSize = true;
+            this.Tenthousands.BackColor = System.Drawing.Color.Transparent;
+            this.Tenthousands.Font = new System.Drawing.Font("Microsoft Sans Serif", 36F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Tenthousands.ForeColor = System.Drawing.Color.White;
+            this.Tenthousands.Location = new System.Drawing.Point(155, 20);
+            this.Tenthousands.Name = "Tenthousands";
+            this.Tenthousands.Size = new System.Drawing.Size(52, 55);
+            this.Tenthousands.TabIndex = 92;
+            this.Tenthousands.Text = "9";
+            this.Tenthousands.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.Tenthousands.Click += new System.EventHandler(this.Tenthousands_Click);
+            this.Tenthousands.MouseEnter += new System.EventHandler(this.Tenthousands_MouseEnter);
+            this.Tenthousands.MouseLeave += new System.EventHandler(this.Tenthousands_MouseExit);
+            // 
+            // Decimal_label58
+            // 
+            this.Decimal_label58.AutoSize = true;
+            this.Decimal_label58.BackColor = System.Drawing.Color.Transparent;
+            this.Decimal_label58.Font = new System.Drawing.Font("Times New Roman", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Decimal_label58.ForeColor = System.Drawing.Color.White;
+            this.Decimal_label58.ImageAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.Decimal_label58.Location = new System.Drawing.Point(251, 43);
+            this.Decimal_label58.Name = "Decimal_label58";
+            this.Decimal_label58.Size = new System.Drawing.Size(15, 24);
+            this.Decimal_label58.TabIndex = 159;
+            this.Decimal_label58.Text = ".";
+            this.Decimal_label58.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // Decimal_label59
+            // 
+            this.Decimal_label59.AutoSize = true;
+            this.Decimal_label59.BackColor = System.Drawing.Color.Transparent;
+            this.Decimal_label59.Font = new System.Drawing.Font("Times New Roman", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Decimal_label59.ForeColor = System.Drawing.Color.White;
+            this.Decimal_label59.ImageAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.Decimal_label59.Location = new System.Drawing.Point(95, 43);
+            this.Decimal_label59.Name = "Decimal_label59";
+            this.Decimal_label59.Size = new System.Drawing.Size(15, 24);
+            this.Decimal_label59.TabIndex = 160;
+            this.Decimal_label59.Text = ".";
+            this.Decimal_label59.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // Hundredthousand
+            // 
+            this.Hundredthousand.AutoSize = true;
+            this.Hundredthousand.BackColor = System.Drawing.Color.Transparent;
+            this.Hundredthousand.Font = new System.Drawing.Font("Microsoft Sans Serif", 36F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Hundredthousand.ForeColor = System.Drawing.Color.White;
+            this.Hundredthousand.Location = new System.Drawing.Point(110, 20);
+            this.Hundredthousand.Name = "Hundredthousand";
+            this.Hundredthousand.Size = new System.Drawing.Size(52, 55);
+            this.Hundredthousand.TabIndex = 93;
+            this.Hundredthousand.Text = "1";
+            this.Hundredthousand.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.Hundredthousand.Click += new System.EventHandler(this.Hundredthousand_Click);
+            this.Hundredthousand.MouseEnter += new System.EventHandler(this.Hundredthousand_MouseEnter);
+            this.Hundredthousand.MouseLeave += new System.EventHandler(this.Hundredthousand_MouseExit);
+            // 
+            // Millions
+            // 
+            this.Millions.AutoSize = true;
+            this.Millions.BackColor = System.Drawing.Color.Transparent;
+            this.Millions.Font = new System.Drawing.Font("Microsoft Sans Serif", 36F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Millions.ForeColor = System.Drawing.Color.White;
+            this.Millions.Location = new System.Drawing.Point(49, 20);
+            this.Millions.Name = "Millions";
+            this.Millions.Size = new System.Drawing.Size(52, 55);
+            this.Millions.TabIndex = 94;
+            this.Millions.Text = "4";
+            this.Millions.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.Millions.Click += new System.EventHandler(this.Millions_Click);
+            this.Millions.MouseEnter += new System.EventHandler(this.Millions_MouseEnter);
+            this.Millions.MouseLeave += new System.EventHandler(this.Millions_MouseExit);
+            // 
+            // Hundreds
+            // 
+            this.Hundreds.AutoSize = true;
+            this.Hundreds.BackColor = System.Drawing.Color.Transparent;
+            this.Hundreds.Font = new System.Drawing.Font("Microsoft Sans Serif", 36F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Hundreds.ForeColor = System.Drawing.Color.White;
+            this.Hundreds.Location = new System.Drawing.Point(265, 20);
+            this.Hundreds.Name = "Hundreds";
+            this.Hundreds.Size = new System.Drawing.Size(52, 55);
+            this.Hundreds.TabIndex = 90;
+            this.Hundreds.Text = "1";
+            this.Hundreds.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.Hundreds.Click += new System.EventHandler(this.Hundreds_Click);
+            this.Hundreds.MouseEnter += new System.EventHandler(this.Hundreds_MouseEnter);
+            this.Hundreds.MouseLeave += new System.EventHandler(this.Hundreds_MouseExit);
+            // 
+            // Thousands
+            // 
+            this.Thousands.AutoSize = true;
+            this.Thousands.BackColor = System.Drawing.Color.Transparent;
+            this.Thousands.Font = new System.Drawing.Font("Microsoft Sans Serif", 36F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Thousands.ForeColor = System.Drawing.Color.White;
+            this.Thousands.Location = new System.Drawing.Point(201, 20);
+            this.Thousands.Name = "Thousands";
+            this.Thousands.Size = new System.Drawing.Size(52, 55);
+            this.Thousands.TabIndex = 91;
+            this.Thousands.Text = "5";
+            this.Thousands.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.Thousands.Click += new System.EventHandler(this.Thousands_Click);
+            this.Thousands.MouseEnter += new System.EventHandler(this.Thousands_MouseEnter);
+            this.Thousands.MouseLeave += new System.EventHandler(this.Thousands_MouseExit);
+            // 
+            // Ones
+            // 
+            this.Ones.AutoSize = true;
+            this.Ones.BackColor = System.Drawing.Color.Transparent;
+            this.Ones.Font = new System.Drawing.Font("Microsoft Sans Serif", 36F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Ones.ForeColor = System.Drawing.Color.White;
+            this.Ones.Location = new System.Drawing.Point(345, 20);
+            this.Ones.Name = "Ones";
+            this.Ones.Size = new System.Drawing.Size(52, 55);
+            this.Ones.TabIndex = 88;
+            this.Ones.Text = "0";
+            this.Ones.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.Ones.Click += new System.EventHandler(this.Ones_Click);
+            this.Ones.MouseEnter += new System.EventHandler(this.Ones_MouseEnter);
+            this.Ones.MouseLeave += new System.EventHandler(this.Ones_MouseExit);
+            // 
+            // Tens
+            // 
+            this.Tens.AutoSize = true;
+            this.Tens.BackColor = System.Drawing.Color.Transparent;
+            this.Tens.Font = new System.Drawing.Font("Microsoft Sans Serif", 36F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Tens.ForeColor = System.Drawing.Color.White;
+            this.Tens.Location = new System.Drawing.Point(305, 20);
+            this.Tens.Name = "Tens";
+            this.Tens.Size = new System.Drawing.Size(52, 55);
+            this.Tens.TabIndex = 89;
+            this.Tens.Text = "1";
+            this.Tens.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.Tens.Click += new System.EventHandler(this.Tens_Click);
+            this.Tens.MouseEnter += new System.EventHandler(this.Tens_MouseEnter);
+            this.Tens.MouseLeave += new System.EventHandler(this.Tens_MouseExit);
             // 
             // TX
             // 
@@ -2731,6 +2557,7 @@ namespace OmniaGUI
             // 
             this.band_stack.AutoScroll = true;
             this.band_stack.BackColor = System.Drawing.Color.Black;
+            this.band_stack.Controls.Add(this.band_stack_label29);
             this.band_stack.Controls.Add(this.label3);
             this.band_stack.Controls.Add(this.General_listView1);
             this.band_stack.Controls.Add(this.checkBox1);
@@ -2750,7 +2577,6 @@ namespace OmniaGUI
             this.band_stack.Controls.Add(this.label30);
             this.band_stack.Controls.Add(this.label29);
             this.band_stack.Controls.Add(this.band_stack_textBox1);
-            this.band_stack.Controls.Add(this.band_stack_label29);
             this.band_stack.Controls.Add(this.label28);
             this.band_stack.Controls.Add(this.label27);
             this.band_stack.Controls.Add(this.label26);
@@ -2772,14 +2598,27 @@ namespace OmniaGUI
             this.band_stack.ToolTipText = "Favorite Frequencies";
             this.band_stack.Click += new System.EventHandler(this.band_stack_Click);
             // 
+            // band_stack_label29
+            // 
+            this.band_stack_label29.AutoSize = true;
+            this.band_stack_label29.BackColor = System.Drawing.Color.Gainsboro;
+            this.band_stack_label29.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.band_stack_label29.ForeColor = System.Drawing.Color.Black;
+            this.band_stack_label29.Location = new System.Drawing.Point(347, 15);
+            this.band_stack_label29.Name = "band_stack_label29";
+            this.band_stack_label29.Size = new System.Drawing.Size(99, 18);
+            this.band_stack_label29.TabIndex = 86;
+            this.band_stack_label29.Text = "FAVORITES";
+            this.band_stack_label29.Click += new System.EventHandler(this.band_stack_label29_Click_1);
+            // 
             // label3
             // 
             this.label3.BackColor = System.Drawing.Color.Transparent;
             this.label3.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label3.ForeColor = System.Drawing.Color.White;
-            this.label3.Location = new System.Drawing.Point(540, 326);
+            this.label3.Location = new System.Drawing.Point(382, 321);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(35, 33);
+            this.label3.Size = new System.Drawing.Size(35, 17);
             this.label3.TabIndex = 85;
             this.label3.Text = "GEN";
             this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -2788,10 +2627,10 @@ namespace OmniaGUI
             // 
             this.General_listView1.BackColor = System.Drawing.Color.Gainsboro;
             this.General_listView1.HideSelection = false;
-            this.General_listView1.Location = new System.Drawing.Point(258, 318);
+            this.General_listView1.Location = new System.Drawing.Point(258, 348);
             this.General_listView1.MultiSelect = false;
             this.General_listView1.Name = "General_listView1";
-            this.General_listView1.Size = new System.Drawing.Size(276, 50);
+            this.General_listView1.Size = new System.Drawing.Size(276, 66);
             this.General_listView1.TabIndex = 84;
             this.toolTip.SetToolTip(this.General_listView1, "General Favorites.\r\nNot Yet Implemented");
             this.General_listView1.UseCompatibleStateImageBehavior = false;
@@ -2802,7 +2641,7 @@ namespace OmniaGUI
             this.checkBox1.AutoSize = true;
             this.checkBox1.BackColor = System.Drawing.Color.Gainsboro;
             this.checkBox1.ForeColor = System.Drawing.Color.Black;
-            this.checkBox1.Location = new System.Drawing.Point(361, 273);
+            this.checkBox1.Location = new System.Drawing.Point(361, 47);
             this.checkBox1.Name = "checkBox1";
             this.checkBox1.Size = new System.Drawing.Size(71, 20);
             this.checkBox1.TabIndex = 83;
@@ -2813,11 +2652,12 @@ namespace OmniaGUI
             // Favorites_textBox2
             // 
             this.Favorites_textBox2.BackColor = System.Drawing.Color.Gainsboro;
+            this.Favorites_textBox2.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Favorites_textBox2.ForeColor = System.Drawing.Color.Black;
-            this.Favorites_textBox2.Location = new System.Drawing.Point(239, 390);
+            this.Favorites_textBox2.Location = new System.Drawing.Point(106, 348);
             this.Favorites_textBox2.MaxLength = 15;
             this.Favorites_textBox2.Name = "Favorites_textBox2";
-            this.Favorites_textBox2.Size = new System.Drawing.Size(146, 23);
+            this.Favorites_textBox2.Size = new System.Drawing.Size(146, 27);
             this.Favorites_textBox2.TabIndex = 82;
             this.Favorites_textBox2.Text = "Enter Name";
             this.Favorites_textBox2.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
@@ -2828,11 +2668,12 @@ namespace OmniaGUI
             // B10_Favs_listView1
             // 
             this.B10_Favs_listView1.BackColor = System.Drawing.Color.Gainsboro;
+            this.B10_Favs_listView1.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.B10_Favs_listView1.HideSelection = false;
-            this.B10_Favs_listView1.Location = new System.Drawing.Point(456, 262);
+            this.B10_Favs_listView1.Location = new System.Drawing.Point(456, 272);
             this.B10_Favs_listView1.MultiSelect = false;
             this.B10_Favs_listView1.Name = "B10_Favs_listView1";
-            this.B10_Favs_listView1.Size = new System.Drawing.Size(276, 50);
+            this.B10_Favs_listView1.Size = new System.Drawing.Size(276, 66);
             this.B10_Favs_listView1.TabIndex = 81;
             this.B10_Favs_listView1.UseCompatibleStateImageBehavior = false;
             this.B10_Favs_listView1.View = System.Windows.Forms.View.List;
@@ -2841,11 +2682,12 @@ namespace OmniaGUI
             // B12_Favs_listView1
             // 
             this.B12_Favs_listView1.BackColor = System.Drawing.Color.Gainsboro;
+            this.B12_Favs_listView1.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.B12_Favs_listView1.HideSelection = false;
-            this.B12_Favs_listView1.Location = new System.Drawing.Point(456, 198);
+            this.B12_Favs_listView1.Location = new System.Drawing.Point(456, 208);
             this.B12_Favs_listView1.MultiSelect = false;
             this.B12_Favs_listView1.Name = "B12_Favs_listView1";
-            this.B12_Favs_listView1.Size = new System.Drawing.Size(276, 50);
+            this.B12_Favs_listView1.Size = new System.Drawing.Size(276, 66);
             this.B12_Favs_listView1.TabIndex = 80;
             this.B12_Favs_listView1.UseCompatibleStateImageBehavior = false;
             this.B12_Favs_listView1.View = System.Windows.Forms.View.List;
@@ -2854,11 +2696,12 @@ namespace OmniaGUI
             // B15_Favs_listView1
             // 
             this.B15_Favs_listView1.BackColor = System.Drawing.Color.Gainsboro;
+            this.B15_Favs_listView1.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.B15_Favs_listView1.HideSelection = false;
-            this.B15_Favs_listView1.Location = new System.Drawing.Point(456, 134);
+            this.B15_Favs_listView1.Location = new System.Drawing.Point(456, 144);
             this.B15_Favs_listView1.MultiSelect = false;
             this.B15_Favs_listView1.Name = "B15_Favs_listView1";
-            this.B15_Favs_listView1.Size = new System.Drawing.Size(276, 50);
+            this.B15_Favs_listView1.Size = new System.Drawing.Size(276, 66);
             this.B15_Favs_listView1.TabIndex = 79;
             this.B15_Favs_listView1.UseCompatibleStateImageBehavior = false;
             this.B15_Favs_listView1.View = System.Windows.Forms.View.List;
@@ -2867,11 +2710,12 @@ namespace OmniaGUI
             // B17_Favs_listView1
             // 
             this.B17_Favs_listView1.BackColor = System.Drawing.Color.Gainsboro;
+            this.B17_Favs_listView1.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.B17_Favs_listView1.HideSelection = false;
-            this.B17_Favs_listView1.Location = new System.Drawing.Point(456, 70);
+            this.B17_Favs_listView1.Location = new System.Drawing.Point(456, 80);
             this.B17_Favs_listView1.MultiSelect = false;
             this.B17_Favs_listView1.Name = "B17_Favs_listView1";
-            this.B17_Favs_listView1.Size = new System.Drawing.Size(276, 50);
+            this.B17_Favs_listView1.Size = new System.Drawing.Size(276, 66);
             this.B17_Favs_listView1.TabIndex = 78;
             this.B17_Favs_listView1.UseCompatibleStateImageBehavior = false;
             this.B17_Favs_listView1.View = System.Windows.Forms.View.List;
@@ -2880,14 +2724,14 @@ namespace OmniaGUI
             // B20_Favs_listView1
             // 
             this.B20_Favs_listView1.BackColor = System.Drawing.Color.Gainsboro;
-            this.B20_Favs_listView1.Font = new System.Drawing.Font("Verdana", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.B20_Favs_listView1.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.B20_Favs_listView1.ForeColor = System.Drawing.Color.Black;
             this.B20_Favs_listView1.HideSelection = false;
             this.B20_Favs_listView1.LabelEdit = true;
-            this.B20_Favs_listView1.Location = new System.Drawing.Point(456, 6);
+            this.B20_Favs_listView1.Location = new System.Drawing.Point(456, 16);
             this.B20_Favs_listView1.MultiSelect = false;
             this.B20_Favs_listView1.Name = "B20_Favs_listView1";
-            this.B20_Favs_listView1.Size = new System.Drawing.Size(276, 50);
+            this.B20_Favs_listView1.Size = new System.Drawing.Size(276, 66);
             this.B20_Favs_listView1.TabIndex = 77;
             this.B20_Favs_listView1.UseCompatibleStateImageBehavior = false;
             this.B20_Favs_listView1.View = System.Windows.Forms.View.List;
@@ -2896,11 +2740,12 @@ namespace OmniaGUI
             // B30_Favs_listView1
             // 
             this.B30_Favs_listView1.BackColor = System.Drawing.Color.Gainsboro;
+            this.B30_Favs_listView1.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.B30_Favs_listView1.HideSelection = false;
-            this.B30_Favs_listView1.Location = new System.Drawing.Point(58, 262);
+            this.B30_Favs_listView1.Location = new System.Drawing.Point(58, 273);
             this.B30_Favs_listView1.MultiSelect = false;
             this.B30_Favs_listView1.Name = "B30_Favs_listView1";
-            this.B30_Favs_listView1.Size = new System.Drawing.Size(276, 50);
+            this.B30_Favs_listView1.Size = new System.Drawing.Size(276, 66);
             this.B30_Favs_listView1.TabIndex = 76;
             this.B30_Favs_listView1.UseCompatibleStateImageBehavior = false;
             this.B30_Favs_listView1.View = System.Windows.Forms.View.List;
@@ -2909,12 +2754,13 @@ namespace OmniaGUI
             // B40_Favs_listView1
             // 
             this.B40_Favs_listView1.BackColor = System.Drawing.Color.Gainsboro;
+            this.B40_Favs_listView1.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.B40_Favs_listView1.ForeColor = System.Drawing.Color.Black;
             this.B40_Favs_listView1.HideSelection = false;
-            this.B40_Favs_listView1.Location = new System.Drawing.Point(58, 198);
+            this.B40_Favs_listView1.Location = new System.Drawing.Point(58, 208);
             this.B40_Favs_listView1.MultiSelect = false;
             this.B40_Favs_listView1.Name = "B40_Favs_listView1";
-            this.B40_Favs_listView1.Size = new System.Drawing.Size(276, 50);
+            this.B40_Favs_listView1.Size = new System.Drawing.Size(276, 66);
             this.B40_Favs_listView1.TabIndex = 75;
             this.B40_Favs_listView1.UseCompatibleStateImageBehavior = false;
             this.B40_Favs_listView1.View = System.Windows.Forms.View.List;
@@ -2923,12 +2769,13 @@ namespace OmniaGUI
             // B60_Favs_listView1
             // 
             this.B60_Favs_listView1.BackColor = System.Drawing.Color.Gainsboro;
+            this.B60_Favs_listView1.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.B60_Favs_listView1.ForeColor = System.Drawing.Color.Black;
             this.B60_Favs_listView1.HideSelection = false;
-            this.B60_Favs_listView1.Location = new System.Drawing.Point(58, 134);
+            this.B60_Favs_listView1.Location = new System.Drawing.Point(58, 144);
             this.B60_Favs_listView1.MultiSelect = false;
             this.B60_Favs_listView1.Name = "B60_Favs_listView1";
-            this.B60_Favs_listView1.Size = new System.Drawing.Size(276, 50);
+            this.B60_Favs_listView1.Size = new System.Drawing.Size(276, 66);
             this.B60_Favs_listView1.TabIndex = 74;
             this.B60_Favs_listView1.UseCompatibleStateImageBehavior = false;
             this.B60_Favs_listView1.View = System.Windows.Forms.View.List;
@@ -2937,12 +2784,13 @@ namespace OmniaGUI
             // B80_Favs_listView1
             // 
             this.B80_Favs_listView1.BackColor = System.Drawing.Color.Gainsboro;
+            this.B80_Favs_listView1.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.B80_Favs_listView1.ForeColor = System.Drawing.Color.Black;
             this.B80_Favs_listView1.HideSelection = false;
-            this.B80_Favs_listView1.Location = new System.Drawing.Point(58, 70);
+            this.B80_Favs_listView1.Location = new System.Drawing.Point(58, 80);
             this.B80_Favs_listView1.MultiSelect = false;
             this.B80_Favs_listView1.Name = "B80_Favs_listView1";
-            this.B80_Favs_listView1.Size = new System.Drawing.Size(276, 50);
+            this.B80_Favs_listView1.Size = new System.Drawing.Size(276, 66);
             this.B80_Favs_listView1.TabIndex = 73;
             this.B80_Favs_listView1.UseCompatibleStateImageBehavior = false;
             this.B80_Favs_listView1.View = System.Windows.Forms.View.List;
@@ -2951,12 +2799,13 @@ namespace OmniaGUI
             // B160_Favs_listView1
             // 
             this.B160_Favs_listView1.BackColor = System.Drawing.Color.Gainsboro;
+            this.B160_Favs_listView1.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.B160_Favs_listView1.ForeColor = System.Drawing.Color.Black;
             this.B160_Favs_listView1.HideSelection = false;
-            this.B160_Favs_listView1.Location = new System.Drawing.Point(58, 6);
+            this.B160_Favs_listView1.Location = new System.Drawing.Point(58, 16);
             this.B160_Favs_listView1.MultiSelect = false;
             this.B160_Favs_listView1.Name = "B160_Favs_listView1";
-            this.B160_Favs_listView1.Size = new System.Drawing.Size(276, 50);
+            this.B160_Favs_listView1.Size = new System.Drawing.Size(276, 66);
             this.B160_Favs_listView1.TabIndex = 72;
             this.B160_Favs_listView1.UseCompatibleStateImageBehavior = false;
             this.B160_Favs_listView1.View = System.Windows.Forms.View.List;
@@ -2965,11 +2814,11 @@ namespace OmniaGUI
             // textBox1
             // 
             this.textBox1.BackColor = System.Drawing.Color.Gainsboro;
-            this.textBox1.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textBox1.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.textBox1.ForeColor = System.Drawing.Color.Black;
-            this.textBox1.Location = new System.Drawing.Point(657, 326);
+            this.textBox1.Location = new System.Drawing.Point(540, 387);
             this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(64, 21);
+            this.textBox1.Size = new System.Drawing.Size(64, 27);
             this.textBox1.TabIndex = 67;
             this.textBox1.Text = "USB";
             this.textBox1.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
@@ -2978,11 +2827,11 @@ namespace OmniaGUI
             // label31
             // 
             this.label31.BackColor = System.Drawing.Color.Gainsboro;
-            this.label31.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label31.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label31.ForeColor = System.Drawing.Color.Black;
-            this.label31.Location = new System.Drawing.Point(601, 326);
+            this.label31.Location = new System.Drawing.Point(610, 390);
             this.label31.Name = "label31";
-            this.label31.Size = new System.Drawing.Size(50, 21);
+            this.label31.Size = new System.Drawing.Size(70, 21);
             this.label31.TabIndex = 66;
             this.label31.Text = "MODE";
             this.label31.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -2991,11 +2840,11 @@ namespace OmniaGUI
             // label30
             // 
             this.label30.BackColor = System.Drawing.Color.Gainsboro;
-            this.label30.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label30.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label30.ForeColor = System.Drawing.Color.Black;
-            this.label30.Location = new System.Drawing.Point(55, 325);
+            this.label30.Location = new System.Drawing.Point(87, 390);
             this.label30.Name = "label30";
-            this.label30.Size = new System.Drawing.Size(50, 21);
+            this.label30.Size = new System.Drawing.Size(60, 21);
             this.label30.TabIndex = 65;
             this.label30.Text = "QRG";
             this.label30.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -3015,29 +2864,15 @@ namespace OmniaGUI
             // band_stack_textBox1
             // 
             this.band_stack_textBox1.BackColor = System.Drawing.Color.LightGray;
-            this.band_stack_textBox1.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.band_stack_textBox1.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.band_stack_textBox1.ForeColor = System.Drawing.Color.Black;
-            this.band_stack_textBox1.Location = new System.Drawing.Point(111, 325);
+            this.band_stack_textBox1.Location = new System.Drawing.Point(153, 387);
             this.band_stack_textBox1.Name = "band_stack_textBox1";
-            this.band_stack_textBox1.Size = new System.Drawing.Size(67, 21);
+            this.band_stack_textBox1.Size = new System.Drawing.Size(99, 27);
             this.band_stack_textBox1.TabIndex = 63;
             this.band_stack_textBox1.Text = "30000000";
             this.band_stack_textBox1.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.band_stack_textBox1.TextChanged += new System.EventHandler(this.band_stack_textBox1_TextChanged_1);
-            // 
-            // band_stack_label29
-            // 
-            this.band_stack_label29.BackColor = System.Drawing.Color.Gainsboro;
-            this.band_stack_label29.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.band_stack_label29.Font = new System.Drawing.Font("Verdana", 8.25F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.band_stack_label29.ForeColor = System.Drawing.Color.Black;
-            this.band_stack_label29.Location = new System.Drawing.Point(323, 423);
-            this.band_stack_label29.Name = "band_stack_label29";
-            this.band_stack_label29.Size = new System.Drawing.Size(128, 23);
-            this.band_stack_label29.TabIndex = 61;
-            this.band_stack_label29.Text = "FAVORITES";
-            this.band_stack_label29.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.band_stack_label29.Click += new System.EventHandler(this.band_stack_label29_Click);
             // 
             // label28
             // 
@@ -3173,9 +3008,9 @@ namespace OmniaGUI
             // 
             this.band_stack_update_button1.BackColor = System.Drawing.Color.Gainsboro;
             this.band_stack_update_button1.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.band_stack_update_button1.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.band_stack_update_button1.Font = new System.Drawing.Font("Verdana", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.band_stack_update_button1.ForeColor = System.Drawing.Color.Black;
-            this.band_stack_update_button1.Location = new System.Drawing.Point(408, 387);
+            this.band_stack_update_button1.Location = new System.Drawing.Point(540, 348);
             this.band_stack_update_button1.Name = "band_stack_update_button1";
             this.band_stack_update_button1.Size = new System.Drawing.Size(146, 28);
             this.band_stack_update_button1.TabIndex = 40;
@@ -3194,7 +3029,7 @@ namespace OmniaGUI
             this.freqcaltab.Padding = new System.Windows.Forms.Padding(10);
             this.freqcaltab.Size = new System.Drawing.Size(792, 451);
             this.freqcaltab.TabIndex = 6;
-            this.freqcaltab.Text = "XCVR Cal";
+            this.freqcaltab.Text = "Proficio Cal";
             this.freqcaltab.ToolTipText = "Frequency and I/Q Calibration";
             this.freqcaltab.Click += new System.EventHandler(this.freqcaltab_Click);
             this.freqcaltab.Enter += new System.EventHandler(this.freqcaltab_Enter);
@@ -3753,7 +3588,7 @@ namespace OmniaGUI
             this.powertabPage1.Padding = new System.Windows.Forms.Padding(3);
             this.powertabPage1.Size = new System.Drawing.Size(792, 451);
             this.powertabPage1.TabIndex = 3;
-            this.powertabPage1.Text = "XCVR  Pwr";
+            this.powertabPage1.Text = "Proficio  Pwr";
             this.powertabPage1.ToolTipText = "Power Output Calibration";
             this.powertabPage1.Click += new System.EventHandler(this.powertabPage1_Click);
             this.powertabPage1.Enter += new System.EventHandler(this.powertabPage1_Enter);
@@ -4438,7 +4273,6 @@ namespace OmniaGUI
             this.MFC.BackColor = System.Drawing.Color.Black;
             this.MFC.Controls.Add(this.label33);
             this.MFC.Controls.Add(this.AMP_comboBox1);
-            this.MFC.Controls.Add(this.IQBD_hScrollBar1);
             this.MFC.Controls.Add(this.Antenna_Switch_label43);
             this.MFC.Controls.Add(this.Antenna_Switch_comboBox1);
             this.MFC.Controls.Add(this.Tuning_Knob_groupBox1);
@@ -4493,7 +4327,7 @@ namespace OmniaGUI
             // IQBD_hScrollBar1
             // 
             this.IQBD_hScrollBar1.Cursor = System.Windows.Forms.Cursors.SizeWE;
-            this.IQBD_hScrollBar1.Location = new System.Drawing.Point(162, 420);
+            this.IQBD_hScrollBar1.Location = new System.Drawing.Point(162, 111);
             this.IQBD_hScrollBar1.Maximum = 209;
             this.IQBD_hScrollBar1.Minimum = -200;
             this.IQBD_hScrollBar1.Name = "IQBD_hScrollBar1";
@@ -4891,13 +4725,14 @@ namespace OmniaGUI
             // 
             this.IQBD_groupBox4.Controls.Add(this.label18);
             this.IQBD_groupBox4.Controls.Add(this.label4);
+            this.IQBD_groupBox4.Controls.Add(this.IQBD_hScrollBar1);
             this.IQBD_groupBox4.Controls.Add(this.IQBD_hScrollBar2);
             this.IQBD_groupBox4.Controls.Add(this.IQBD_Apply_button8);
             this.IQBD_groupBox4.Controls.Add(this.IQBD_ONOFF);
             this.IQBD_groupBox4.Controls.Add(this.IQBD_Monitor_label);
             this.IQBD_groupBox4.Controls.Add(this.IQBD_Tune_button8);
             this.IQBD_groupBox4.ForeColor = System.Drawing.Color.White;
-            this.IQBD_groupBox4.Location = new System.Drawing.Point(7, 314);
+            this.IQBD_groupBox4.Location = new System.Drawing.Point(7, 298);
             this.IQBD_groupBox4.Name = "IQBD_groupBox4";
             this.IQBD_groupBox4.Size = new System.Drawing.Size(778, 129);
             this.IQBD_groupBox4.TabIndex = 192;
@@ -5050,7 +4885,7 @@ namespace OmniaGUI
             this.Freq_Comp_label32.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.Freq_Comp_label32.Font = new System.Drawing.Font("Verdana", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Freq_Comp_label32.ForeColor = System.Drawing.Color.Black;
-            this.Freq_Comp_label32.Location = new System.Drawing.Point(320, 295);
+            this.Freq_Comp_label32.Location = new System.Drawing.Point(320, 278);
             this.Freq_Comp_label32.Name = "Freq_Comp_label32";
             this.Freq_Comp_label32.Size = new System.Drawing.Size(162, 23);
             this.Freq_Comp_label32.TabIndex = 183;
@@ -5331,7 +5166,7 @@ namespace OmniaGUI
             this.RPi_Temperature_label1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.RPi_Temperature_label1.Font = new System.Drawing.Font("Verdana", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.RPi_Temperature_label1.ForeColor = System.Drawing.Color.Black;
-            this.RPi_Temperature_label1.Location = new System.Drawing.Point(220, 338);
+            this.RPi_Temperature_label1.Location = new System.Drawing.Point(220, 321);
             this.RPi_Temperature_label1.Name = "RPi_Temperature_label1";
             this.RPi_Temperature_label1.Size = new System.Drawing.Size(162, 23);
             this.RPi_Temperature_label1.TabIndex = 166;
@@ -5423,7 +5258,7 @@ namespace OmniaGUI
             this.AMP_Current_label5.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.AMP_Current_label5.Font = new System.Drawing.Font("Verdana", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.AMP_Current_label5.ForeColor = System.Drawing.Color.Black;
-            this.AMP_Current_label5.Location = new System.Drawing.Point(602, 338);
+            this.AMP_Current_label5.Location = new System.Drawing.Point(602, 321);
             this.AMP_Current_label5.Name = "AMP_Current_label5";
             this.AMP_Current_label5.Size = new System.Drawing.Size(162, 23);
             this.AMP_Current_label5.TabIndex = 145;
@@ -5437,7 +5272,7 @@ namespace OmniaGUI
             this.Amplifier_temperature_label58.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.Amplifier_temperature_label58.Font = new System.Drawing.Font("Verdana", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Amplifier_temperature_label58.ForeColor = System.Drawing.Color.Black;
-            this.Amplifier_temperature_label58.Location = new System.Drawing.Point(411, 338);
+            this.Amplifier_temperature_label58.Location = new System.Drawing.Point(411, 321);
             this.Amplifier_temperature_label58.Name = "Amplifier_temperature_label58";
             this.Amplifier_temperature_label58.Size = new System.Drawing.Size(162, 23);
             this.Amplifier_temperature_label58.TabIndex = 144;
@@ -5451,7 +5286,7 @@ namespace OmniaGUI
             this.Temperature_label57.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.Temperature_label57.Font = new System.Drawing.Font("Verdana", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Temperature_label57.ForeColor = System.Drawing.Color.Black;
-            this.Temperature_label57.Location = new System.Drawing.Point(29, 338);
+            this.Temperature_label57.Location = new System.Drawing.Point(29, 321);
             this.Temperature_label57.Name = "Temperature_label57";
             this.Temperature_label57.Size = new System.Drawing.Size(162, 23);
             this.Temperature_label57.TabIndex = 141;
@@ -5480,7 +5315,7 @@ namespace OmniaGUI
             // 
             this.MSCC_Core_Version_label45.BackColor = System.Drawing.Color.Gainsboro;
             this.MSCC_Core_Version_label45.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.MSCC_Core_Version_label45.Location = new System.Drawing.Point(39, 417);
+            this.MSCC_Core_Version_label45.Location = new System.Drawing.Point(39, 400);
             this.MSCC_Core_Version_label45.Name = "MSCC_Core_Version_label45";
             this.MSCC_Core_Version_label45.Size = new System.Drawing.Size(123, 23);
             this.MSCC_Core_Version_label45.TabIndex = 126;
@@ -5492,7 +5327,7 @@ namespace OmniaGUI
             // 
             this.MSCC_Display_label44.BackColor = System.Drawing.Color.Gainsboro;
             this.MSCC_Display_label44.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.MSCC_Display_label44.Location = new System.Drawing.Point(48, 381);
+            this.MSCC_Display_label44.Location = new System.Drawing.Point(48, 364);
             this.MSCC_Display_label44.Name = "MSCC_Display_label44";
             this.MSCC_Display_label44.Size = new System.Drawing.Size(105, 23);
             this.MSCC_Display_label44.TabIndex = 125;
@@ -5623,7 +5458,7 @@ namespace OmniaGUI
             // 
             this.SDRcore_Trans_Version.BackColor = System.Drawing.Color.Gainsboro;
             this.SDRcore_Trans_Version.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.SDRcore_Trans_Version.Location = new System.Drawing.Point(486, 417);
+            this.SDRcore_Trans_Version.Location = new System.Drawing.Point(486, 400);
             this.SDRcore_Trans_Version.Name = "SDRcore_Trans_Version";
             this.SDRcore_Trans_Version.Size = new System.Drawing.Size(123, 23);
             this.SDRcore_Trans_Version.TabIndex = 79;
@@ -5635,7 +5470,7 @@ namespace OmniaGUI
             // 
             this.SDRcore_Recv_Version_label16.BackColor = System.Drawing.Color.Gainsboro;
             this.SDRcore_Recv_Version_label16.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.SDRcore_Recv_Version_label16.Location = new System.Drawing.Point(337, 417);
+            this.SDRcore_Recv_Version_label16.Location = new System.Drawing.Point(337, 400);
             this.SDRcore_Recv_Version_label16.Name = "SDRcore_Recv_Version_label16";
             this.SDRcore_Recv_Version_label16.Size = new System.Drawing.Size(123, 23);
             this.SDRcore_Recv_Version_label16.TabIndex = 78;
@@ -5647,7 +5482,7 @@ namespace OmniaGUI
             // 
             this.MS_SDR_Version_label16.BackColor = System.Drawing.Color.Gainsboro;
             this.MS_SDR_Version_label16.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.MS_SDR_Version_label16.Location = new System.Drawing.Point(188, 417);
+            this.MS_SDR_Version_label16.Location = new System.Drawing.Point(188, 400);
             this.MS_SDR_Version_label16.Name = "MS_SDR_Version_label16";
             this.MS_SDR_Version_label16.Size = new System.Drawing.Size(123, 23);
             this.MS_SDR_Version_label16.TabIndex = 77;
@@ -5659,7 +5494,7 @@ namespace OmniaGUI
             // 
             this.label15.BackColor = System.Drawing.Color.Gainsboro;
             this.label15.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.label15.Location = new System.Drawing.Point(495, 381);
+            this.label15.Location = new System.Drawing.Point(495, 364);
             this.label15.Name = "label15";
             this.label15.Size = new System.Drawing.Size(105, 23);
             this.label15.TabIndex = 76;
@@ -5670,7 +5505,7 @@ namespace OmniaGUI
             // 
             this.label12.BackColor = System.Drawing.Color.Gainsboro;
             this.label12.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.label12.Location = new System.Drawing.Point(346, 381);
+            this.label12.Location = new System.Drawing.Point(346, 364);
             this.label12.Name = "label12";
             this.label12.Size = new System.Drawing.Size(105, 23);
             this.label12.TabIndex = 75;
@@ -5681,7 +5516,7 @@ namespace OmniaGUI
             // 
             this.label11.BackColor = System.Drawing.Color.Gainsboro;
             this.label11.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.label11.Location = new System.Drawing.Point(197, 381);
+            this.label11.Location = new System.Drawing.Point(197, 364);
             this.label11.Name = "label11";
             this.label11.Size = new System.Drawing.Size(105, 23);
             this.label11.TabIndex = 74;
@@ -5692,7 +5527,7 @@ namespace OmniaGUI
             // 
             this.label6.BackColor = System.Drawing.Color.Gainsboro;
             this.label6.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.label6.Location = new System.Drawing.Point(644, 381);
+            this.label6.Location = new System.Drawing.Point(644, 364);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(105, 23);
             this.label6.TabIndex = 73;
@@ -5703,7 +5538,7 @@ namespace OmniaGUI
             // 
             this.firmwarelabel16.BackColor = System.Drawing.Color.Gainsboro;
             this.firmwarelabel16.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.firmwarelabel16.Location = new System.Drawing.Point(635, 417);
+            this.firmwarelabel16.Location = new System.Drawing.Point(635, 400);
             this.firmwarelabel16.Name = "firmwarelabel16";
             this.firmwarelabel16.Size = new System.Drawing.Size(123, 23);
             this.firmwarelabel16.TabIndex = 71;
@@ -5825,11 +5660,11 @@ namespace OmniaGUI
             this.powertabControl1.ResumeLayout(false);
             this.mainPage.ResumeLayout(false);
             this.mainPage.PerformLayout();
-            this.groupBox3.ResumeLayout(false);
-            this.groupBox3.PerformLayout();
             this.RIT_groupBox4.ResumeLayout(false);
             this.RIT_groupBox4.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picWaterfall)).EndInit();
+            this.groupBox3.ResumeLayout(false);
+            this.groupBox3.PerformLayout();
             this.TX.ResumeLayout(false);
             this.TX.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.Power_Meter_Hold)).EndInit();
@@ -5895,7 +5730,6 @@ namespace OmniaGUI
         private System.Windows.Forms.Label label23;
         private System.Windows.Forms.Label label22;
         private System.Windows.Forms.Label label21;
-        private System.Windows.Forms.Label band_stack_label29;
         private System.Windows.Forms.TextBox band_stack_textBox1;
         private System.Windows.Forms.Label label29;
         private System.Windows.Forms.TextBox textBox1;
@@ -5916,14 +5750,6 @@ namespace OmniaGUI
         private System.Windows.Forms.RadioButton genradioButton;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Button Freqbutton3;
-        private System.Windows.Forms.Label Thousands;
-        private System.Windows.Forms.Label Tenmillions;
-        private System.Windows.Forms.Label Millions;
-        private System.Windows.Forms.Label Hundredthousand;
-        private System.Windows.Forms.Label Tenthousands;
-        private System.Windows.Forms.Label Hundreds;
-        private System.Windows.Forms.Label Tens;
-        private System.Windows.Forms.Label Ones;
         private System.Windows.Forms.Button buttTune;
         private System.Windows.Forms.RadioButton B160radioButton;
         private System.Windows.Forms.RadioButton B10radioButton;
@@ -6000,21 +5826,6 @@ namespace OmniaGUI
         private ListView B30_Favs_listView1;
         private ListView B40_Favs_listView1;
         private TextBox Favorites_textBox2;
-        private Button Million_Bottom_button7;
-        private Button Hundred_Thousand_Button_button6;
-        private Button Tenthousand_Bottom_button5;
-        private Button Thousand_Bottom_button;
-        private Button Hundred_Bottom_button3;
-        private Button Tens_Bottom_button2;
-        private Button Ones_Bottom_button2;
-        private Button Ones_Top_button2;
-        private Button Ten_Million_Top_button3;
-        private Button Million_Top_button4;
-        private Button Hundred_Thousand_Top_button5;
-        private Button Tenthousand_Top_button6;
-        private Button Thousand_Top_button7;
-        private Button Hundreds_Top_button8;
-        private Button Tens_Top_button;
         private CheckBox checkBox1;
         private Button NR_button3;
         private Button NB_button2;
@@ -6181,7 +5992,6 @@ namespace OmniaGUI
         public ZedGraph.ZedGraphControl Zedgraph_Control;
         private Button Spectrum_Controls_button3;
         private GroupBox SMeter_groupBox4;
-        private Panel panel2;
         private Button button7;
         private Button Audio_Digital_button3;
         private CheckBox Time_checkBox2;
@@ -6190,7 +6000,6 @@ namespace OmniaGUI
         private Label label1;
         private Label label3;
         private ListView General_listView1;
-        private Button TenMillion_Bottom_button8;
         private Button Solidus_Bias_button8;
         private CheckBox Peak_Needle_checkBox2;
         private HScrollBar Main_Power_hScrollBar1;
@@ -6223,6 +6032,32 @@ namespace OmniaGUI
         private Label Freq_Comp_label32;
         private HScrollBar Side_Tone_Volume_hScrollBar1;
         private Label Side_Tone_label32;
+        /*private Label Freq_Poiner_7;
+        private Label Freq_Poiner_6;
+        private Label Freq_Poiner_5;
+        private Label Freq_Poiner_4;
+        private Label Freq_Poiner_3;
+        private Label Freq_Poiner_2;
+        private Label Freq_Poiner_1;
+        private Label Freq_Poiner_0;
+        */
+        private Label Tenmillions;
+        private Label Millions;
+        private Label Hundredthousand;
+        private Label Tenthousands;
+        private Label Hundreds;
+        private Label Tens;
+        private Label Ones;
+        private Label Thousands;
+        private Label Freq_Pointer_5;
+        private Label Freq_Pointer_4;
+        private Label Freq_Pointer_3;
+        private Label Freq_Pointer_2;
+        private Label Freq_Pointer_1;
+        private Label Freq_Pointer_0;
+        private Label Freq_Pointer_7;
+        private Label Freq_Pointer_6;
+        private Label band_stack_label29;
         //private Label Freq_CAl_Progress_Label;
     }
 }

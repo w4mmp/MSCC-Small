@@ -63,7 +63,6 @@ public static class Master_Controls
     public static bool FTP_File_Found = true;
     public static bool Main_Tab_Active = true;
     public static bool Post_Init = false;
-    
    
     public static class Extended_Commands
     {
@@ -86,6 +85,9 @@ public static class Master_Controls
         public const byte CMD_SET_REVERSE_POWER = 0x0C;
         public const byte CMD_SET_SWR = 0x0D;
         public const byte CMD_SET_SOLIDUS_STATUS = 0x0E;
+        //RPi Commands
+        public const byte CMD_SET_REBOOT = 0X40;
+        public const byte CMD_SET_SHUTDOWN = 0X41;
 
         //Docking Commands
         public const byte CMD_SET_DOCKED = 0x10;
@@ -108,9 +110,9 @@ public static class Master_Controls
         public const byte CMD_MFC_SET_RIT = 0x1D;
         public const byte CMD_SET_GUI_STAR = 0x1E;
         public const byte Knob_switch_star = 0x10;
-        public const byte Button_left_switch_star = 0x20;
-        public const byte Button_middle_switch_star = 0x30;
-        public const byte Button_right_switch_star = 0x40;
+        public const byte Button_A_switch_star = 0x20;
+        public const byte Button_B_switch_star = 0x30;
+        public const byte Button_C_switch_star = 0x40;
 
         public const byte CMD_SET_KNOB_SWITCH = 0x20;
         public const byte CMD_SET_LEFT_SWITCH = 0x21;
@@ -127,7 +129,7 @@ public static class Master_Controls
     public static bool code_triggered = false;
     public static bool Startup_Label_Toggle = false;
     public static short Startup_Label_Tick_count = 0;
-    public static string productVersion = "120.08.05";
+    public static string productVersion = "120.11.24";
     public static bool Debug_Display = false;
     public static bool Two_Tone = false;
     public static bool QRP_Mode = true;
@@ -168,6 +170,10 @@ public static class Master_Controls
     public static TabPage Current_tab;
 }
 
+public static class VFO_Controls
+{
+    public static bool VFO_A = true;
+}
 public static class Solidus_Controls
 {
     public static bool Solidus_Status = false;
@@ -183,7 +189,7 @@ public static class RPi_Settings
     public static int Peak_Needle_Color_Index = 0;
     public static int Time_Display = 0;
     public static int Meter_Mode = 0;
-    public static bool RPi_Needs_Updated = false;
+    //public static bool RPi_Needs_Updated = false;
     public static class Volume_Settings{
         public static int Volume_ATTN_Index = 0;
         public static int Previous_Speaker_Volume = 0;
@@ -198,6 +204,9 @@ public static class RPi_Settings
     {
         public static int Previous_Freq_Step = 0;
         public static int Freq_Step = 0;
+        public static short Freq_Digit = 30;
+        public static short Antenna_Switch = 0;
+
     }
 }
 
@@ -809,6 +818,11 @@ public static class IQ_Controls
     public static short IQ_INVALID_BAND = 150;
     public static bool IQBD_MONITOR = false;
     public static bool Previous_QRP_Mode = false;
+    public static class RPi
+    {
+        public static int Calibration_Slider_Value = 0;
+        public static int Previous_Calibration_Slider_Value = 0;
+    }
 }
 
 public static class Band_Stack_Controls
